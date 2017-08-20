@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Founders
 {
-    class FileUtils
+    public class FileUtils
     {
         /* INSTANCE VARIABLES */
         public String rootFolder;

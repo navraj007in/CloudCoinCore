@@ -2,7 +2,7 @@
 
 namespace Founders
 {
-    class FixitHelper
+    public class FixitHelper
     {
         //  instance variables
         public int[] trustedServers = new int[8];

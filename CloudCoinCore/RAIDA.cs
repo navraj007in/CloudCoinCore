@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Founders
 {
-    class RAIDA
+    public class RAIDA
     {
         /* INSTANCE VARIABLE */
         public DetectionAgent[] agent;

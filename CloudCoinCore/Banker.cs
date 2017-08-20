@@ -4,7 +4,7 @@ using System.Linq;
 namespace Founders
 
 {
-    class Banker
+    public class Banker
     {
         public FileUtils fileUtils;
         public Banker(FileUtils fileUtils)

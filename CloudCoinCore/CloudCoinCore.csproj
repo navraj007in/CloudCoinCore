@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banker.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="CloudCoin.cs" />
     <Compile Include="CoinUtils.cs" />
     <Compile Include="DetectionAgent.cs" />

@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Founders
 {
-    class DetectionAgent
+    public class DetectionAgent
     {
         public int readTimeout;
         public int RAIDANumber;

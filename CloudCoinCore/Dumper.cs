@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Founders
 {
-    class Dumper
+    public class Dumper
     {
         FileUtils fileUtils;
         Random random;

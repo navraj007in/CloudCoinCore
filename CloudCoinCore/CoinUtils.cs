@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace Founders
 {
-    class CoinUtils
+    public class CoinUtils
     {
         //  instance variables
         public CloudCoin cc;

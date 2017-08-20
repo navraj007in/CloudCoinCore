@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Founders
 {
-    class Importer
+    public class Importer
     {
         /* INSTANCE VARAIBLES */
         FileUtils fileUtils;

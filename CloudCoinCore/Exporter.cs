@@ -6,7 +6,7 @@ using System.Data;
 
 namespace Founders
 {
-    class Exporter
+    public class Exporter
     {
         /* INSTANCE VARIABLES */
         FileUtils fileUtils;

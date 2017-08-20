@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Founders
 {
-    class CloudCoin
+    public class CloudCoin
     {
         //Fields
         [JsonProperty("nn")]

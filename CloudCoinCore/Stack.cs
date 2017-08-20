@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 namespace Founders
 {
-    class Stack
+    public class Stack
     {
         [JsonProperty("cloudcoin")]
         public CloudCoin[] cc { get; set; }

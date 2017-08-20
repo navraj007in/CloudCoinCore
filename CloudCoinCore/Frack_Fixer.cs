@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Founders
 {
-    class Frack_Fixer
+    public class Frack_Fixer
     {
         /* INSTANCE VARIABLES */
         private FileUtils fileUtils;
