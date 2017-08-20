@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace Founders
+namespace CloudCoin
 {
     public class Frack_Fixer
     {

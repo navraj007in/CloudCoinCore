@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-namespace Founders
+namespace CloudCoin
 {
     public class Stack
     {

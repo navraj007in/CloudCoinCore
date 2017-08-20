@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
-namespace Founders
+namespace CloudCoin
 {
     public class RAIDA
     {

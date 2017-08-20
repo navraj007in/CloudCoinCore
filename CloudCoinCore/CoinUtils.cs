@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Founders
+namespace CloudCoin
 {
     public class CoinUtils
     {

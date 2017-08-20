@@ -1,5 +1,5 @@
 ﻿
-namespace Founders
+namespace CloudCoin
 {
     public static class RAIDA_Status
     {

@@ -3,7 +3,7 @@ using System.Net;
 using System.Text;
 using System.IO;
 
-namespace Founders
+namespace CloudCoin
 {
     public class DetectionAgent
     {

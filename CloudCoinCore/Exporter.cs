@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Data;
 
-namespace Founders
+namespace CloudCoin
 {
     public class Exporter
     {
