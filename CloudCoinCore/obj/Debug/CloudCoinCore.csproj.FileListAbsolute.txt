@@ -1,0 +1,7 @@
+C:\Cloudcoin\CloudCoinCore\CloudCoinCore\CloudCoinCore\bin\Debug\CloudCoinCore.dll
+C:\Cloudcoin\CloudCoinCore\CloudCoinCore\CloudCoinCore\bin\Debug\CloudCoinCore.pdb
+C:\Cloudcoin\CloudCoinCore\CloudCoinCore\CloudCoinCore\bin\Debug\Newtonsoft.Json.dll
+C:\Cloudcoin\CloudCoinCore\CloudCoinCore\CloudCoinCore\bin\Debug\Newtonsoft.Json.xml
+C:\Cloudcoin\CloudCoinCore\CloudCoinCore\CloudCoinCore\obj\Debug\CloudCoinCore.csprojResolveAssemblyReference.cache
+C:\Cloudcoin\CloudCoinCore\CloudCoinCore\CloudCoinCore\obj\Debug\CloudCoinCore.dll
+C:\Cloudcoin\CloudCoinCore\CloudCoinCore\CloudCoinCore\obj\Debug\CloudCoinCore.pdb
