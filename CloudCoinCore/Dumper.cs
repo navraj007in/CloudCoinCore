@@ -7,10 +7,10 @@ namespace CloudCoin
 {
     public class Dumper
     {
-        FileUtils fileUtils;
+        IFileUtils fileUtils;
         Random random;
 
-        public Dumper(FileUtils fileUtils)
+        public Dumper(IFileUtils fileUtils)
         {
             this.fileUtils = fileUtils;
             random = new Random();

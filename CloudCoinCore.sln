@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudCoinCore", "CloudCoinCore\CloudCoinCore.csproj", "{494F4B82-0BED-45D7-8CEF-0E06314DEAC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoundersConsole", "FoundersConsole\FoundersConsole.csproj", "{724238A9-7A6A-492D-B640-7CF85D1EC528}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Founders", "..\Founders\Founders\Founders.csproj", "{F4E7B0B5-8132-4137-97CC-F73D62182DF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{494F4B82-0BED-45D7-8CEF-0E06314DEAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{494F4B82-0BED-45D7-8CEF-0E06314DEAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{494F4B82-0BED-45D7-8CEF-0E06314DEAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{724238A9-7A6A-492D-B640-7CF85D1EC528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{724238A9-7A6A-492D-B640-7CF85D1EC528}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{724238A9-7A6A-492D-B640-7CF85D1EC528}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{724238A9-7A6A-492D-B640-7CF85D1EC528}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4E7B0B5-8132-4137-97CC-F73D62182DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4E7B0B5-8132-4137-97CC-F73D62182DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4E7B0B5-8132-4137-97CC-F73D62182DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4E7B0B5-8132-4137-97CC-F73D62182DF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

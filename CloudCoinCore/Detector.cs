@@ -8,12 +8,12 @@ namespace CloudCoin
     {
         /*  INSTANCE VARIABLES */
         RAIDA raida;
-        FileUtils fileUtils;
+        IFileUtils fileUtils;
         int detectTime = 5000;
 
 
         /*  CONSTRUCTOR */
-        public Detector(FileUtils fileUtils, int timeout)
+        public Detector(IFileUtils fileUtils, int timeout)
         {
             this.raida = new RAIDA(timeout);
             this.fileUtils = fileUtils;

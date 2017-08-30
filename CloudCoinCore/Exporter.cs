@@ -9,10 +9,10 @@ namespace CloudCoin
     public class Exporter
     {
         /* INSTANCE VARIABLES */
-        FileUtils fileUtils;
+        IFileUtils fileUtils;
 
         /* CONSTRUCTOR */
-        public Exporter(FileUtils fileUtils)
+        public Exporter(IFileUtils fileUtils)
         {
             this.fileUtils = fileUtils;
         }

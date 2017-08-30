@@ -7,14 +7,14 @@ namespace CloudCoin
     public class Frack_Fixer
     {
         /* INSTANCE VARIABLES */
-        private FileUtils fileUtils;
+        private IFileUtils fileUtils;
         private int totalValueToBank;
         private int totalValueToFractured;
         private int totalValueToCounterfeit;
         private RAIDA raida;
 
         /* CONSTRUCTORS */
-        public Frack_Fixer(FileUtils fileUtils, int timeout)
+        public Frack_Fixer(IFileUtils fileUtils, int timeout)
         {
             this.fileUtils = fileUtils;
             raida = new RAIDA(timeout);

@@ -6,8 +6,8 @@ namespace CloudCoin
 {
     public class Banker
     {
-        public FileUtils fileUtils;
-        public Banker(FileUtils fileUtils)
+        public IFileUtils fileUtils;
+        public Banker(IFileUtils fileUtils)
         {
             this.fileUtils = fileUtils;
         }

@@ -9,10 +9,10 @@ namespace CloudCoin
     public class Importer
     {
         /* INSTANCE VARAIBLES */
-        FileUtils fileUtils;
+        IFileUtils fileUtils;
 
         /* CONSTRUCTOR */
-        public Importer(FileUtils fileUtils)
+        public Importer(IFileUtils fileUtils)
         {
             this.fileUtils = fileUtils;
         }//Constructor

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace CloudCoin
 {
-    public class FileUtils
+    public class FileUtils1
     {
         /* INSTANCE VARIABLES */
         public String rootFolder;
@@ -25,7 +25,7 @@ namespace CloudCoin
         public String exportFolder;
 
         /* CONSTRUCTOR */
-        public FileUtils(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder)
+        public FileUtils1(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder)
         {
             //  initialise instance variables
             this.rootFolder = rootFolder;

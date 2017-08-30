@@ -51,9 +51,9 @@
     <Compile Include="Detector.cs" />
     <Compile Include="Dumper.cs" />
     <Compile Include="Exporter.cs" />
-    <Compile Include="FileUtils.cs" />
     <Compile Include="FixitHelper.cs" />
     <Compile Include="Frack_Fixer.cs" />
+    <Compile Include="IFileUtils.cs" />
     <Compile Include="Importer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RAIDA.cs" />
