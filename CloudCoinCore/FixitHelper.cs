@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudCoin
+namespace CloudCoinCore
 {
     public class FixitHelper
     {
@@ -18,7 +18,7 @@ namespace CloudCoin
         public String[] ans3;
         public String[] ans4;
         public String[] currentAns = new String[4];
-        public bool finnished = false;
+        public bool finished = false;
 
         public bool triad_1_is_ready = false;
         public bool triad_2_is_ready = false;
@@ -98,7 +98,7 @@ namespace CloudCoin
                     currentTriadReady = triad_4_is_ready;
                     break;
                 default:
-                    this.finnished = true;
+                    this.finished = true;
                     break;
             }
             // end switch
@@ -133,7 +133,7 @@ namespace CloudCoin
                     currentTriadReady = true;
                     break;
                 default:
-                    this.finnished = true;
+                    this.finished = true;
                     break;
             }//end switch
         }//End fix Guid

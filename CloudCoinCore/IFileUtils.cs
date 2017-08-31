@@ -8,7 +8,11 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 
 
+<<<<<<< HEAD
+namespace CloudCoinCore
+=======
 namespace CloudCoin
+>>>>>>> aadb1f835ccf101e7f3a4c1f8c143311d763c59a
 {
     public abstract class IFileUtils
     {

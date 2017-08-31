@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace CloudCoin
+namespace CloudCoinCore
 {
     public class Frack_Fixer
     {
@@ -231,7 +231,7 @@ namespace CloudCoin
 
                     //trustedServerAns = new String[] { brokeCoin.ans[fixer.currentTriad[0]], brokeCoin.ans[fixer.currentTriad[1]], brokeCoin.ans[fixer.currentTriad[2]] };
                     corner = 1;
-                    while (!fixer.finnished)
+                    while (!fixer.finished)
                     {
                         Console.WriteLine(" Using corner " + corner);
                         fix_result = fixOneGuidCorner(raida_ID, brokeCoin, corner, fixer.currentTriad);
@@ -240,7 +240,7 @@ namespace CloudCoin
                         {
                             //Fixed. Do the fixed stuff
                             cu.setPastStatus("pass", raida_ID);
-                            fixer.finnished = true;
+                            fixer.finished = true;
                             corner = 1;
                         }
                         else

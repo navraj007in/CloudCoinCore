@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace CloudCoin
+namespace CloudCoinCore
 {
     public class Detector
     {
