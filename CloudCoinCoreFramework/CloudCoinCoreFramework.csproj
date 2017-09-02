@@ -43,12 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Banker.cs" />
     <Compile Include="CloudCoin.cs" />
     <Compile Include="CoinUtils.cs" />
     <Compile Include="DetectionAgent.cs" />
+    <Compile Include="Detector.cs" />
     <Compile Include="IExporter.cs" />
     <Compile Include="IFileUtils.cs" />
     <Compile Include="IImporter.cs" />
+    <Compile Include="iLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RAIDA.cs" />
     <Compile Include="RAIDA_Status.cs" />

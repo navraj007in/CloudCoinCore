@@ -161,7 +161,68 @@ namespace CloudCoinCore
             //Get data from the detection agents
         }//end detect coin
 
+        public CoinUtils partialDetectCoin(CoinUtils cu, int milliSecondsToTimeOut)
+        {
+            cu.generatePan();
+            int[] echoes = (int[])RAIDA_Status.echoTime.Clone();
+            int[] raidas = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 };
+            Array.Sort(echoes, raidas);
+            Console.WriteLine("fastest raida: " + raidas[0] + "," + raidas[1] + "," + raidas[2] + "," + raidas[3] + "," + raidas[4] + "," + raidas[5] + "," + raidas[6] + "," + raidas[7] + "," + raidas[8] + "," + raidas[9] + "," + raidas[10] + "," + raidas[11] + "," + raidas[12] + "," + raidas[13] + "," + raidas[14] + "," + raidas[15]);
+            var t00 = Task.Factory.StartNew(() => detectOne(raidas[00], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[00]], cu.pans[raidas[00]], cu.getDenomination()));
+            var t01 = Task.Factory.StartNew(() => detectOne(raidas[01], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[01]], cu.pans[raidas[01]], cu.getDenomination()));
+            var t02 = Task.Factory.StartNew(() => detectOne(raidas[02], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[02]], cu.pans[raidas[02]], cu.getDenomination()));
+            var t03 = Task.Factory.StartNew(() => detectOne(raidas[03], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[03]], cu.pans[raidas[03]], cu.getDenomination()));
+            var t04 = Task.Factory.StartNew(() => detectOne(raidas[04], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[04]], cu.pans[raidas[04]], cu.getDenomination()));
+            var t05 = Task.Factory.StartNew(() => detectOne(raidas[05], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[05]], cu.pans[raidas[05]], cu.getDenomination()));
+            var t06 = Task.Factory.StartNew(() => detectOne(raidas[06], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[06]], cu.pans[raidas[06]], cu.getDenomination()));
+            var t07 = Task.Factory.StartNew(() => detectOne(raidas[07], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[07]], cu.pans[raidas[07]], cu.getDenomination()));
+            var t08 = Task.Factory.StartNew(() => detectOne(raidas[08], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[08]], cu.pans[raidas[08]], cu.getDenomination()));
+            var t09 = Task.Factory.StartNew(() => detectOne(raidas[09], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[09]], cu.pans[raidas[09]], cu.getDenomination()));
+            var t10 = Task.Factory.StartNew(() => detectOne(raidas[10], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[10]], cu.pans[raidas[10]], cu.getDenomination()));
+            var t11 = Task.Factory.StartNew(() => detectOne(raidas[11], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[11]], cu.pans[raidas[11]], cu.getDenomination()));
+            var t12 = Task.Factory.StartNew(() => detectOne(raidas[12], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[12]], cu.pans[raidas[12]], cu.getDenomination()));
+            var t13 = Task.Factory.StartNew(() => detectOne(raidas[13], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[13]], cu.pans[raidas[13]], cu.getDenomination()));
+            var t14 = Task.Factory.StartNew(() => detectOne(raidas[14], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[14]], cu.pans[raidas[14]], cu.getDenomination()));
+            var t15 = Task.Factory.StartNew(() => detectOne(raidas[15], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[15]], cu.pans[raidas[15]], cu.getDenomination()));
+            //var t16 = Task.Factory.StartNew(() => detectOne(raidas[16], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[16]], cu.pans[raidas[16]], cu.getDenomination()));
 
+
+
+            var taskList = new List<Task> { t00, t01, t02, t03, t04, t05, t06, t07, t08, t09, t10, t11, t12, t13, t14, t15 };
+            Task.WaitAll(taskList.ToArray(), milliSecondsToTimeOut);
+            //Get data from the detection agents
+
+            //nt k = 0;
+            //for(int j =0; j<16;j++)
+            //{
+            //    if(responseArray[raidas[j]] != null && responseArray[raidas[j]].outcome == "error" && k < 9)
+            //    {
+            //        detectOne(raidas[16+k], cu.cc.nn, cu.cc.sn, cu.cc.an[raidas[16+k]], cu.pans[raidas[16+k]], cu.getDenomination());
+            //       k++;
+            //   }
+            //}
+
+            for (int i = 0; i < 25; i++)
+            {
+                if (responseArray[i] != null)
+                {
+                    cu.setPastStatus(responseArray[i].outcome, i);
+                    Console.WriteLine(cu.cc.sn + " detect:" + i + " " + responseArray[i].fullResponse);
+                }
+                else
+                {
+                    cu.setPastStatus("undetected", i);
+                };// should be pass, fail, error or undetected. 
+            }//end for each detection agent
+
+            cu.setAnsToPansIfPassed(true);
+            cu.calculateHP();
+            // cu.gradeCoin(); // sets the grade and figures out what the file extension should be (bank, fracked, counterfeit, lost
+            cu.calcExpirationDate();
+            cu.grade();
+
+            return cu;
+        }//end detect coin
 
     }//end RAIDA Class
 }// End Namespace

@@ -8,7 +8,7 @@ namespace CloudCoinCore
 {
     public abstract class IImporter
     {
-        IFileUtils fileUtils;
+        public IFileUtils fileUtils;
 
         /* CONSTRUCTOR */
         public IImporter(IFileUtils fileUtils)

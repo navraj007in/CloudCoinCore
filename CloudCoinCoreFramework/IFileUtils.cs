@@ -21,9 +21,9 @@ namespace CloudCoinCore
         public String counterfeitFolder;
         public String directoryFolder;
         public String exportFolder;
-
+        public String partialFolder;
         /* CONSTRUCTOR */
-        public IFileUtils(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder)
+        public IFileUtils(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder,String partialFolder)
         {
             //  initialise instance variables
             this.rootFolder = rootFolder;
@@ -37,6 +37,7 @@ namespace CloudCoinCore
             this.counterfeitFolder = counterfeitFolder;
             this.directoryFolder = directoryFolder;
             this.exportFolder = exportFolder;
+            this.partialFolder = partialFolder;
         }  // End constructor
 
         /* PUBLIC METHODS */

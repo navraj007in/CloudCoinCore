@@ -473,6 +473,27 @@ namespace CloudCoinCore
                 this.pans[i] = cc.an[i];
             }// end for 25 ans
         }// end setAnsToPans
+        public void setAnsToPansIfPassed(bool partial = false)
+        {
+            // now set all ans that passed to the new pans
+            char[] pownArray = cc.pown.ToCharArray();
+
+            for (int i = 0; (i < 25); i++)
+            {
+                if (pownArray[i] == 'p')//1 means pass
+                {
+                    cc.an[i] = pans[i];
+                }
+                else if (pownArray[i] == 'u' && !RAIDA_Status.failsEcho[i] && partial == false)//Timed out but there server echoed. So it probably changed the PAN just too slow of a response
+                {
+                    cc.an[i] = pans[i];
+                }
+                else
+                {
+                    // Just keep the ans and do not change. Hopefully they are not fracked. 
+                }
+            }// for each guid in coin
+        }// end set ans to pans if passed
 
         public void setAnsToPansIfPassed()
         {

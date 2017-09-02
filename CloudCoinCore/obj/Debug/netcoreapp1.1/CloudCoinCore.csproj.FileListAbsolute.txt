@@ -4,3 +4,4 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\bin\Debug\netcoreapp1.1\Cloud
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.AssemblyInfo.cs
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.pdb
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.csprojResolveAssemblyReference.cache

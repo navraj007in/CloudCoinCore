@@ -12,11 +12,12 @@ namespace WindowsFormsApp1
 {
     public class FileUtils : IFileUtils
     {
+
         /* INSTANCE VARIABLES */
 
         /* CONSTRUCTOR */
-        public FileUtils(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder) : base(rootFolder, importFolder,
-            importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder)
+        public FileUtils(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder,String partialFolder) : base(rootFolder, importFolder,
+            importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder,partialFolder)
         {
             //  initialise instance variables
             this.rootFolder = rootFolder;
@@ -30,8 +31,9 @@ namespace WindowsFormsApp1
             this.counterfeitFolder = counterfeitFolder;
             this.directoryFolder = directoryFolder;
             this.exportFolder = exportFolder;
-
+            this.partialFolder = partialFolder;
         }  // End constructor
+
 
         /* PUBLIC METHODS */
 
@@ -359,6 +361,8 @@ namespace WindowsFormsApp1
             Directory.CreateDirectory(counterfeitFolder);
             Directory.CreateDirectory(directoryFolder);
             Directory.CreateDirectory(exportFolder);
+            Directory.CreateDirectory(partialFolder);
+
             //            Directory.CreateDirectory(languageFolder);
 
         }
