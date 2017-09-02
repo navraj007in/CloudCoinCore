@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudCoinCore", "CloudCoinCore\CloudCoinCore.csproj", "{494F4B82-0BED-45D7-8CEF-0E06314DEAC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudCoinCore", "CloudCoinCore\CloudCoinCore.csproj", "{41979135-4F57-4163-B313-7313471A2584}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoundersConsole", "FoundersConsole\FoundersConsole.csproj", "{724238A9-7A6A-492D-B640-7CF85D1EC528}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Founders", "Founders\Founders.csproj", "{8B903AB0-C487-4E6E-9B78-EC120C13D749}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Founders", "..\Founders\Founders\Founders.csproj", "{F4E7B0B5-8132-4137-97CC-F73D62182DF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{C43B216C-242B-4AF1-8A84-FFADC030760A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudCoinCoreFramework", "CloudCoinCoreFramework\CloudCoinCoreFramework.csproj", "{C062BE88-92BB-4762-B5FE-615E91B1C8E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{494F4B82-0BED-45D7-8CEF-0E06314DEAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{494F4B82-0BED-45D7-8CEF-0E06314DEAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{494F4B82-0BED-45D7-8CEF-0E06314DEAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{494F4B82-0BED-45D7-8CEF-0E06314DEAC0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{724238A9-7A6A-492D-B640-7CF85D1EC528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{724238A9-7A6A-492D-B640-7CF85D1EC528}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{724238A9-7A6A-492D-B640-7CF85D1EC528}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{724238A9-7A6A-492D-B640-7CF85D1EC528}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4E7B0B5-8132-4137-97CC-F73D62182DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4E7B0B5-8132-4137-97CC-F73D62182DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4E7B0B5-8132-4137-97CC-F73D62182DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4E7B0B5-8132-4137-97CC-F73D62182DF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41979135-4F57-4163-B313-7313471A2584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41979135-4F57-4163-B313-7313471A2584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41979135-4F57-4163-B313-7313471A2584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41979135-4F57-4163-B313-7313471A2584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B903AB0-C487-4E6E-9B78-EC120C13D749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B903AB0-C487-4E6E-9B78-EC120C13D749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B903AB0-C487-4E6E-9B78-EC120C13D749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B903AB0-C487-4E6E-9B78-EC120C13D749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C43B216C-242B-4AF1-8A84-FFADC030760A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C43B216C-242B-4AF1-8A84-FFADC030760A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C43B216C-242B-4AF1-8A84-FFADC030760A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C43B216C-242B-4AF1-8A84-FFADC030760A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C062BE88-92BB-4762-B5FE-615E91B1C8E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C062BE88-92BB-4762-B5FE-615E91B1C8E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C062BE88-92BB-4762-B5FE-615E91B1C8E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C062BE88-92BB-4762-B5FE-615E91B1C8E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
