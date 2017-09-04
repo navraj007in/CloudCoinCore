@@ -78,20 +78,41 @@ namespace CloudCoinInvestors
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
 
-            lblOneCount.Text = Convert.ToString(bankTotals[1] + frackedTotals[1]+ partialTotals[1]);
-            lblFiveCount.Text = Convert.ToString(bankTotals[2] + frackedTotals[2] + partialTotals[2]);
-            lblQtrCount.Text = Convert.ToString(bankTotals[3] + frackedTotals[3] + partialTotals[3]);
-            lblHundredCount.Text = Convert.ToString(bankTotals[4] + frackedTotals[4] + partialTotals[4]);
-            lbl250Count.Text = Convert.ToString(bankTotals[5] + frackedTotals[5] + partialTotals[5]);
+            //lblOneCount.Text = Convert.ToString(bankTotals[1] + frackedTotals[1]+ partialTotals[1]);
+            //lblFiveCount.Text = Convert.ToString(bankTotals[2] + frackedTotals[2] + partialTotals[2]);
+            //lblQtrCount.Text = Convert.ToString(bankTotals[3] + frackedTotals[3] + partialTotals[3]);
+            //lblHundredCount.Text = Convert.ToString(bankTotals[4] + frackedTotals[4] + partialTotals[4]);
+            //lbl250Count.Text = Convert.ToString(bankTotals[5] + frackedTotals[5] + partialTotals[5]);
 
-            lblOneTotal.Text = (lblOneCount.Text);
-            lblFiveTotal.Text = Convert.ToString(Convert.ToInt16(lblFiveCount.Text) * 5);
-            lblQtrTotal.Text = Convert.ToString(Convert.ToInt16(lblQtrCount.Text) * 25);
-            lblHundredTotal.Text = Convert.ToString(Convert.ToInt16(lblHundredCount.Text) * 100);
-            lbl250Total.Text = Convert.ToString(Convert.ToInt16(lbl250Total.Text) * 250);
-            lblTotalCoins.Text = "Total Coins : " + Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]);
+            setLabelText(lblOneCount, Convert.ToString(bankTotals[1] + frackedTotals[1] + partialTotals[1]));
+            setLabelText(lblFiveCount, Convert.ToString(bankTotals[2] + frackedTotals[2] + partialTotals[2]));
+            setLabelText(lblQtrCount, Convert.ToString(bankTotals[3] + frackedTotals[3] + partialTotals[3]));
+            setLabelText(lblHundredCount, Convert.ToString(bankTotals[4] + frackedTotals[4] + partialTotals[4]));
+            setLabelText(lbl250Count, Convert.ToString(bankTotals[5] + frackedTotals[5] + partialTotals[5]));
+
+            setLabelText(lblOneTotal, lblOneCount.Text);
+            setLabelText(lblFiveTotal, Convert.ToString(Convert.ToInt16(lblFiveCount.Text) * 5));
+            setLabelText(lblQtrTotal, Convert.ToString(Convert.ToInt16(lblQtrCount.Text) * 25));
+            setLabelText(lblHundredTotal, Convert.ToString(Convert.ToInt16(lblHundredCount.Text) * 100));
+            setLabelText(lbl250Total, Convert.ToString(Convert.ToInt16(lbl250Count.Text) * 250));
+            setLabelText(lblTotalCoins, "Total Coins : " + Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
+
+            //lblOneTotal.Text = (lblOneCount.Text);
+            //lblFiveTotal.Text = Convert.ToString(Convert.ToInt16(lblFiveCount.Text) * 5);
+            //lblQtrTotal.Text = Convert.ToString(Convert.ToInt16(lblQtrCount.Text) * 25);
+            //lblHundredTotal.Text = Convert.ToString(Convert.ToInt16(lblHundredCount.Text) * 100);
+            //lbl250Total.Text = Convert.ToString(Convert.ToInt16(lbl250Total.Text) * 250);
+            //lblTotalCoins.Text = "Total Coins : " + Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]);
         }// end show
 
+        private void setLabelText(Label lbl,string text)
+        {
+            lbl.Invoke((MethodInvoker)delegate
+            {
+                lbl.Text = text;
+            });
+
+        }
         public void showFolders()
         {
             updateLog(" Your Root folder is:" + "\n " + rootFolder);
@@ -162,6 +183,7 @@ namespace CloudCoinInvestors
             }//end if coins to import
         }   // end import
 
+
         private void updateLog(string logLine)
         {
             txtLogs.Invoke((MethodInvoker)delegate
@@ -204,7 +226,7 @@ namespace CloudCoinInvestors
 
                 return;
             }
-
+            progressBar.Visible = true;
             importWorker.DoWork += ImportWorker_DoWork;
             importWorker.RunWorkerAsync();
         }
@@ -251,7 +273,20 @@ namespace CloudCoinInvestors
 
         private void Detector_OnUpdateStatus(object sender, ProgressEventArgs e)
         {
-            updateLog(e.Status);
+            try
+            {
+                updateLog(e.Status);
+                progressBar.Invoke((MethodInvoker)delegate
+                {
+                    if(e.percentage>0)
+                        progressBar.Value = e.percentage;
+                });
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+
+            }
         }
 
         public void export()
@@ -349,6 +384,11 @@ namespace CloudCoinInvestors
             frmExport export = new frmExport();
             export.ShowDialog();
 
+        }
+
+        private void importWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            progressBar.Visible = false;
         }
     }
 }

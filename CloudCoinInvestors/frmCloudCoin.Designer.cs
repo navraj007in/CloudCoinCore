@@ -65,6 +65,7 @@
             this.txtLogs = new System.Windows.Forms.RichTextBox();
             this.importWorker = new System.ComponentModel.BackgroundWorker();
             this.cmdExport = new System.Windows.Forms.Button();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -378,7 +379,7 @@
             // 
             // txtLogs
             // 
-            this.txtLogs.Location = new System.Drawing.Point(67, 273);
+            this.txtLogs.Location = new System.Drawing.Point(67, 288);
             this.txtLogs.Name = "txtLogs";
             this.txtLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtLogs.Size = new System.Drawing.Size(538, 197);
@@ -390,6 +391,7 @@
             this.importWorker.WorkerReportsProgress = true;
             this.importWorker.WorkerSupportsCancellation = true;
             this.importWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.ImportWorker_DoWork);
+            this.importWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.importWorker_RunWorkerCompleted);
             // 
             // cmdExport
             // 
@@ -401,11 +403,20 @@
             this.cmdExport.UseVisualStyleBackColor = true;
             this.cmdExport.Click += new System.EventHandler(this.cmdExport_Click);
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(124, 259);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(357, 23);
+            this.progressBar.TabIndex = 6;
+            this.progressBar.Visible = false;
+            // 
             // frmCloudCoin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(870, 497);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.cmdExport);
             this.Controls.Add(this.txtLogs);
             this.Controls.Add(this.cmdImport);
@@ -464,6 +475,7 @@
         private System.Windows.Forms.RichTextBox txtLogs;
         private System.ComponentModel.BackgroundWorker importWorker;
         private System.Windows.Forms.Button cmdExport;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }
 

@@ -20,12 +20,12 @@ namespace Founders
         public delegate void StatusUpdateHandler(object sender, CloudCoinInvestors.ProgressEventArgs e);
         public event StatusUpdateHandler OnUpdateStatus;
 
-        private void UpdateStatus(string status)
+        private void UpdateStatus(string status,int percentage = 0)
         {
             // Make sure someone is listening to event
             if (OnUpdateStatus == null) return;
 
-            ProgressEventArgs args = new ProgressEventArgs(status);
+            ProgressEventArgs args = new ProgressEventArgs(status,percentage);
             OnUpdateStatus(this, args);
         }
 
@@ -85,7 +85,9 @@ namespace Founders
                         Console.Out.WriteLine("");
 
                         updateLog("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
-                        UpdateStatus("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
+                        double percentCompleted = (j + 1)*100 / suspectFileNames.Length;
+                        Console.WriteLine("Calculated percentage - "+ percentCompleted + ".j "+ j + " length "+ suspectFileNames.Length);
+                        UpdateStatus("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination(),Convert.ToInt32(percentCompleted));
                         CoinUtils detectedCC = this.raida.detectCoin(cu, detectTime);
                         cu.calcExpirationDate();
 
