@@ -228,6 +228,9 @@ namespace CloudCoinInvestors
 
             Console.Out.WriteLine("  Detecting Authentication of Suspect Coins");// "Detecting Authentication of Suspect Coins");
             Detector detector = new Detector(fileUtils, timeout);
+            detector.frmCloudCoin = this;
+            detector.OnUpdateStatus += Detector_OnUpdateStatus;
+            detector.txtLogs = txtLogs;
             int[] detectionResults = detector.detectAll();
             Console.Out.WriteLine("  Total imported to bank: " + detectionResults[0]);//"Total imported to bank: "
             Console.Out.WriteLine("  Total imported to fracked: " + detectionResults[2]);//"Total imported to fracked: "
@@ -245,6 +248,11 @@ namespace CloudCoinInvestors
             updateLog(stopwatch.Elapsed + " ms");
 
         }//end detect
+
+        private void Detector_OnUpdateStatus(object sender, ProgressEventArgs e)
+        {
+            updateLog(e.Status);
+        }
 
         public void export()
         {

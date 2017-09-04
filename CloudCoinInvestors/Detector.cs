@@ -1,6 +1,9 @@
-﻿using System;
+﻿using CloudCoinInvestors;
+using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Founders
 {
@@ -10,8 +13,21 @@ namespace Founders
         RAIDA raida;
         FileUtils fileUtils;
         int detectTime = 5000;
-        
 
+        public RichTextBox txtLogs;
+        public Form frmCloudCoin;
+
+        public delegate void StatusUpdateHandler(object sender, CloudCoinInvestors.ProgressEventArgs e);
+        public event StatusUpdateHandler OnUpdateStatus;
+
+        private void UpdateStatus(string status)
+        {
+            // Make sure someone is listening to event
+            if (OnUpdateStatus == null) return;
+
+            ProgressEventArgs args = new ProgressEventArgs(status);
+            OnUpdateStatus(this, args);
+        }
 
         /*  CONSTRUCTOR */
         public Detector(FileUtils fileUtils, int timeout)
@@ -51,15 +67,25 @@ namespace Founders
                         Console.Out.WriteLine("Suspect CloudCoin was moved to Trash folder.");
                         CoreLogger.Log("Suspect CloudCoin was moved to Trash folder.");
                         Console.ForegroundColor = ConsoleColor.White;
+                        updateLog("You tried to import a coin that has already been imported.");
+                        updateLog("Suspect CloudCoin was moved to Trash folder.");
+                        UpdateStatus("You tried to import a coin that has already been imported.");
+                        UpdateStatus("Suspect CloudCoin was moved to Trash folder.");
+
                     }
                     else
                     {
                         newCC = this.fileUtils.loadOneCloudCoinFromJsonFile(this.fileUtils.suspectFolder + suspectFileNames[j]);
                         CoinUtils cu = new CoinUtils(newCC);
+                        cu.OnUpdateStatus += Cu_OnUpdateStatus;
+                        cu.txtLogs = txtLogs;
+
                         Console.Out.WriteLine("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
                         CoreLogger.Log("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
                         Console.Out.WriteLine("");
 
+                        updateLog("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
+                        UpdateStatus("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
                         CoinUtils detectedCC = this.raida.detectCoin(cu, detectTime);
                         cu.calcExpirationDate();
 
@@ -110,6 +136,9 @@ namespace Founders
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.Out.WriteLine("Not enough RAIDA were contacted to determine if the coin is authentic.");
                             Console.Out.WriteLine("Try again later.");
+                            updateLog("Not enough RAIDA were contacted to determine if the coin is authentic.");
+                            updateLog("Try again later.");
+
                             CoreLogger.Log("Not enough RAIDA were contacted to determine if the coin is authentic. Try again later.");
                             Console.ForegroundColor = ConsoleColor.White;
                         }//end if else
@@ -133,6 +162,23 @@ namespace Founders
             results[3] = totalValueToKeptInSuspect;
             return results;
         }//Detect All
+
+        private void Cu_OnUpdateStatus(object sender, ProgressEventArgs e)
+        {
+            UpdateStatus(e.Status);
+        }
+
+        private void updateLog(string logLine)
+        {
+            txtLogs.Invoke((MethodInvoker)delegate
+            {
+                txtLogs.AppendText(logLine + Environment.NewLine);
+                txtLogs.SelectionStart = txtLogs.TextLength;
+                txtLogs.SelectionLength = 0;
+                txtLogs.ScrollToCaret();
+                // Running on the UI thread
+            });
+        }
 
         public int[] partialDetectAll()
         {

@@ -1,6 +1,8 @@
-﻿using PCLCrypto;
+﻿using CloudCoinInvestors;
+using PCLCrypto;
 using System;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 
 namespace Founders
 {
@@ -19,6 +21,7 @@ namespace Founders
         public Folder folder;
         public String[] gradeStatus = new String[3];// What passed, what failed, what was undetected
 
+        public RichTextBox txtLogs;
 
         //CONSTRUCTORS
         public CoinUtils( CloudCoin cc )
@@ -40,6 +43,7 @@ namespace Founders
         {
 
         }//end constructor
+
 
         public string getPastStatus(int raida_id)
         {
@@ -520,6 +524,11 @@ namespace Founders
             Console.Out.WriteLine("");
             Console.ForegroundColor = ConsoleColor.White;
 
+            UpdateStatus("   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
+            if(txtLogs!=null)
+            {
+                updateLog("   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
+            }
             // check if failed
             //  string fmt = "00";
             // string fi = i.ToString(fmt); // Pad numbers with two digits
@@ -538,6 +547,28 @@ namespace Founders
 
 
         }//Console Report
+
+        public delegate void StatusUpdateHandler(object sender, ProgressEventArgs e);
+        public event StatusUpdateHandler OnUpdateStatus;
+        private void UpdateStatus(string status)
+        {
+            // Make sure someone is listening to event
+            if (OnUpdateStatus == null) return;
+
+            ProgressEventArgs args = new ProgressEventArgs(status);
+            OnUpdateStatus(this, args);
+        }
+        private void updateLog(string logLine)
+        {
+            txtLogs.Invoke((MethodInvoker)delegate
+            {
+                txtLogs.AppendText(logLine + Environment.NewLine);
+                txtLogs.SelectionStart = txtLogs.TextLength;
+                txtLogs.SelectionLength = 0;
+                txtLogs.ScrollToCaret();
+                // Running on the UI thread
+            });
+        }
 
         public void a(Char status)
         {

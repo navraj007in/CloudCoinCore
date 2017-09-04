@@ -101,6 +101,7 @@
     <Compile Include="logger.cs" />
     <Compile Include="MindStorage.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgressEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RAIDA.cs" />
     <Compile Include="RAIDA_Status.cs" />
