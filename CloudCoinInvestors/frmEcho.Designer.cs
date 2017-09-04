@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmdRefresh = new System.Windows.Forms.Button();
+            this.lblHealth = new System.Windows.Forms.Label();
             this.lblLuxemberg = new System.Windows.Forms.Label();
             this.lblUkraine = new System.Windows.Forms.Label();
             this.lblUSA2 = new System.Windows.Forms.Label();
@@ -54,8 +56,6 @@
             this.lblPhillipines = new System.Windows.Forms.Label();
             this.lblMacedonia = new System.Windows.Forms.Label();
             this.lblAustralia = new System.Windows.Forms.Label();
-            this.lblHealth = new System.Windows.Forms.Label();
-            this.cmdRefresh = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -94,6 +94,25 @@
             this.groupBox1.TabIndex = 25;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Servers";
+            // 
+            // cmdRefresh
+            // 
+            this.cmdRefresh.Location = new System.Drawing.Point(555, 19);
+            this.cmdRefresh.Name = "cmdRefresh";
+            this.cmdRefresh.Size = new System.Drawing.Size(75, 23);
+            this.cmdRefresh.TabIndex = 51;
+            this.cmdRefresh.Text = "Refresh";
+            this.cmdRefresh.UseVisualStyleBackColor = true;
+            this.cmdRefresh.Click += new System.EventHandler(this.cmdRefresh_Click);
+            // 
+            // lblHealth
+            // 
+            this.lblHealth.AutoSize = true;
+            this.lblHealth.Location = new System.Drawing.Point(125, 298);
+            this.lblHealth.Name = "lblHealth";
+            this.lblHealth.Size = new System.Drawing.Size(38, 13);
+            this.lblHealth.TabIndex = 50;
+            this.lblHealth.Text = "Health";
             // 
             // lblLuxemberg
             // 
@@ -320,31 +339,14 @@
             this.lblAustralia.TabIndex = 25;
             this.lblAustralia.Text = "Australia";
             // 
-            // lblHealth
-            // 
-            this.lblHealth.AutoSize = true;
-            this.lblHealth.Location = new System.Drawing.Point(125, 298);
-            this.lblHealth.Name = "lblHealth";
-            this.lblHealth.Size = new System.Drawing.Size(38, 13);
-            this.lblHealth.TabIndex = 50;
-            this.lblHealth.Text = "Health";
-            // 
-            // cmdRefresh
-            // 
-            this.cmdRefresh.Location = new System.Drawing.Point(555, 19);
-            this.cmdRefresh.Name = "cmdRefresh";
-            this.cmdRefresh.Size = new System.Drawing.Size(75, 23);
-            this.cmdRefresh.TabIndex = 51;
-            this.cmdRefresh.Text = "Refresh";
-            this.cmdRefresh.UseVisualStyleBackColor = true;
-            this.cmdRefresh.Click += new System.EventHandler(this.cmdRefresh_Click);
-            // 
             // frmEcho
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(725, 376);
             this.Controls.Add(this.groupBox1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmEcho";
             this.Text = "Echo RAIDA";
             this.Load += new System.EventHandler(this.frmEcho_Load);

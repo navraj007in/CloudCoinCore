@@ -22,3 +22,4 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\bin\Debug\PInvoke.Window
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\bin\Debug\Validation.xml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.frmCloudCoin.resources
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.frmEcho.resources
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.frmExport.resources
