@@ -30,6 +30,7 @@ namespace CloudCoinInvestors
         public static String partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
 
         public static FileUtils fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
+        public frmCloudCoin cloudcoin;
 
         public frmExport()
         {
@@ -219,6 +220,18 @@ namespace CloudCoinInvestors
         }
         private void cmdExport_Click(object sender, EventArgs e)
         {
+            frmCloudCoin.exportOnes = Convert.ToInt16(txtOnes.Text);
+            frmCloudCoin.exportFives = Convert.ToInt16(txt5s.Text);
+            frmCloudCoin.exportQtrs = Convert.ToInt16(txt25s.Text);
+            frmCloudCoin.exportHundreds = Convert.ToInt16(txt100s.Text);
+            frmCloudCoin.exportTwoFifties = Convert.ToInt16(txt250s.Text);
+            if (rdbJpeg.Checked)
+                frmCloudCoin.exportJpegStack = 1;
+            else
+                frmCloudCoin.exportJpegStack = 2;
+
+            this.Close();
+            cloudcoin.export();
 
         }
     }

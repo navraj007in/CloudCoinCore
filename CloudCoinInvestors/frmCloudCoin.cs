@@ -31,6 +31,15 @@ namespace CloudCoinInvestors
         public static String languageFolder = rootFolder + "Language" + Path.DirectorySeparatorChar;
         public static String partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
 
+        public static int exportOnes = 0;
+        public static int exportFives = 0;
+        public static int exportTens = 0;
+        public static int exportQtrs = 0;
+        public static int exportHundreds = 0;
+        public static int exportTwoFifties = 0;
+        public static int exportJpegStack = 2;
+        public static string exportTag = "";
+
         public static FileUtils fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
 
         public frmCloudCoin()
@@ -278,7 +287,7 @@ namespace CloudCoinInvestors
                 updateLog(e.Status);
                 progressBar.Invoke((MethodInvoker)delegate
                 {
-                    if(e.percentage>0)
+                    if(e.percentage>0 & e.percentage <=100)
                         progressBar.Value = e.percentage;
                 });
             }
@@ -301,69 +310,73 @@ namespace CloudCoinInvestors
             int grandTotal = (bankTotals[0] + frackedTotals[0] + partialTotals[0]);
             showCoins();
             // state how many 1, 5, 25, 100 and 250
-            int exp_1 = 0;
-            int exp_5 = 0;
-            int exp_25 = 0;
-            int exp_100 = 0;
-            int exp_250 = 0;
+            int exp_1 = exportOnes;
+            int exp_5 = exportFives;
+            int exp_25 = exportQtrs;
+            int exp_100 = exportHundreds;
+            int exp_250 = exportTwoFifties;
             //Warn if too many coins
             Console.WriteLine(bankTotals[1] + frackedTotals[1] + bankTotals[2] + frackedTotals[2] + bankTotals[3] + frackedTotals[3] + bankTotals[4] + frackedTotals[4] + bankTotals[5] + frackedTotals[5] + partialTotals[1] + partialTotals[2] + partialTotals[3] + partialTotals[4] + partialTotals[5]);
+
+            updateLog(Convert.ToString(bankTotals[1] + frackedTotals[1] + bankTotals[2] + frackedTotals[2] + bankTotals[3] + frackedTotals[3] + bankTotals[4] + frackedTotals[4] + bankTotals[5] + frackedTotals[5] + partialTotals[1] + partialTotals[2] + partialTotals[3] + partialTotals[4] + partialTotals[5]));
+
             if (((bankTotals[1] + frackedTotals[1]) + (bankTotals[2] + frackedTotals[2]) + (bankTotals[3] + frackedTotals[3]) + (bankTotals[4] + frackedTotals[4]) + (bankTotals[5] + frackedTotals[5]) + partialTotals[1] + partialTotals[2] + partialTotals[3] + partialTotals[4] + partialTotals[5]) > 1000)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Out.WriteLine("Warning: You have more than 1000 Notes in your bank. Stack files should not have more than 1000 Notes in them.");
                 Console.Out.WriteLine("Do not export stack files with more than 1000 notes. .");
+                updateLog("Warning: You have more than 1000 Notes in your bank. Stack files should not have more than 1000 Notes in them.");
+                updateLog("Do not export stack files with more than 1000 notes. .");
+
                 Console.ForegroundColor = ConsoleColor.White;
             }//end if they have more than 1000 coins
 
             Console.Out.WriteLine("  Do you want to export your CloudCoin to (1)jpgs or (2) stack (JSON) file?");
             int file_type = 0; //reader.readInt(1, 2);
             // 1 jpg 2 stack
-            if ((bankTotals[1] + frackedTotals[1]) > 0)
-            {
-                Console.Out.WriteLine("  How many 1s do you want to export?");
-                exp_1 = 0;// reader.readInt(0, (bankTotals[1] + frackedTotals[1] + partialTotals[1]));
-            }
+            //if ((bankTotals[1] + frackedTotals[1]) > 0)
+            //{
+            //    Console.Out.WriteLine("  How many 1s do you want to export?");
+            //    exp_1 = 0;// reader.readInt(0, (bankTotals[1] + frackedTotals[1] + partialTotals[1]));
+            //}
 
-            // if 1s not zero 
-            if ((bankTotals[2] + frackedTotals[2]) > 0)
-            {
-                Console.Out.WriteLine("  How many 5s do you want to export?");
-                exp_5 = 0;// reader.readInt(0, (bankTotals[2] + frackedTotals[2] + partialTotals[2]));
-            }
+            //// if 1s not zero 
+            //if ((bankTotals[2] + frackedTotals[2]) > 0)
+            //{
+            //    Console.Out.WriteLine("  How many 5s do you want to export?");
+            //    exp_5 = 0;// reader.readInt(0, (bankTotals[2] + frackedTotals[2] + partialTotals[2]));
+            //}
 
-            // if 1s not zero 
-            if ((bankTotals[3] + frackedTotals[3] > 0))
-            {
-                Console.Out.WriteLine("  How many 25s do you want to export?");
-                exp_25 = 0; //reader.readInt(0, (bankTotals[3] + frackedTotals[3] + partialTotals[3]));
-            }
+            //// if 1s not zero 
+            //if ((bankTotals[3] + frackedTotals[3] > 0))
+            //{
+            //    Console.Out.WriteLine("  How many 25s do you want to export?");
+            //    exp_25 = 0; //reader.readInt(0, (bankTotals[3] + frackedTotals[3] + partialTotals[3]));
+            //}
 
-            // if 1s not zero 
-            if ((bankTotals[4] + frackedTotals[4]) > 0)
-            {
-                Console.Out.WriteLine("  How many 100s do you want to export?");
-                exp_100 = 0;// reader.readInt(0, (bankTotals[4] + frackedTotals[4] + partialTotals[4]));
-            }
+            //// if 1s not zero 
+            //if ((bankTotals[4] + frackedTotals[4]) > 0)
+            //{
+            //    Console.Out.WriteLine("  How many 100s do you want to export?");
+            //    exp_100 = 0;// reader.readInt(0, (bankTotals[4] + frackedTotals[4] + partialTotals[4]));
+            //}
 
-            // if 1s not zero 
-            if ((bankTotals[5] + frackedTotals[5]) > 0)
-            {
-                Console.Out.WriteLine("  How many 250s do you want to export?");
-                exp_250 = 0;// reader.readInt(0, (bankTotals[5] + frackedTotals[5] + partialTotals[5]));
-            }
+            //// if 1s not zero 
+            //if ((bankTotals[5] + frackedTotals[5]) > 0)
+            //{
+            //    Console.Out.WriteLine("  How many 250s do you want to export?");
+            //    exp_250 = 0;// reader.readInt(0, (bankTotals[5] + frackedTotals[5] + partialTotals[5]));
+            //}
 
             // if 1s not zero 
             // move to export
             Exporter exporter = new Exporter(fileUtils);
-            if (file_type == 1)
-            {
-                Console.Out.WriteLine("  Tag your jpegs with 'random' to give them a random number.");
-                
-            }
-            Console.Out.WriteLine("  What tag will you add to the file name?");
-            String tag = "";// reader.readString();
+            exporter.OnUpdateStatus += Exporter_OnUpdateStatus;
+            file_type = exportJpegStack;
+
+            String tag = exportTag;// reader.readString();
             //Console.Out.WriteLine(("Exporting to:" + exportFolder));
+            progressBar.Visible = true;
             if (file_type == 1)
             {
                 exporter.writeJPEGFiles(exp_1, exp_5, exp_25, exp_100, exp_250, tag);
@@ -373,15 +386,39 @@ namespace CloudCoinInvestors
             {
                 exporter.writeJSONFile(exp_1, exp_5, exp_25, exp_100, exp_250, tag);
             }
+            progressBar.Visible = false;
+
 
             // end if type jpge or stack
             Console.Out.WriteLine("  Exporting CloudCoins Completed.");
-            updateLog("  Exporting CloudCoins Completed.");
+
+            updateLog("Exporting CloudCoins Completed.");
+            showCoins();
+            MessageBox.Show("Export completed.","Cloudcoins", MessageBoxButtons.OK);
         }// end export One
+
+        private void Exporter_OnUpdateStatus(object sender, ProgressEventArgs e)
+        {
+            try
+            {
+                updateLog(e.Status);
+                progressBar.Invoke((MethodInvoker)delegate
+                {
+                    if (e.percentage > 0 & e.percentage <= 100)
+                        progressBar.Value = e.percentage;
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+
+        }
 
         private void cmdExport_Click(object sender, EventArgs e)
         {
             frmExport export = new frmExport();
+            export.cloudcoin = this;
             export.ShowDialog();
 
         }
@@ -389,6 +426,7 @@ namespace CloudCoinInvestors
         private void importWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressBar.Visible = false;
+            MessageBox.Show("Cloudcoins Imported.","Cloudcoin",MessageBoxButtons.OK);
         }
     }
 }

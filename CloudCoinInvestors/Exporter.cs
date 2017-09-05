@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Data;
+using CloudCoinInvestors;
 
 namespace Founders
 {
@@ -17,6 +18,18 @@ namespace Founders
         {
             
             this.fileUtils = fileUtils;
+        }
+
+        public delegate void StatusUpdateHandler(object sender, CloudCoinInvestors.ProgressEventArgs e);
+        public event StatusUpdateHandler OnUpdateStatus;
+
+        private void UpdateStatus(string status, int percentage = 0)
+        {
+            // Make sure someone is listening to event
+            if (OnUpdateStatus == null) return;
+
+            ProgressEventArgs args = new ProgressEventArgs(status, percentage);
+            OnUpdateStatus(this, args);
         }
 
         /* PUBLIC METHODS */
@@ -321,7 +334,10 @@ namespace Founders
                 if (m1 == 0 && m5 == 0 && m25 == 0 && m100 == 0 && m250 == 0)
                 {
                     break;
-                } // Break if all the coins have been called for.     
+                } // Break if all the coins have been called for. 
+                string status = String.Format("exported %d of %d coin.",i,bankedFileNames.Length);
+                int percentCompleted = (i + 1) *100 / bankedFileNames.Length;
+                UpdateStatus(status,percentCompleted);
             }// end for each coin needed
 
             /*WRITE JSON TO FILE*/
@@ -333,7 +349,7 @@ namespace Founders
                 // tack on a random number if a file already exists with the same tag
                 Random rnd = new Random();
                 int tagrand = rnd.Next(999);
-                filename = (this.fileUtils.exportFolder + Path.DirectorySeparatorChar + totalSaved + ".CloudCoins." + tag + tagrand + ".stack");
+                filename = (this.fileUtils.exportFolder  + totalSaved + ".CloudCoins." + tag + tagrand + ".stack");
             }//end if file exists
 
             File.WriteAllText(filename, json);
