@@ -11,50 +11,51 @@
             <GroupBox Margin="0,10" Header="Servers">
                 <StackPanel Orientation="Vertical" >
                     <StackPanel Orientation="Horizontal" >
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Australia</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Macedonia</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblAustralia">Australia</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblMacedonia">Macedonia</Button>
 
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Philipines</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Serbia</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Bulgaria</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblPhillipines">Philipines</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblSerbia">Serbia</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblBulgaria">Bulgaria</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" >
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Russia</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Switzerland</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblRussia">Russia</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblSwitzerland">Switzerland</Button>
 
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >UK</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Punjab</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >India</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblUK">UK</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblPunjab">Punjab</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblIndia">India</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" >
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Croatia</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >USA</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblCroatia">Croatia</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblUSA">USA</Button>
 
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >India</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Taiwan</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Moscow</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblIndia2">India</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblTaiwan">Taiwan</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblMoscow">Moscow</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" >
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >St. Petersberg</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Columbia</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblStPetersburg">St. Petersberg</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblColumbia">Columbia</Button>
 
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Singapore</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Germany</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Canada</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblSingapore">Singapore</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblGermany">Germany</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblCanada">Canada</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" >
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Venezuela</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Hyderabad</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblVenezuela">Venezuela</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblHyderabad">Hyderabad</Button>
 
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >USA</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Ukraine</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Luxemberg</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblUSA2">USA</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblUkraine">Ukraine</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblLuxemberg">Luxemberg</Button>
                     </StackPanel>
 
 
                 </StackPanel>                
             </GroupBox>
-            <Button Background="{StaticResource AccentColorBrush}" Foreground="White">Refresh</Button>
+            <Button Background="{StaticResource AccentColorBrush}" Foreground="White" x:Name="cmdRefresh" Click="cmdEcho_Click">Refresh</Button>
+            <Label x:Name="lblHealth" />
         </StackPanel> 
     </Grid>
 </UserControl>

@@ -12,9 +12,11 @@
     <Grid>
         <StackPanel Orientation="Vertical">
 
-            <Button Margin="0,10" Height="35" Width="80" Foreground="White" HorizontalAlignment="Center" Background="{StaticResource AccentColorBrush}">Import</Button>
-            <ProgressBar Maximum="100" ></ProgressBar>
-            <RichTextBox  Height="300" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+            <Button Margin="0,10" Height="35" Width="160" Foreground="White" HorizontalAlignment="Center" Background="{StaticResource AccentColorBrush}" x:Name="cmdImport" Click="cmdImport_Click">Import</Button>
+
+            <RichTextBox  Height="200" HorizontalScrollBarVisibility="Auto" x:Name="txtLogs" VerticalScrollBarVisibility="Visible" TextChanged="txtLogs_TextChanged"></RichTextBox>
+            <ProgressBar Margin="2,6" x:Name="progressBar" Value="100" Visibility="Collapsed"/>
+            <Label x:Name="lblStatus"></Label>
         </StackPanel>
     </Grid>
 </UserControl>

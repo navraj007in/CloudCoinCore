@@ -1,8 +1,9 @@
-﻿using CloudCoinInvestors;
+﻿using CloudCoinIE;
+using CloudCoinInvestors;
 using PCLCrypto;
 using System;
 using System.Security.Cryptography;
-using System.Windows.Forms;
+using System.Windows.Controls;
 
 namespace Founders
 {
@@ -560,14 +561,22 @@ namespace Founders
         }
         private void updateLog(string logLine)
         {
-            txtLogs.Invoke((MethodInvoker)delegate
+            App.Current.Dispatcher.Invoke(delegate
             {
-                txtLogs.AppendText(logLine + Environment.NewLine);
-                txtLogs.SelectionStart = txtLogs.TextLength;
-                txtLogs.SelectionLength = 0;
-                txtLogs.ScrollToCaret();
-                // Running on the UI thread
+                try
+                {
+                    txtLogs.AppendText(logLine + Environment.NewLine);
+                }
+                catch(Exception e)
+                {
+                    
+                }
             });
+                //txtLogs.SelectionStart = txtLogs.TextLength;
+                //txtLogs.SelectionLength = 0;
+                //txtLogs.ScrollToCaret();
+                // Running on the UI thread
+
         }
 
         public void a(Char status)

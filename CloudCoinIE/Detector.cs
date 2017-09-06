@@ -1,9 +1,10 @@
-﻿using CloudCoinInvestors;
+﻿using CloudCoinIE;
+using CloudCoinInvestors;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
+using System.Windows.Controls;
 
 namespace Founders
 {
@@ -15,7 +16,7 @@ namespace Founders
         int detectTime = 5000;
 
         public RichTextBox txtLogs;
-        public Form frmCloudCoin;
+
 
         public delegate void StatusUpdateHandler(object sender, CloudCoinInvestors.ProgressEventArgs e);
         public event StatusUpdateHandler OnUpdateStatus;
@@ -172,14 +173,12 @@ namespace Founders
 
         private void updateLog(string logLine)
         {
-            txtLogs.Invoke((MethodInvoker)delegate
+            App.Current.Dispatcher.Invoke(delegate
             {
                 txtLogs.AppendText(logLine + Environment.NewLine);
-                txtLogs.SelectionStart = txtLogs.TextLength;
-                txtLogs.SelectionLength = 0;
-                txtLogs.ScrollToCaret();
-                // Running on the UI thread
             });
+
+            // Running on the UI thread
         }
 
         public int[] partialDetectAll()
