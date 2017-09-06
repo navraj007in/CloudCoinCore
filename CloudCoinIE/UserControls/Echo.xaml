@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="CloudCoinIE.UserControls.Echo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        
+        <StackPanel HorizontalAlignment="Center" Orientation="Vertical" >
+            <GroupBox Margin="0,10" Header="Servers">
+                <StackPanel Orientation="Vertical" >
+                    <StackPanel Orientation="Horizontal" >
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Australia</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Macedonia</Button>
+
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Philipines</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Serbia</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Bulgaria</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Russia</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Switzerland</Button>
+
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >UK</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Punjab</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >India</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Croatia</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >USA</Button>
+
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >India</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Taiwan</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Moscow</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >St. Petersberg</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Columbia</Button>
+
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Singapore</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Germany</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Canada</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Venezuela</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Hyderabad</Button>
+
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >USA</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Ukraine</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" >Luxemberg</Button>
+                    </StackPanel>
+
+
+                </StackPanel>                
+            </GroupBox>
+            <Button Background="{StaticResource AccentColorBrush}" Foreground="White">Refresh</Button>
+        </StackPanel> 
+    </Grid>
+</UserControl>

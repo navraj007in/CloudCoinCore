@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="CloudCoinIE.UserControls.Bank"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="600"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+
+        <StackPanel Orientation="Vertical">
+            <Label HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource AccentColorBrush}">Coins</Label>
+            <Label HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource AccentColorBrush}" x:Name="lblTotalCoins">0</Label>
+            <GroupBox Width="450" Height="220" Header="Details" Margin="0" HorizontalAlignment="Center">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="10,2">Denomination</Label>
+                        <Label Margin="10,2" >Count</Label>
+                        <Label Margin="30,2" >Total</Label>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="10,2">1s</Label>
+                        <Label Margin="75,2" x:Name="lblOnesCount">0</Label>
+                        <Label x:Name="lblOnesValue">0</Label>
+
+                    </StackPanel>
+                    <Line></Line>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="10,2">5s</Label>
+                        <Label Margin="75,2" x:Name="lblFivesCount">0</Label>
+                        <Label Margin="2,2" x:Name="lblFivesValue">0</Label>
+
+                    </StackPanel>
+                    <Line></Line>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="10,2">25s</Label>
+                        <Label Margin="69,2" x:Name="lblQtrCount">0</Label>
+                        <Label Margin="7,2" x:Name="lblQtrValue">0</Label>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="10,2">100s</Label>
+                        <Label Margin="63,2" x:Name="lblHundredCount">0</Label>
+                        <Label Margin="11,2" x:Name="lblHundredValue">0</Label>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="10,2">250s</Label>
+                        <Label Margin="63,2" x:Name="lblTwoFiftiesCount">0</Label>
+                        <Label Margin="11,2" x:Name="lblTwoFiftiesValue">0</Label>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </GroupBox>
+            <Rectangle Visibility="Collapsed"   Margin="20,20,20,20" HorizontalAlignment="Center" >
+                
+            </Rectangle>
+            <DataGrid Visibility="Collapsed" x:Name="dg" AutoGenerateColumns="False" Style="{DynamicResource AzureDataGrid}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding StaticColumnA}" IsReadOnly="True"   Foreground="Yellow"/>
+                    <DataGridTextColumn Binding="{Binding StaticColumnB}" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding DynamicColumnA}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</UserControl>
