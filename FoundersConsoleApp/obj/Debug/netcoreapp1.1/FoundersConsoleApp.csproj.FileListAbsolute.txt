@@ -1,9 +1,0 @@
-D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersConsoleApp\bin\Debug\netcoreapp1.1\FoundersConsoleApp.deps.json
-D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersConsoleApp\bin\Debug\netcoreapp1.1\FoundersConsoleApp.dll
-D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersConsoleApp\bin\Debug\netcoreapp1.1\FoundersConsoleApp.pdb
-D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersConsoleApp\bin\Debug\netcoreapp1.1\CloudCoinCore.dll
-D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersConsoleApp\bin\Debug\netcoreapp1.1\CloudCoinCore.pdb
-D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersConsoleApp\obj\Debug\netcoreapp1.1\FoundersConsoleApp.csprojResolveAssemblyReference.cache
-D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersConsoleApp\obj\Debug\netcoreapp1.1\FoundersConsoleApp.AssemblyInfo.cs
-D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersConsoleApp\obj\Debug\netcoreapp1.1\FoundersConsoleApp.dll
-D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersConsoleApp\obj\Debug\netcoreapp1.1\FoundersConsoleApp.pdb

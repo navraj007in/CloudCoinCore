@@ -72,6 +72,7 @@ namespace CloudCoinIE.UserControls
             raidas[23] = lblUkraine;
             raidas[24] = lblLuxemberg;
 
+            echoRaida();
         }
 
         public bool echoRaida()
@@ -146,7 +147,7 @@ namespace CloudCoinIE.UserControls
             }//end if enough RAIDA
         }//End echo
 
-
+        
         private void cmdEcho_Click(object sender, RoutedEventArgs e)
         {
             echoRaida();

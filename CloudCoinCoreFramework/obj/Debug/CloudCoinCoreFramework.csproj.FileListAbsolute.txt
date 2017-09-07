@@ -2,6 +2,5 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCoreFramework\bin\Debug\CloudCoinC
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCoreFramework\bin\Debug\CloudCoinCoreFramework.pdb
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCoreFramework\bin\Debug\Newtonsoft.Json.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCoreFramework\bin\Debug\Newtonsoft.Json.xml
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCoreFramework\obj\Debug\CloudCoinCoreFramework.csprojResolveAssemblyReference.cache
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCoreFramework\obj\Debug\CloudCoinCoreFramework.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCoreFramework\obj\Debug\CloudCoinCoreFramework.pdb

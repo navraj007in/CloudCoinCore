@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="SkiaSharp" Version="1.59.1" />
   </ItemGroup>
 
 </Project>

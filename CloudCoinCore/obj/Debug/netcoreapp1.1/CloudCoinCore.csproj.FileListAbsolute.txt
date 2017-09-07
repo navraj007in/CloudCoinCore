@@ -1,7 +1,14 @@
+D:\git\FoundersCore\CloudCoinCore\bin\Debug\netcoreapp1.1\CloudCoinCore.deps.json
+D:\git\FoundersCore\CloudCoinCore\bin\Debug\netcoreapp1.1\CloudCoinCore.dll
+D:\git\FoundersCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.AssemblyInfo.cs
+D:\git\FoundersCore\CloudCoinCore\bin\Debug\netcoreapp1.1\CloudCoinCore.pdb
+D:\git\FoundersCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.csprojResolveAssemblyReference.cache
+D:\git\FoundersCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.dll
+D:\git\FoundersCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.pdb
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\bin\Debug\netcoreapp1.1\CloudCoinCore.deps.json
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\bin\Debug\netcoreapp1.1\CloudCoinCore.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\bin\Debug\netcoreapp1.1\CloudCoinCore.pdb
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.csprojResolveAssemblyReference.cache
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.AssemblyInfo.cs
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.pdb
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.csprojResolveAssemblyReference.cache

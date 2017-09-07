@@ -1,0 +1,11 @@
+D:\git\FoundersCore\CoreEx\bin\Release\netcoreapp1.1\CoreEx.deps.json
+D:\git\FoundersCore\CoreEx\bin\Release\netcoreapp1.1\CoreEx.runtimeconfig.json
+D:\git\FoundersCore\CoreEx\bin\Release\netcoreapp1.1\CoreEx.runtimeconfig.dev.json
+D:\git\FoundersCore\CoreEx\bin\Release\netcoreapp1.1\CoreEx.dll
+D:\git\FoundersCore\CoreEx\bin\Release\netcoreapp1.1\CoreEx.pdb
+D:\git\FoundersCore\CoreEx\bin\Release\netcoreapp1.1\CloudCoinCore.dll
+D:\git\FoundersCore\CoreEx\bin\Release\netcoreapp1.1\CloudCoinCore.pdb
+D:\git\FoundersCore\CoreEx\obj\Release\netcoreapp1.1\CoreEx.csprojResolveAssemblyReference.cache
+D:\git\FoundersCore\CoreEx\obj\Release\netcoreapp1.1\CoreEx.AssemblyInfo.cs
+D:\git\FoundersCore\CoreEx\obj\Release\netcoreapp1.1\CoreEx.dll
+D:\git\FoundersCore\CoreEx\obj\Release\netcoreapp1.1\CoreEx.pdb

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudCoinCore
+namespace Founders
 {
     public class Response
     {

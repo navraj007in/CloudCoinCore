@@ -1,11 +1,6 @@
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\bin\Debug\CloudCoinInvestors.exe.config
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\bin\Debug\CloudCoinInvestors.exe
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\bin\Debug\CloudCoinInvestors.pdb
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.csprojResolveAssemblyReference.cache
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.Properties.Resources.resources
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.csproj.GenerateResource.Cache
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.exe
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.pdb
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\bin\Debug\Newtonsoft.Json.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\bin\Debug\PCLCrypto.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\bin\Debug\PInvoke.BCrypt.dll
@@ -23,3 +18,7 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\bin\Debug\Validation.xml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.frmCloudCoin.resources
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.frmEcho.resources
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.frmExport.resources
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.Properties.Resources.resources
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.csproj.GenerateResource.Cache
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.exe
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinInvestors\obj\Debug\CloudCoinInvestors.pdb

@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Text;
 using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
 
-namespace CloudCoinCore
+namespace Founders
 {
     public class DetectionAgent
     {
         public int readTimeout;
         public int RAIDANumber;
         public String fullUrl;
+        
 
         /**
         * DetectionAgent Constructor
@@ -21,6 +22,7 @@ namespace CloudCoinCore
         */
         public DetectionAgent(int RAIDANumber, int readTimeout)
         {
+            
             this.RAIDANumber = RAIDANumber;
             this.fullUrl = "https://RAIDA" + RAIDANumber + ".cloudcoin.global/service/";
             this.readTimeout = readTimeout;
@@ -32,7 +34,7 @@ namespace CloudCoinCore
         * Method ECHO
         * @param raidaID The number of the RAIDA server 0-24
         */
-        public Response echo(int raidaID)
+        public async Task<Response> echo(int raidaID)
         {
             Response echoResponse = new Response();
             echoResponse.fullRequest = this.fullUrl + "echo?b=t";
@@ -40,8 +42,8 @@ namespace CloudCoinCore
             RAIDA_Status.failsEcho[raidaID] = true;
             try
             {
-                echoResponse.fullResponse = getHtmlAsync(echoResponse.fullRequest).Result;
-                if (echoResponse.fullResponse.Contains("ready"))
+                echoResponse.fullResponse = await getHtml(echoResponse.fullRequest);
+                if ( echoResponse.fullResponse.Contains("ready") )
                 {
                     echoResponse.success = true;
                     echoResponse.outcome = "ready";
@@ -51,20 +53,21 @@ namespace CloudCoinCore
                 {
                     echoResponse.success = false;
                     echoResponse.outcome = "error";
-                    RAIDA_Status.failsEcho[raidaID] = true;
-                }
+                    RAIDA_Status.failsEcho[raidaID] = true; }
             }
             catch (Exception ex)
             {
                 echoResponse.outcome = "error";
                 echoResponse.success = false;
                 RAIDA_Status.failsEcho[raidaID] = true;
+                if(ex.InnerException != null)
                 echoResponse.fullResponse = ex.InnerException.Message;
             }
             DateTime after = DateTime.Now; TimeSpan ts = after.Subtract(before);
             echoResponse.milliseconds = Convert.ToInt32(ts.Milliseconds);
             RAIDA_Status.echoTime[raidaID] = Convert.ToInt32(ts.Milliseconds);
             //Console.WriteLine("RAIDA # " + raidaID + RAIDA_Status.failsEcho[raidaID]);
+            
             return echoResponse;
         }//end detect
 
@@ -79,14 +82,14 @@ namespace CloudCoinCore
          * @param d int that is the Denomination of the Coin
          * @return Response object. 
          */
-        public Response detect(int nn, int sn, String an, String pan, int d)
+        public async Task<Response> detect(int nn, int sn, String an, String pan, int d)
         {
             Response detectResponse = new Response();
             detectResponse.fullRequest = this.fullUrl + "detect?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + pan + "&denomination=" + d + "&b=t";
             DateTime before = DateTime.Now;
             try
             {
-                detectResponse.fullResponse = getHtmlAsync(detectResponse.fullRequest).Result;
+                detectResponse.fullResponse = await getHtml(detectResponse.fullRequest);
                 DateTime after = DateTime.Now; TimeSpan ts = after.Subtract(before);
                 detectResponse.milliseconds = Convert.ToInt32(ts.Milliseconds);
 
@@ -130,7 +133,7 @@ namespace CloudCoinCore
         * @param d int that is the Denomination of the Coin
         * @return Response object. 
         */
-        public Response get_ticket(int nn, int sn, String an, int d)
+        public async Task<Response> get_ticket(int nn, int sn, String an, int d)
         {
             Response get_ticketResponse = new Response();
             get_ticketResponse.fullRequest = fullUrl + "get_ticket?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + an + "&denomination=" + d;
@@ -138,7 +141,7 @@ namespace CloudCoinCore
 
             try
             {
-                get_ticketResponse.fullResponse = getHtmlAsync(get_ticketResponse.fullRequest).Result;
+                get_ticketResponse.fullResponse = await getHtml(get_ticketResponse.fullRequest);
                 DateTime after = DateTime.Now; TimeSpan ts = after.Subtract(before);
                 get_ticketResponse.milliseconds = Convert.ToInt32(ts.Milliseconds);
 
@@ -186,7 +189,7 @@ namespace CloudCoinCore
          * @param pan string proposed authenticity number (to replace the wrong AN the RAIDA has)
          * @return string status sent back from the server: sucess, fail or error. 
          */
-        public Response fix(int[] triad, String m1, String m2, String m3, String pan)
+        public async Task<Response> fix(int[] triad, String m1, String m2, String m3, String pan)
         {
             Response fixResponse = new Response();
             DateTime before = DateTime.Now;
@@ -196,7 +199,7 @@ namespace CloudCoinCore
 
             try
             {
-                fixResponse.fullResponse = getHtmlAsync(fixResponse.fullRequest).Result;
+                fixResponse.fullResponse = await getHtml(fixResponse.fullRequest);
                 if (fixResponse.fullResponse.Contains("success"))
                 {
                     fixResponse.outcome = "success";
@@ -226,46 +229,39 @@ namespace CloudCoinCore
          * @param url_in The URL to be downloaded
          * @return The text that was downloaded
          */
-        private async System.Threading.Tasks.Task<string> getHtmlAsync(String urlAddress)
+        private async Task<String> getHtml(String urlAddress)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+            //Console.Out.WriteLine(urlAddress);
+            
+            // Console.Out.Write(".");
+            string data = "";
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
+            //request.ContinueTimeout = readTimeout;
+            //request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
 
-            var stringTask = client.GetStringAsync(urlAddress);
+            try
+            {
+                using (var cli = new HttpClient())
+                {
+                    HttpResponseMessage response = await cli.GetAsync(urlAddress);
+                    
+                        //Console.Write(".");
+                        if(response.IsSuccessStatusCode)
+                            data = await response.Content.ReadAsStringAsync();
+                            // System.Console.Out.WriteLine(data);  
+                }
+            }
+            catch (Exception ex)
+            {
+                // Console.Out.WriteLine(ex.Message);
+                
+                return ex.Message;
+            }
+            // Console.Out.WriteLine(data);
+            return data;
+        }//end get HTML
 
-            //String msg = Convert.ToString(stringTask);
-            var msg = await stringTask;
-            //Console.Write(msg);
-
-            return msg;
-
-        }
-
-        //    private String getHtml(String urlAddress)
-        //{
-        //    //Console.Out.WriteLine(urlAddress);
-        //    // Console.Out.Write(".");
-        //    var client = new HttpClient();
-        //    client.DefaultRequestHeaders.Accept.Clear();
-        //    client.DefaultRequestHeaders.Accept.Add(
-        //        new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-        //    client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
-
-        //    var stringTask = client.GetStringAsync(urlAddress);
-
-        //    //String msg = Convert.ToString(stringTask);
-        //    var msg = await stringTask;
-        //    //Console.Write(msg);
-        //    //Debug.WriteLine(msg);
-
-        //    return msg;
-        //    // Console.Out.WriteLine(data);
-
-        //}//end get HTML
-
+     
 
         /**
          * Method ordinalIndexOf used to parse cloudcoins. Finds the nth number of a character within a string

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Founders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,45 @@ namespace CloudCoinIE.UserControls
             InitializeComponent();
             List<Item> theItems = new List<Item>() { };
             dg.ItemsSource = theItems;
+            showCoins();
         }
+
+        public void showCoins()
+        {
+            Console.Out.WriteLine("");
+            // This is for consol apps.
+            Banker bank = new Banker(MainWindow.fileUtils);
+            int[] bankTotals = bank.countCoins(MainWindow.bankFolder);
+            int[] frackedTotals = bank.countCoins(MainWindow.frackedFolder);
+            int[] partialTotals = bank.countCoins(MainWindow.partialFolder);
+            // int[] counterfeitTotals = bank.countCoins( counterfeitFolder );
+
+            //Output  " 12.3"
+
+
+            setLabelText(lblOnesCount, Convert.ToString(bankTotals[1] + frackedTotals[1] + partialTotals[1]));
+            setLabelText(lblFivesCount, Convert.ToString(bankTotals[2] + frackedTotals[2] + partialTotals[2]));
+            setLabelText(lblQtrCount, Convert.ToString(bankTotals[3] + frackedTotals[3] + partialTotals[3]));
+            setLabelText(lblHundredCount, Convert.ToString(bankTotals[4] + frackedTotals[4] + partialTotals[4]));
+            setLabelText(lblTwoFiftiesCount, Convert.ToString(bankTotals[5] + frackedTotals[5] + partialTotals[5]));
+
+            setLabelText(lblOnesValue, lblOnesCount.Content.ToString());
+            setLabelText(lblFivesValue, Convert.ToString(Convert.ToInt16(lblFivesCount.Content.ToString()) * 5));
+            setLabelText(lblQtrValue, Convert.ToString(Convert.ToInt16(lblQtrCount.Content.ToString()) * 25));
+            setLabelText(lblHundredValue, Convert.ToString(Convert.ToInt16(lblHundredCount.Content.ToString()) * 100));
+            setLabelText(lblTwoFiftiesValue, Convert.ToString(Convert.ToInt16(lblTwoFiftiesCount.Content.ToString()) * 250));
+            setLabelText(lblTotalCoins, "Total Coins : " + Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
+
+        }// end show
+
+        private void setLabelText(Label lbl, string text)
+        {
+            App.Current.Dispatcher.Invoke(delegate
+            {
+                lbl.Content = text;
+            });
+
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace CloudCoinCore
+namespace Founders
 {
     public class CloudCoin
     {
@@ -26,12 +26,11 @@ namespace CloudCoinCore
 
 
         //Constructors
-        public CloudCoin()
-        {
+        public CloudCoin() {
 
         }//end of constructor
 
-        public CloudCoin(int nn, int sn, List<string> an, string ed, string pown, List<string> aoid)
+        public CloudCoin(int nn, int sn, List<string> an, string ed, string pown, List<string> aoid )
         {
             this.nn = nn;
             this.sn = sn;
@@ -41,6 +40,6 @@ namespace CloudCoinCore
             this.aoid = aoid;
         }//end of constructor
 
-
+   
     }
 }

@@ -1,4 +1,3 @@
-D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\obj\Debug\FoundersOriginal.csprojResolveAssemblyReference.cache
 D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\FoundersOriginal.exe.config
 D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\FoundersOriginal.exe
 D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\FoundersOriginal.pdb
