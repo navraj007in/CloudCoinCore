@@ -1,0 +1,15 @@
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\bin\release\netcoreapp1.1\win10-x64\hostpolicy.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\bin\release\netcoreapp1.1\win10-x64\hostfxr.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\bin\release\netcoreapp1.1\win10-x64\CoreEx.exe
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\bin\release\netcoreapp1.1\win10-x64\CoreEx.deps.json
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\bin\release\netcoreapp1.1\win10-x64\CoreEx.runtimeconfig.json
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\bin\release\netcoreapp1.1\win10-x64\CoreEx.runtimeconfig.dev.json
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\bin\release\netcoreapp1.1\win10-x64\CoreEx.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\bin\release\netcoreapp1.1\win10-x64\CoreEx.pdb
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\bin\release\netcoreapp1.1\win10-x64\CloudCoinCore.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\bin\release\netcoreapp1.1\win10-x64\CloudCoinCore.pdb
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\obj\release\netcoreapp1.1\win10-x64\CoreEx.csproj.CoreCompileInputs.cache
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\obj\release\netcoreapp1.1\win10-x64\CoreEx.AssemblyInfoInputs.cache
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\obj\release\netcoreapp1.1\win10-x64\CoreEx.AssemblyInfo.cs
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\obj\release\netcoreapp1.1\win10-x64\CoreEx.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\CoreEx\obj\release\netcoreapp1.1\win10-x64\CoreEx.pdb
