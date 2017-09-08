@@ -64,32 +64,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Banker.cs" />
-    <Compile Include="CloudCoin.cs" />
-    <Compile Include="CoinUtils.cs" />
-    <Compile Include="CoreLogger.cs" />
-    <Compile Include="DetectionAgent.cs" />
-    <Compile Include="Detector.cs" />
-    <Compile Include="Dumper.cs" />
-    <Compile Include="Emailer.cs" />
-    <Compile Include="Exporter.cs" />
-    <Compile Include="FileUtils.cs" />
-    <Compile Include="FixitHelper.cs" />
-    <Compile Include="Frack_Fixer.cs" />
-    <Compile Include="Importer.cs" />
-    <Compile Include="KeyboardReader.cs" />
-    <Compile Include="logger.cs" />
-    <Compile Include="MindStorage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RAIDA.cs" />
-    <Compile Include="RAIDA_Status.cs" />
-    <Compile Include="Response.cs" />
-    <Compile Include="Stack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CloudCoinCoreFramework\CloudCoinCoreFramework.csproj">
+      <Project>{64da1db8-00df-4550-b31e-9c62328eb74c}</Project>
+      <Name>CloudCoinCoreFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,8 +1,0 @@
-9/7/2017 8:38:24 PM
-Input is not an integer. Please enter an integer between 1 & 2
-9/7/2017 8:38:25 PM
-System.FormatException: Input string was not in a correct format.
-   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
-   at System.Convert.ToInt32(String value)
-   at Founders.KeyboardReader.readInt(Int32 min, Int32 max) in D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\KeyboardReader.cs:line 129

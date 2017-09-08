@@ -17,3 +17,13 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\PInvoke.Windows.
 D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\Validation.xml
 D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\obj\Debug\FoundersOriginal.exe
 D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\obj\Debug\FoundersOriginal.pdb
+D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\obj\Debug\FoundersOriginal.csprojResolveAssemblyReference.cache
+D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\SkiaSharp.dll.config
+D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\libSkiaSharp.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\libSkiaSharp.dylib
+D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\x86\libSkiaSharp.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\x64\libSkiaSharp.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\CloudCoinCoreFramework.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\SkiaSharp.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\CloudCoinCoreFramework.pdb
+D:\CloudCoinPCLLibrary\CloudCoinCore\FoundersOriginal\bin\Debug\SkiaSharp.xml

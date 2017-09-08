@@ -23,15 +23,11 @@ namespace CloudCoinIE.UserControls
     {
         public class Item
         {
-            public string StaticColumnA { get; } = "Some static value";
-            public string StaticColumnB { get; } = "Some static value";
-            public string DynamicColumnA { get; set; }
+            
         }
         public Bank()
         {
             InitializeComponent();
-            List<Item> theItems = new List<Item>() { };
-            dg.ItemsSource = theItems;
             showCoins();
         }
 
@@ -47,7 +43,7 @@ namespace CloudCoinIE.UserControls
 
             //Output  " 12.3"
 
-
+            
             setLabelText(lblOnesCount, Convert.ToString(bankTotals[1] + frackedTotals[1] + partialTotals[1]));
             setLabelText(lblFivesCount, Convert.ToString(bankTotals[2] + frackedTotals[2] + partialTotals[2]));
             setLabelText(lblQtrCount, Convert.ToString(bankTotals[3] + frackedTotals[3] + partialTotals[3]));
@@ -67,7 +63,8 @@ namespace CloudCoinIE.UserControls
         {
             App.Current.Dispatcher.Invoke(delegate
             {
-                lbl.Content = text;
+                if(lbl!=null)
+                    lbl.Content = text;
             });
 
         }

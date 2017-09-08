@@ -9,43 +9,66 @@ namespace Founders
 {
     class Program
     {
-        /* INSTANCE VARIABLES */
         public static KeyboardReader reader = new KeyboardReader();
         //  public static String rootFolder = System.getProperty("user.dir") + File.separator +"bank" + File.separator ;
-        public static String rootFolder = AppDomain.CurrentDomain.BaseDirectory;
-        public static String importFolder = rootFolder + "Import" + Path.DirectorySeparatorChar;
-        public static String importedFolder = rootFolder + "Imported" + Path.DirectorySeparatorChar;
-        public static String trashFolder = rootFolder + "Trash" + Path.DirectorySeparatorChar;
-        public static String suspectFolder = rootFolder + "Suspect" + Path.DirectorySeparatorChar;
-        public static String frackedFolder = rootFolder + "Fracked" + Path.DirectorySeparatorChar;
-        public static String bankFolder = rootFolder + "Bank" + Path.DirectorySeparatorChar;
-        public static String templateFolder = rootFolder + "Templates" + Path.DirectorySeparatorChar;
-        public static String counterfeitFolder = rootFolder + "Counterfeit" + Path.DirectorySeparatorChar;
-        public static String directoryFolder = rootFolder + "Directory" + Path.DirectorySeparatorChar;
-        public static String exportFolder = rootFolder + "Export" + Path.DirectorySeparatorChar;
-        public static String languageFolder = rootFolder + "Language" + Path.DirectorySeparatorChar;
-        public static String partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
+        public static String rootFolder = AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar;
 
         public static String prompt = "> ";
         public static String[] commandsAvailable = new String[] { "echo raida", "show coins", "import", "export", "fix fracked", "show folders", "export stack files with one note each", "quit" };
-        public static string[] countries = new String[] { "Australia", "Macedonia", "Philippines", "Serbia", "Bulgaria", "Russia", "Switzerland", "United Kingdom", "Punjab", "India", "Croatia", "USA", "India", "Taiwan", "Moscow", "St.Petersburg", "Columbia", "Singapore", "Germany", "Canada", "Venezuela", "Hyperbad", "USA", "Ukraine", "Luxenburg" };
 
         //{ "echo raida", "show coins", "import", "export", "fix fracked", "show folders", "export for sales", "quit" };
         public static int timeout = 10000; // Milliseconds to wait until the request is ended. 
-        public static FileUtils fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
+        public static FileUtils fileUtils = FileUtils.GetInstance(rootFolder);
 
         public static Random myRandom = new Random();
 
 
-        /* MAIN METHOD */
-        public static void Main(String[] args)
+        static void Main(string[] args)
         {
             fileUtils.CreateDirectoryStructure();
-            printWelcome();
-            run(); // Makes all commands available and loops
-        } // End main
+            int argLength = args.Length;
+            if (argLength > 0)
+            {
+                handleCommand(args);
+            }
+            else
+            {
+                printWelcome();
+                run();
+            }
+        }
 
-        /* STATIC METHODS */
+        public static void handleCommand(string[] args)
+        {
+            string command = args[0];
+
+            switch (command)
+            {
+                case "echo":
+                    echoRaida();
+                    break;
+                case "showcoins":
+                    showCoins();
+                    break;
+                case "import":
+                    import();
+                    break;
+                case "export":
+                    export();
+                    break;
+                case "showfolders":
+                    showFolders();
+                    break;
+                case "fix":
+                    fix();
+                    break;
+                case "dump":
+                    dump();
+                    break;
+                default:
+                    break;
+            }
+        }
         public static void run()
         {
             bool restart = false;
@@ -110,7 +133,6 @@ namespace Founders
             }// end while
         }// end run method
 
-
         public static void printWelcome()
         {
             Console.BackgroundColor = ConsoleColor.Blue;
@@ -128,7 +150,7 @@ namespace Founders
             Console.Out.Write("  Checking RAIDA");
             echoRaida();
             //Check to see if suspect files need to be imported because they failed to finish last time. 
-            String[] suspectFileNames = new DirectoryInfo(suspectFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
+            String[] suspectFileNames = new DirectoryInfo(fileUtils.suspectFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
             if (suspectFileNames.Length > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -138,7 +160,6 @@ namespace Founders
             } //end if there are files in the suspect folder that need to be imported
 
         } // End print welcome
-
 
         public static bool echoRaida()
         {
@@ -153,7 +174,7 @@ namespace Founders
             Console.Out.WriteLine();
             for (int i = 0; i < 25; i++)
             {
-                int padding = longestCountryName - countries[i].Length;
+                int padding = longestCountryName - RAIDA.countries[i].Length;
                 string strPad = "";
                 for (int j = 0; j < padding; j++)
                 {
@@ -163,12 +184,12 @@ namespace Founders
                 if (RAIDA_Status.failsEcho[i])
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Out.Write(strPad + countries[i]);
+                    Console.Out.Write(strPad + RAIDA.countries[i]);
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Out.Write(strPad + countries[i]);
+                    Console.Out.Write(strPad + RAIDA.countries[i]);
                     totalReady++;
                 }
                 if (i == 4 || i == 9 || i == 14 || i == 19) { Console.WriteLine(); }
@@ -202,9 +223,9 @@ namespace Founders
             Console.Out.WriteLine("");
             // This is for consol apps.
             Banker bank = new Banker(fileUtils);
-            int[] bankTotals = bank.countCoins(bankFolder);
-            int[] frackedTotals = bank.countCoins(frackedFolder);
-            int[] partialTotals = bank.countCoins(partialFolder);
+            int[] bankTotals = bank.countCoins(fileUtils.bankFolder);
+            int[] frackedTotals = bank.countCoins(fileUtils.frackedFolder);
+            int[] partialTotals = bank.countCoins(fileUtils.partialFolder);
             // int[] counterfeitTotals = bank.countCoins( counterfeitFolder );
 
             //Output  " 12.3"
@@ -229,16 +250,16 @@ namespace Founders
         public static void showFolders()
         {
             Console.Out.WriteLine(" Your Root folder is:" + "\n " + rootFolder);
-            Console.Out.WriteLine(" Your Import folder is:" + "\n  " + importFolder);
-            Console.Out.WriteLine(" Your Imported folder is:" + "\n  " + importedFolder);
-            Console.Out.WriteLine(" Your Suspect folder is: " + "\n  " + suspectFolder);
-            Console.Out.WriteLine(" Your Trash folder is:" + "\n  " + trashFolder);
-            Console.Out.WriteLine(" Your Bank folder is:" + "\n  " + bankFolder);
-            Console.Out.WriteLine(" Your Fracked folder is:" + "\n  " + frackedFolder);
-            Console.Out.WriteLine(" Your Templates folder is:" + "\n  " + templateFolder);
-            Console.Out.WriteLine(" Your Directory folder is:" + "\n  " + directoryFolder);
-            Console.Out.WriteLine(" Your Counterfeits folder is:" + "\n  " + counterfeitFolder);
-            Console.Out.WriteLine(" Your Export folder is:" + "\n  " + exportFolder);
+            Console.Out.WriteLine(" Your Import folder is:" + "\n  " + fileUtils.importFolder);
+            Console.Out.WriteLine(" Your Imported folder is:" + "\n  " + fileUtils.importedFolder);
+            Console.Out.WriteLine(" Your Suspect folder is: " + "\n  " + fileUtils.suspectFolder);
+            Console.Out.WriteLine(" Your Trash folder is:" + "\n  " + fileUtils.trashFolder);
+            Console.Out.WriteLine(" Your Bank folder is:" + "\n  " + fileUtils.bankFolder);
+            Console.Out.WriteLine(" Your Fracked folder is:" + "\n  " + fileUtils.frackedFolder);
+            Console.Out.WriteLine(" Your Templates folder is:" + "\n  " + fileUtils.templateFolder);
+            Console.Out.WriteLine(" Your Directory folder is:" + "\n  " + fileUtils.directoryFolder);
+            Console.Out.WriteLine(" Your Counterfeits folder is:" + "\n  " + fileUtils.counterfeitFolder);
+            Console.Out.WriteLine(" Your Export folder is:" + "\n  " + fileUtils.exportFolder);
         } // end show folders
 
         public static void import()
@@ -265,7 +286,7 @@ namespace Founders
             }
 
             //CHECK TO SEE IF THERE ARE UN DETECTED COINS IN THE SUSPECT FOLDER
-            String[] suspectFileNames = new DirectoryInfo(suspectFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
+            String[] suspectFileNames = new DirectoryInfo(fileUtils.suspectFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
             if (suspectFileNames.Length > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -279,7 +300,7 @@ namespace Founders
             Console.Out.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Out.WriteLine("  Loading all CloudCoins in your import folder: ");// "Loading all CloudCoins in your import folder: " );
-            Console.Out.WriteLine(importFolder);
+            Console.Out.WriteLine(fileUtils.importFolder);
             Console.ForegroundColor = ConsoleColor.White;
             Importer importer = new Importer(fileUtils);
             if (!importer.importAll())//Moves all CloudCoins from the Import folder into the Suspect folder. 
@@ -309,7 +330,7 @@ namespace Founders
             if (totalRAIDABad > 8)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Out.WriteLine("You do not have enought RAIDA to perform an import operation.");
+                Console.Out.WriteLine("You do not have enough RAIDA to perform an import operation.");
                 Console.Out.WriteLine("Check to make sure your internet is working.");
                 Console.Out.WriteLine("Make sure no routers at your work are blocking access to the RAIDA.");
                 Console.Out.WriteLine("Try to Echo RAIDA and see if the status has changed.");
@@ -318,7 +339,7 @@ namespace Founders
             }
 
             //CHECK TO SEE IF THERE ARE UN DETECTED COINS IN THE SUSPECT FOLDER
-            String[] suspectFileNames = new DirectoryInfo(suspectFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
+            String[] suspectFileNames = new DirectoryInfo(fileUtils.suspectFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
             if (suspectFileNames.Length > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -332,7 +353,7 @@ namespace Founders
             Console.Out.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Out.WriteLine("  Loading all CloudCoins in your import folder: ");// "Loading all CloudCoins in your import folder: " );
-            Console.Out.WriteLine(importFolder);
+            Console.Out.WriteLine(fileUtils.importFolder);
             Console.ForegroundColor = ConsoleColor.White;
             Importer importer = new Importer(fileUtils);
             if (!importer.importAll())//Moves all CloudCoins from the Import folder into the Suspect folder. 
@@ -398,9 +419,9 @@ namespace Founders
                 Dumper dumper = new Dumper(fileUtils);
                 Console.Out.WriteLine("");
                 Banker bank = new Banker(fileUtils);
-                int[] bankTotals = bank.countCoins(bankFolder);
-                int[] frackedTotals = bank.countCoins(frackedFolder);
-                int[] partialTotals = bank.countCoins(partialFolder);
+                int[] bankTotals = bank.countCoins(fileUtils.bankFolder);
+                int[] frackedTotals = bank.countCoins(fileUtils.frackedFolder);
+                int[] partialTotals = bank.countCoins(fileUtils.partialFolder);
                 Console.Out.WriteLine("  Your Bank Inventory:");
                 int grandTotal = (bankTotals[0] + frackedTotals[0] + partialTotals[0]);
                 showCoins();
@@ -461,9 +482,9 @@ namespace Founders
         {
             Console.Out.WriteLine("");
             Banker bank = new Banker(fileUtils);
-            int[] bankTotals = bank.countCoins(bankFolder);
-            int[] frackedTotals = bank.countCoins(frackedFolder);
-            int[] partialTotals = bank.countCoins(partialFolder);
+            int[] bankTotals = bank.countCoins(fileUtils.bankFolder);
+            int[] frackedTotals = bank.countCoins(fileUtils.frackedFolder);
+            int[] partialTotals = bank.countCoins(fileUtils.partialFolder);
             Console.Out.WriteLine("  Your Bank Inventory:");
             int grandTotal = (bankTotals[0] + frackedTotals[0] + partialTotals[0]);
             showCoins();
@@ -602,9 +623,12 @@ namespace Founders
             string pass = reader.readString();
             Console.Out.WriteLine("email: ");
             string email = reader.readString();
+            MindStorage mindStorage = new MindStorage();
+            string[] pans = mindStorage.generateNewPan(user, pass, email);
 
+            for (int i = 0; i < 25; i++)
+                Console.Out.WriteLine(pans[i]);
 
         }
-
-    }//End class
-}//end namespace
+    }//end namespace
+}

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace CoreEx
+namespace Founders
 {
     class Program
     {
@@ -43,6 +43,9 @@ namespace CoreEx
 
             switch (command)
             {
+                case "--help":
+                    printHelp();
+                    break;
                 case "echo":
                     echoRaida();
                     break;
@@ -67,6 +70,16 @@ namespace CoreEx
                 default:
                     break;
             }
+        }
+        public static void printHelp()
+        {
+            Console.WriteLine(" echo        :           Echo RAIDA");
+            Console.WriteLine(" import      :           Import Coins");
+            Console.WriteLine(" export      :           Export Coins");
+            Console.WriteLine(" showfolders :           Show Folders");
+            Console.WriteLine(" fix         :           Fix Fracked Coins");
+
+
         }
         public static void run()
         {
