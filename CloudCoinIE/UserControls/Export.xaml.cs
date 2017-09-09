@@ -1,5 +1,6 @@
 ﻿using Founders;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -214,6 +215,7 @@ namespace CloudCoinIE.UserControls
 
             //updateLog("Exporting CloudCoins Completed.");
             showCoins();
+            Process.Start(MainWindow.exportFolder);
             //MessageBox.Show("Export completed.", "Cloudcoins", MessageBoxButtons.OK);
         }// end export One
 

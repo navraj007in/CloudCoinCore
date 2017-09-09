@@ -12,6 +12,8 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\PInvoke.Kernel32.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\PInvoke.NCrypt.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\PInvoke.Windows.Core.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\System.Windows.Interactivity.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\ToastNotifications.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\ToastNotifications.Messages.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Validation.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Dragablz.pdb
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Dragablz.xml
@@ -50,5 +52,8 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.csproj.Ge
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.exe
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.pdb
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.csprojResolveAssemblyReference.cache
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\ToastNotifications.dll
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\ToastNotifications.Messages.dll
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg1.jpg
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg100.jpg
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg25.jpg
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg250.jpg
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg5.jpg

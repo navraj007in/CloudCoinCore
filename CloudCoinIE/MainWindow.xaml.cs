@@ -49,10 +49,10 @@ namespace CloudCoinIE
         public static int exportJpegStack = 2;
         public static string exportTag = "";
 
-        public static FileUtils fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
-
+        public static FileUtils fileUtils;
         public MainWindow()
         {
+            setupFolders();
             InitializeComponent();
             fileUtils.CreateDirectoryStructure();
 
@@ -62,6 +62,37 @@ namespace CloudCoinIE
 
         }
 
+        public void setupFolders()
+        {
+            rootFolder = getWorkspace();
+
+            importFolder = rootFolder + "Import" + Path.DirectorySeparatorChar;
+            importedFolder = rootFolder + "Imported" + Path.DirectorySeparatorChar;
+            trashFolder = rootFolder + "Trash" + Path.DirectorySeparatorChar;
+            suspectFolder = rootFolder + "Suspect" + Path.DirectorySeparatorChar;
+            frackedFolder = rootFolder + "Fracked" + Path.DirectorySeparatorChar;
+            bankFolder = rootFolder + "Bank" + Path.DirectorySeparatorChar;
+            templateFolder = rootFolder + "Templates" + Path.DirectorySeparatorChar;
+            counterfeitFolder = rootFolder + "Counterfeit" + Path.DirectorySeparatorChar;
+            directoryFolder = rootFolder + "Directory" + Path.DirectorySeparatorChar;
+            exportFolder = rootFolder + "Export" + Path.DirectorySeparatorChar;
+            languageFolder = rootFolder + "Language" + Path.DirectorySeparatorChar;
+            partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
+
+            fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
+
+
+        }
+        public string getWorkspace()
+        {
+            string workspace = "";
+            if (Properties.Settings.Default.WorkSpace != null && Properties.Settings.Default.WorkSpace.Length > 0)
+                workspace = Properties.Settings.Default.WorkSpace;
+            else
+                workspace = AppDomain.CurrentDomain.BaseDirectory;
+            Properties.Settings.Default.WorkSpace = workspace;
+                return workspace;
+        }
         public void fix()
         {
             //Check RAIDA Status

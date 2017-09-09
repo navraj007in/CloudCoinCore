@@ -24,7 +24,28 @@ namespace Founders
         public String directoryFolder;
         public String exportFolder;
         public String partialFolder;
-        
+
+        public static FileUtils GetInstance(String rootFolder)
+        {
+            String importFolder = rootFolder + "Import" + Path.DirectorySeparatorChar;
+            String importedFolder = rootFolder + "Imported" + Path.DirectorySeparatorChar;
+            String trashFolder = rootFolder + "Trash" + Path.DirectorySeparatorChar;
+            String suspectFolder = rootFolder + "Suspect" + Path.DirectorySeparatorChar;
+            String frackedFolder = rootFolder + "Fracked" + Path.DirectorySeparatorChar;
+            String bankFolder = rootFolder + "Bank" + Path.DirectorySeparatorChar;
+            String templateFolder = rootFolder + "Templates" + Path.DirectorySeparatorChar;
+            String counterfeitFolder = rootFolder + "Counterfeit" + Path.DirectorySeparatorChar;
+            String directoryFolder = rootFolder + "Directory" + Path.DirectorySeparatorChar;
+            String exportFolder = rootFolder + "Export" + Path.DirectorySeparatorChar;
+            String languageFolder = rootFolder + "Language" + Path.DirectorySeparatorChar;
+            String partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
+
+            FileUtils fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
+
+            return fileUtils;
+        }
+
+
 
         /* CONSTRUCTOR */
         public FileUtils(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder, String partialFolder)

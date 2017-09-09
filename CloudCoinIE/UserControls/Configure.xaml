@@ -7,6 +7,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <StackPanel Orientation="Vertical">
+            <GroupBox Width="450" Height="290" Header="System Configuration" Margin="0,15" HorizontalAlignment="Center" x:Name="groupExport">
+                <StackPanel  Orientation="Vertical">
+                    <Label Content="Choose CloudCoin Directory" />
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="cmdDirectory" Click="cmdDirectory_Click" Content="Choose Directory" Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140" />
+
+                    </StackPanel>
+                    <TextBlock Margin="0,5" TextWrapping="WrapWithOverflow" x:Name="lblDirectory" />
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Button x:Name="cmdBackup" Content="Backup Cloudcoins" Click="cmdBackup_Click" Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Button x:Name="cmdRestore" Content="Restore Cloudcoins" Click ="cmdRestore_Click"  Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
     </Grid>
 </UserControl>
