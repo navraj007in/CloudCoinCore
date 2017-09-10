@@ -157,7 +157,7 @@ namespace CloudCoinIE.UserControls
             updateLog("  Total Counterfeit: " + detectionResults[1]);
             updateLog("  Total Kept in suspect folder: " + detectionResults[3]);
 
-//            showCoins();
+            //            showCoins();
             stopwatch.Stop();
             Console.Out.WriteLine(stopwatch.Elapsed + " ms");
             updateLog(stopwatch.Elapsed + " ms");
@@ -177,7 +177,7 @@ namespace CloudCoinIE.UserControls
             App.Current.Dispatcher.Invoke(delegate
             {
                 progressBar.Value = e.percentage;
-                if(e.percentage>0)
+                if (e.percentage > 0)
                     lblStatus.Content = String.Format("{0} % of Coins Scanned.", Convert.ToString(e.percentage));
 
             });
@@ -185,7 +185,8 @@ namespace CloudCoinIE.UserControls
 
         private void updateLog(string logLine)
         {
-            App.Current.Dispatcher.Invoke(delegate {
+            App.Current.Dispatcher.Invoke(delegate
+            {
                 txtLogs.AppendText(logLine + Environment.NewLine);
             });
 
@@ -198,7 +199,24 @@ namespace CloudCoinIE.UserControls
 
         private void cmdRestore_Click(object sender, RoutedEventArgs e)
         {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    string restorePath = fileUtils.suspectFolder;
+                    String SourcePath = dialog.SelectedPath + Path.DirectorySeparatorChar + "Bank";
+                    foreach (string newPath in Directory.GetFiles(SourcePath, "*.*",
+    SearchOption.AllDirectories))
+                        File.Copy(newPath, newPath.Replace(SourcePath, restorePath), true);
 
+                    SourcePath = dialog.SelectedPath + Path.DirectorySeparatorChar + "Fracked";
+                    foreach (string newPath in Directory.GetFiles(SourcePath, "*.*",
+    SearchOption.AllDirectories))
+                        File.Copy(newPath, newPath.Replace(SourcePath, restorePath), true);
+                    cmdImport_Click(this, new RoutedEventArgs());
+                }
+            }
         }
     }
 }

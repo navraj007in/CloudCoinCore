@@ -16,6 +16,10 @@ using System.IO;
 using Founders;
 using System.Threading;
 using System.Diagnostics;
+using ToastNotifications;
+using ToastNotifications.Position;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
 
 namespace CloudCoinIE
 {
@@ -58,11 +62,48 @@ namespace CloudCoinIE
             import.RefreshCoins += new EventHandler(Refresh);
 
             fileUtils.CreateDirectoryStructure();
+            watch();
 
             new Thread(delegate () {
                 fix();
             }).Start();
 
+        }
+
+        FileSystemWatcher watcher;
+        private void OnChanged(object source, FileSystemEventArgs e)
+        {
+            App.Current.Dispatcher.Invoke(delegate
+            {
+
+                //Copies file to another directory.
+                Notifier notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
+
+                notifier.ShowInformation("Import folder has new coins.");
+            });
+        }
+        private void watch()
+        {
+            watcher = new FileSystemWatcher();
+            watcher.Path = fileUtils.ImportFolder;
+            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
+                                   | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            watcher.Filter = "*.*";
+            watcher.Changed += new FileSystemEventHandler(OnChanged);
+            watcher.EnableRaisingEvents = true;
         }
 
         private void Refresh(object sender,  EventArgs e)
