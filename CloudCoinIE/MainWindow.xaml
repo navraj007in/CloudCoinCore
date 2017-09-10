@@ -19,13 +19,13 @@
                 <dragablz:InterTabController />
             </dragablz:TabablzControl.InterTabController>
             <TabItem Header="Bank" IsSelected="True">
-                <cont:Bank></cont:Bank>                
+                <cont:Bank x:Name="bank"></cont:Bank>                
             </TabItem>
             <TabItem Header="Import">
-                <cont:Import ></cont:Import>
+                <cont:Import x:Name="import"></cont:Import>
             </TabItem>
             <TabItem Header="Export">
-                <cont:Export />
+                <cont:Export x:Name="export"/>
             </TabItem>
             <TabItem Header="Echo">
                 <cont:Echo></cont:Echo>

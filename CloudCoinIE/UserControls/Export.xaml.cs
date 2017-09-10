@@ -22,20 +22,6 @@ namespace CloudCoinIE.UserControls
         int hundredsTotal = 0;
         int TwoFiftiesTotal = 0;
 
-        public static String rootFolder = AppDomain.CurrentDomain.BaseDirectory;
-        public static String importFolder = rootFolder + "Import" + Path.DirectorySeparatorChar;
-        public static String importedFolder = rootFolder + "Imported" + Path.DirectorySeparatorChar;
-        public static String trashFolder = rootFolder + "Trash" + Path.DirectorySeparatorChar;
-        public static String suspectFolder = rootFolder + "Suspect" + Path.DirectorySeparatorChar;
-        public static String frackedFolder = rootFolder + "Fracked" + Path.DirectorySeparatorChar;
-        public static String bankFolder = rootFolder + "Bank" + Path.DirectorySeparatorChar;
-        public static String templateFolder = rootFolder + "Templates" + Path.DirectorySeparatorChar;
-        public static String counterfeitFolder = rootFolder + "Counterfeit" + Path.DirectorySeparatorChar;
-        public static String directoryFolder = rootFolder + "Directory" + Path.DirectorySeparatorChar;
-        public static String exportFolder = rootFolder + "Export" + Path.DirectorySeparatorChar;
-        public static String languageFolder = rootFolder + "Language" + Path.DirectorySeparatorChar;
-        public static String partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
-
         public static int exportOnes = 0;
         public static int exportFives = 0;
         public static int exportTens = 0;
@@ -45,7 +31,8 @@ namespace CloudCoinIE.UserControls
         public static int exportJpegStack = 2;
         public static string exportTag = "";
 
-        public static FileUtils fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
+        public static FileUtils fileUtils = FileUtils.GetInstance(MainWindow.rootFolder);
+        public EventHandler RefreshCoins;
 
         public Export()
         {
@@ -57,9 +44,9 @@ namespace CloudCoinIE.UserControls
             Console.Out.WriteLine("");
             // This is for consol apps.
             Banker bank = new Banker(MainWindow.fileUtils);
-            int[] bankTotals = bank.countCoins(MainWindow.bankFolder);
-            int[] frackedTotals = bank.countCoins(MainWindow.frackedFolder);
-            int[] partialTotals = bank.countCoins(MainWindow.partialFolder);
+            int[] bankTotals = bank.countCoins(MainWindow.fileUtils.BankFolder);
+            int[] frackedTotals = bank.countCoins(MainWindow.fileUtils.frackedFolder);
+            int[] partialTotals = bank.countCoins(MainWindow.fileUtils.partialFolder);
 
             onesTotal = bankTotals[1] + frackedTotals[1] + partialTotals[1];
             fivesTotal = bankTotals[2] + frackedTotals[2] + partialTotals[2];
@@ -67,12 +54,20 @@ namespace CloudCoinIE.UserControls
             hundredsTotal = bankTotals[4] + frackedTotals[4] + partialTotals[4];
             TwoFiftiesTotal = bankTotals[5] + frackedTotals[5] + partialTotals[5];
 
-            countOnes.Maximum = onesTotal;
-            countFive.Maximum = fivesTotal;
-            countQtrs.Maximum = qtrsTotal;
-            countHundreds.Maximum = hundredsTotal;
-            countTwoFifties.Maximum = TwoFiftiesTotal;
+            App.Current.Dispatcher.Invoke(delegate
+            {
 
+                countOnes.Maximum = onesTotal;
+                countFive.Maximum = fivesTotal;
+                countQtrs.Maximum = qtrsTotal;
+                countHundreds.Maximum = hundredsTotal;
+                countTwoFifties.Maximum = TwoFiftiesTotal;
+                countOnes.Value = 0;
+                countFive.Value = 0;
+                countQtrs.Value = 0;
+                countHundreds.Value = 0;
+                countTwoFifties.Value = 0;
+            });
         }
         int total = 0;
         private void updateTotal()
@@ -139,13 +134,12 @@ namespace CloudCoinIE.UserControls
                 exportJpegStack = 2;
 
             Banker bank = new Banker(fileUtils);
-            int[] bankTotals = bank.countCoins(bankFolder);
-            int[] frackedTotals = bank.countCoins(frackedFolder);
-            int[] partialTotals = bank.countCoins(partialFolder);
+            int[] bankTotals = bank.countCoins(fileUtils.BankFolder);
+            int[] frackedTotals = bank.countCoins(fileUtils.frackedFolder);
+            int[] partialTotals = bank.countCoins(fileUtils.partialFolder);
 
             //updateLog("  Your Bank Inventory:");
             int grandTotal = (bankTotals[0] + frackedTotals[0] + partialTotals[0]);
-            showCoins();
             // state how many 1, 5, 25, 100 and 250
             int exp_1 = Convert.ToInt16(countOnes.Value);
             int exp_5 = Convert.ToInt16(countFive.Value);
@@ -179,7 +173,7 @@ namespace CloudCoinIE.UserControls
             exporter.OnUpdateStatus += Exporter_OnUpdateStatus; 
             file_type = exportJpegStack;
 
-            String tag = exportTag;// reader.readString();
+            String tag = txtTag.Text;// reader.readString();
             //Console.Out.WriteLine(("Exporting to:" + exportFolder));
 
             if (file_type == 1)
@@ -210,15 +204,19 @@ namespace CloudCoinIE.UserControls
                 cfg.Dispatcher = Application.Current.Dispatcher;
             });
 
-            notifier.ShowInformation("  Exporting CloudCoins Completed.");
+            notifier.ShowInformation("Exporting CloudCoins Completed.");
 
-
+            RefreshCoins?.Invoke(this, new EventArgs());
             //updateLog("Exporting CloudCoins Completed.");
             showCoins();
-            Process.Start(MainWindow.exportFolder);
+            Process.Start(fileUtils.exportFolder);
             //MessageBox.Show("Export completed.", "Cloudcoins", MessageBoxButtons.OK);
         }// end export One
 
+        public void setLimits()
+        {
+
+        }
         private void Exporter_OnUpdateStatus(object sender, CloudCoinInvestors.ProgressEventArgs e)
         {
 

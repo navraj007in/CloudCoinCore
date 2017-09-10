@@ -12,7 +12,11 @@
     <Grid>
         <StackPanel Orientation="Vertical">
 
-            <Button Margin="0,10" Height="35" Width="160" Foreground="White" HorizontalAlignment="Center" Background="{StaticResource AccentColorBrush}" x:Name="cmdImport" Click="cmdImport_Click">Import</Button>
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,5">
+                <Button Margin="0,10" Height="35" Width="120" Foreground="White" HorizontalAlignment="Center" Background="{StaticResource AccentColorBrush}" x:Name="cmdImport" Click="cmdImport_Click">Import</Button>
+                <Button x:Name="cmdRestore" Content="Restore Cloudcoins" Click ="cmdRestore_Click"  Margin="4" Background="{StaticResource AccentColorBrush}" Height="35" Foreground="White" Width="120"/>
+            </StackPanel>
+
 
             <RichTextBox  Height="200" HorizontalScrollBarVisibility="Auto" x:Name="txtLogs" VerticalScrollBarVisibility="Visible" TextChanged="txtLogs_TextChanged"></RichTextBox>
             <ProgressBar Margin="2,6" x:Name="progressBar" Value="100" Visibility="Collapsed"/>

@@ -40,7 +40,7 @@ namespace CloudCoinIE.UserControls
         public static String partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
 
 
-        public static FileUtils fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
+        public static FileUtils fileUtils = FileUtils.GetInstance(MainWindow.rootFolder);
 
 
         public Echo()

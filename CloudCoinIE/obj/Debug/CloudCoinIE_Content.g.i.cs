@@ -8,10 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templates/jpeg1.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templates/jpeg100.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templates/jpeg25.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templates/jpeg250.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templates/jpeg5.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("android-chrome-512x512_131495165950459079.ico")]
 
 

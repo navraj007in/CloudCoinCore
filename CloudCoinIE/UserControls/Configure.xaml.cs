@@ -1,6 +1,7 @@
 ﻿using Founders;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -154,6 +155,11 @@ SearchOption.AllDirectories))
         private void cmdRestore_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void cmdShowFolders_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(MainWindow.rootFolder);
         }
     }
 }

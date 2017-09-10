@@ -1,3 +1,8 @@
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg1.jpg
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg100.jpg
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg25.jpg
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg250.jpg
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg5.jpg
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\CloudCoinIE.exe.config
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\CloudCoinIE.exe
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\CloudCoinIE.pdb
@@ -29,6 +34,7 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\PInvoke.Kernel32.xml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\PInvoke.NCrypt.xml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\PInvoke.Windows.Core.xml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Validation.xml
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.csprojResolveAssemblyReference.cache
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\UserControls\Bank.baml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\UserControls\Echo.baml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\MainWindow.g.cs
@@ -51,9 +57,3 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.Propertie
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.csproj.GenerateResource.Cache
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.exe
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.pdb
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.csprojResolveAssemblyReference.cache
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg1.jpg
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg100.jpg
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg25.jpg
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg250.jpg
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Templates\jpeg5.jpg

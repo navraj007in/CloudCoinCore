@@ -54,6 +54,9 @@ namespace CloudCoinIE
         {
             setupFolders();
             InitializeComponent();
+            export.RefreshCoins += new EventHandler(Refresh);
+            import.RefreshCoins += new EventHandler(Refresh);
+
             fileUtils.CreateDirectoryStructure();
 
             new Thread(delegate () {
@@ -62,6 +65,11 @@ namespace CloudCoinIE
 
         }
 
+        private void Refresh(object sender,  EventArgs e)
+        {
+            bank.showCoins();
+            export.showCoins();
+        }
         public void setupFolders()
         {
             rootFolder = getWorkspace();
@@ -79,7 +87,7 @@ namespace CloudCoinIE
             languageFolder = rootFolder + "Language" + Path.DirectorySeparatorChar;
             partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
 
-            fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
+            fileUtils = FileUtils.GetInstance(MainWindow.rootFolder);
 
 
         }

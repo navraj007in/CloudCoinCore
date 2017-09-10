@@ -36,9 +36,9 @@ namespace CloudCoinIE.UserControls
             Console.Out.WriteLine("");
             // This is for consol apps.
             Banker bank = new Banker(MainWindow.fileUtils);
-            int[] bankTotals = bank.countCoins(MainWindow.bankFolder);
-            int[] frackedTotals = bank.countCoins(MainWindow.frackedFolder);
-            int[] partialTotals = bank.countCoins(MainWindow.partialFolder);
+            int[] bankTotals = bank.countCoins(MainWindow.fileUtils.bankFolder);
+            int[] frackedTotals = bank.countCoins(MainWindow.fileUtils.frackedFolder);
+            int[] partialTotals = bank.countCoins(MainWindow.fileUtils.partialFolder);
             // int[] counterfeitTotals = bank.countCoins( counterfeitFolder );
 
             //Output  " 12.3"
@@ -50,11 +50,11 @@ namespace CloudCoinIE.UserControls
             setLabelText(lblHundredCount, Convert.ToString(bankTotals[4] + frackedTotals[4] + partialTotals[4]));
             setLabelText(lblTwoFiftiesCount, Convert.ToString(bankTotals[5] + frackedTotals[5] + partialTotals[5]));
 
-            setLabelText(lblOnesValue, lblOnesCount.Content.ToString());
-            setLabelText(lblFivesValue, Convert.ToString(Convert.ToInt16(lblFivesCount.Content.ToString()) * 5));
-            setLabelText(lblQtrValue, Convert.ToString(Convert.ToInt16(lblQtrCount.Content.ToString()) * 25));
-            setLabelText(lblHundredValue, Convert.ToString(Convert.ToInt16(lblHundredCount.Content.ToString()) * 100));
-            setLabelText(lblTwoFiftiesValue, Convert.ToString(Convert.ToInt16(lblTwoFiftiesCount.Content.ToString()) * 250));
+            setLabelText(lblOnesValue, Convert.ToString(bankTotals[1] + frackedTotals[1] + partialTotals[1]));
+            setLabelText(lblFivesValue, Convert.ToString(bankTotals[2] + frackedTotals[2] + partialTotals[2] * 5));
+            setLabelText(lblQtrValue, Convert.ToString(bankTotals[3] + frackedTotals[3] + partialTotals[3] * 25));
+            setLabelText(lblHundredValue, Convert.ToString(bankTotals[4] + frackedTotals[4] + partialTotals[4] * 100));
+            setLabelText(lblTwoFiftiesValue, Convert.ToString(bankTotals[5] + frackedTotals[5] + partialTotals[5] * 250));
             setLabelText(lblTotalCoins, "Total Coins : " + Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
 
         }// end show

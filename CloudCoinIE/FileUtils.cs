@@ -25,6 +25,21 @@ namespace Founders
         public String exportFolder;
         public String partialFolder;
 
+        public String RootFolder { get { return rootFolder; } }
+        public String ImportFolder { get { return importFolder; } }
+        public String ImportedFolder { get { return importedFolder; } }
+        public String ExportFolder { get { return exportFolder; } }
+        public String TrashFolder { get { return trashFolder; } }
+        public String PartialFolder { get { return partialFolder; } }
+        public String SuspectFolder { get { return suspectFolder; } }
+        public String FrackedFolder { get { return frackedFolder; } }
+        public String BankFolder { get { return bankFolder; } }
+        public String TemplateFolder { get { return templateFolder; } }
+        public String CounterfeitFolder { get { return counterfeitFolder; } }
+        public String DirectoryFolder { get { return directoryFolder; } }
+
+
+
         public static FileUtils GetInstance(String rootFolder)
         {
             String importFolder = rootFolder + "Import" + Path.DirectorySeparatorChar;
@@ -48,7 +63,7 @@ namespace Founders
 
 
         /* CONSTRUCTOR */
-        public FileUtils(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder, String partialFolder)
+        private FileUtils(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder, String partialFolder)
         {
             //  initialise instance variables
             this.rootFolder = rootFolder;

@@ -35,19 +35,6 @@ namespace CloudCoinIE.UserControls
     {
         public static int timeout = 10000; // Milliseconds to wait until the request is ended. 
 
-        public static String rootFolder = AppDomain.CurrentDomain.BaseDirectory;
-        public static String importFolder = rootFolder + "Import" + Path.DirectorySeparatorChar;
-        public static String importedFolder = rootFolder + "Imported" + Path.DirectorySeparatorChar;
-        public static String trashFolder = rootFolder + "Trash" + Path.DirectorySeparatorChar;
-        public static String suspectFolder = rootFolder + "Suspect" + Path.DirectorySeparatorChar;
-        public static String frackedFolder = rootFolder + "Fracked" + Path.DirectorySeparatorChar;
-        public static String bankFolder = rootFolder + "Bank" + Path.DirectorySeparatorChar;
-        public static String templateFolder = rootFolder + "Templates" + Path.DirectorySeparatorChar;
-        public static String counterfeitFolder = rootFolder + "Counterfeit" + Path.DirectorySeparatorChar;
-        public static String directoryFolder = rootFolder + "Directory" + Path.DirectorySeparatorChar;
-        public static String exportFolder = rootFolder + "Export" + Path.DirectorySeparatorChar;
-        public static String languageFolder = rootFolder + "Language" + Path.DirectorySeparatorChar;
-        public static String partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
 
         public static int exportOnes = 0;
         public static int exportFives = 0;
@@ -58,7 +45,8 @@ namespace CloudCoinIE.UserControls
         public static int exportJpegStack = 2;
         public static string exportTag = "";
 
-        public static FileUtils fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
+        public static FileUtils fileUtils = FileUtils.GetInstance(MainWindow.rootFolder);
+        public EventHandler RefreshCoins;
 
 
         public Import()
@@ -109,7 +97,7 @@ namespace CloudCoinIE.UserControls
             //Check RAIDA Status
 
             //CHECK TO SEE IF THERE ARE UN DETECTED COINS IN THE SUSPECT FOLDER
-            String[] suspectFileNames = new DirectoryInfo(suspectFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
+            String[] suspectFileNames = new DirectoryInfo(MainWindow.fileUtils.suspectFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
             if (suspectFileNames.Length > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -126,9 +114,9 @@ namespace CloudCoinIE.UserControls
             Console.Out.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Out.WriteLine("  Loading all CloudCoins in your import folder: ");// "Loading all CloudCoins in your import folder: " );
-            Console.Out.WriteLine(importFolder);
+            Console.Out.WriteLine(MainWindow.fileUtils.importFolder);
             updateLog("  Loading all CloudCoins in your import folder: ");
-            updateLog(importFolder);
+            updateLog(MainWindow.fileUtils.importFolder);
 
             Console.ForegroundColor = ConsoleColor.White;
             Importer importer = new Importer(fileUtils);
@@ -176,6 +164,8 @@ namespace CloudCoinIE.UserControls
 
             string messageBoxText = "Finished Importing Coins.";
             string caption = "Coins";
+            RefreshCoins?.Invoke(this, new EventArgs());
+
             MessageBoxButton button = MessageBoxButton.OK;
             MessageBoxImage icon = MessageBoxImage.Information;
             MessageBox.Show(messageBoxText, caption, button, icon);
@@ -204,6 +194,11 @@ namespace CloudCoinIE.UserControls
         private void txtLogs_TextChanged(object sender, TextChangedEventArgs e)
         {
             txtLogs.ScrollToEnd();
+        }
+
+        private void cmdRestore_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
