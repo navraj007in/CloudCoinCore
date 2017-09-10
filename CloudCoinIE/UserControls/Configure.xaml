@@ -21,7 +21,7 @@
                         <Button x:Name="cmdBackup" Content="Backup Cloudcoins" Click="cmdBackup_Click" Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <Button x:Name="cmdRestore" Content="Restore Cloudcoins" Click ="cmdRestore_Click"  Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140"/>
+                        <Button x:Name="cmdRestore" Content="Restore Cloudcoins" Visibility="Collapsed" Click ="cmdRestore_Click"  Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
                         <Button x:Name="cmdShowFolders" Content="Show Folders" Click ="cmdShowFolders_Click"  Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140"/>
