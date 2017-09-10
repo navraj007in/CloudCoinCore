@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("CloudCoinIE")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("CloudCoin Research Foundation")]
 [assembly: AssemblyProduct("CloudCoinIE")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]

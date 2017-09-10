@@ -178,7 +178,16 @@ namespace CloudCoinIE
             Console.Out.WriteLine("  If your coins are not completely fixed, you may 'fix fracked' again.");
         }//end fix
 
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
 
+            TextRange t = new TextRange(import.txtLogs.Document.ContentStart,
+                                            import.txtLogs.Document.ContentEnd);
+            FileStream file = new FileStream("Good File.xaml", FileMode.Open);
+            t.Load(file, System.Windows.DataFormats.XamlPackage);
+            file.Close();
+
+        }
     }
 }
     

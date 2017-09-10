@@ -12,7 +12,7 @@
                                       xmlns:cont="clr-namespace:CloudCoinIE.UserControls"
 
         mc:Ignorable="d"
-        Title="CloudCoin Investors Edition" Height="380" Width="525">
+        Title="CloudCoin Investors Edition" Height="380" Width="525" Closing="MetroWindow_Closing">
     <Grid>
         <dragablz:TabablzControl >
             <dragablz:TabablzControl.InterTabController>

@@ -442,26 +442,33 @@ namespace Founders
             }
             // end RAIDA other errors and unknowns
             // Coin will go to bank, counterfeit or fracked
+            String coinStatus = "";
             if (other > 12)
             {
                 // not enough RAIDA to have a quorum
                 folder = Folder.Suspect;
+                coinStatus = "Suspect";
             }
             else if (failed > passed)
             {
                 // failed out numbers passed with a quorum: Counterfeit
                 folder = Folder.Counterfeit;
+                coinStatus = "Counterfeit";
             }
             else if (failed > 0)
             {
                 // The quorum majority said the coin passed but some disagreed: fracked. 
                 folder = Folder.Fracked;
+                coinStatus = "Fracked";
             }
             else
             {
                 // No fails, all passes: bank
                 folder = Folder.Bank;
+                coinStatus = "Authentic";
             }
+
+            updateLog("Coin status :"+  coinStatus);
 
             gradeStatus[0] = passedDesc;
             gradeStatus[1] = failedDesc;
@@ -509,7 +516,7 @@ namespace Founders
             Console.Out.WriteLine("");
             Console.ForegroundColor = ConsoleColor.White;
             Console.Out.WriteLine("                                                        ");
-            Console.Out.WriteLine("   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
+            Console.Out.WriteLine("  Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
             CoreLogger.Log("   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
             Console.Out.WriteLine("                                                        ");
             Console.Out.Write("    "); a(pownArray[0]); Console.Out.Write("       "); a(pownArray[1]); Console.Out.Write("       "); a(pownArray[2]); Console.Out.Write("       "); a(pownArray[3]); Console.Out.Write("       "); a(pownArray[4]); Console.Out.WriteLine("    ");
@@ -525,10 +532,10 @@ namespace Founders
             Console.Out.WriteLine("");
             Console.ForegroundColor = ConsoleColor.White;
 
-            UpdateStatus("   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
+            UpdateStatus("Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
             if(txtLogs!=null)
             {
-                updateLog("   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
+                updateLog("Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
             }
             // check if failed
             //  string fmt = "00";

@@ -86,9 +86,6 @@ namespace Founders
                         Console.Out.WriteLine("");
 
                         updateLog("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
-                        double percentCompleted = (j + 1)*100 / suspectFileNames.Length;
-                        Console.WriteLine("Calculated percentage - "+ percentCompleted + ".j "+ j + " length "+ suspectFileNames.Length);
-                        UpdateStatus("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination(),Convert.ToInt32(percentCompleted));
                         CoinUtils detectedCC = this.raida.detectCoin(cu, detectTime);
                         cu.calcExpirationDate();
 
@@ -145,6 +142,9 @@ namespace Founders
                             CoreLogger.Log("Not enough RAIDA were contacted to determine if the coin is authentic. Try again later.");
                             Console.ForegroundColor = ConsoleColor.White;
                         }//end if else
+                        double percentCompleted = (j + 1) * 100 / suspectFileNames.Length;
+                        Console.WriteLine("Calculated percentage - " + percentCompleted + ".j " + j + " length " + suspectFileNames.Length);
+                        UpdateStatus("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination(), Convert.ToInt32(percentCompleted));
 
                     }//end if file exists
                 }
