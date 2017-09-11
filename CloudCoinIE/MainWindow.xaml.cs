@@ -70,8 +70,14 @@ namespace CloudCoinIE
 
         }
 
-        FileSystemWatcher watcher;
-        private void OnChanged(object source, FileSystemEventArgs e)
+        FileSystemWatcher watcherImport;
+        FileSystemWatcher watcherBank;
+
+        private void OnChangedBank(object source, FileSystemEventArgs e)
+        {
+            bank.showCoins();
+        }
+            private void OnChanged(object source, FileSystemEventArgs e)
         {
             App.Current.Dispatcher.Invoke(delegate
             {
@@ -97,13 +103,22 @@ namespace CloudCoinIE
         }
         private void watch()
         {
-            watcher = new FileSystemWatcher();
-            watcher.Path = fileUtils.ImportFolder;
-            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
+            watcherImport = new FileSystemWatcher();
+            watcherImport.Path = fileUtils.ImportFolder;
+            watcherImport.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
                                    | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-            watcher.Filter = "*.*";
-            watcher.Changed += new FileSystemEventHandler(OnChanged);
-            watcher.EnableRaisingEvents = true;
+            watcherImport.Filter = "*.*";
+            watcherImport.Changed += new FileSystemEventHandler(OnChanged);
+            watcherImport.EnableRaisingEvents = true;
+
+            watcherBank = new FileSystemWatcher();
+            watcherBank.Path = fileUtils.BankFolder;
+            watcherBank.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
+                                   | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            watcherBank.Filter = "*.*";
+            watcherBank.Changed += new FileSystemEventHandler(OnChangedBank);
+            watcherBank.EnableRaisingEvents = true;
+
         }
 
         private void Refresh(object sender,  EventArgs e)
@@ -181,11 +196,6 @@ namespace CloudCoinIE
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
-            TextRange t = new TextRange(import.txtLogs.Document.ContentStart,
-                                            import.txtLogs.Document.ContentEnd);
-            FileStream file = new FileStream("Good File.xaml", FileMode.Open);
-            t.Load(file, System.Windows.DataFormats.XamlPackage);
-            file.Close();
 
         }
     }

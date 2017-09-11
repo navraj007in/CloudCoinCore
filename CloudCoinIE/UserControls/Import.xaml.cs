@@ -80,6 +80,8 @@ namespace CloudCoinIE.UserControls
 
                 return;
             }
+            cmdImport.IsEnabled = false;
+            cmdRestore.IsEnabled = false;
             progressBar.Visibility = Visibility.Visible;
             new Thread(() =>
             {
@@ -169,7 +171,12 @@ namespace CloudCoinIE.UserControls
             MessageBoxButton button = MessageBoxButton.OK;
             MessageBoxImage icon = MessageBoxImage.Information;
             MessageBox.Show(messageBoxText, caption, button, icon);
+            App.Current.Dispatcher.Invoke(delegate
+            {
 
+                cmdRestore.IsEnabled = true;
+                cmdImport.IsEnabled = true;
+            });
         }//end detect
 
         private void Detector_OnUpdateStatus(object sender, CloudCoinInvestors.ProgressEventArgs e)

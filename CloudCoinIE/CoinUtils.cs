@@ -568,17 +568,24 @@ namespace Founders
         }
         private void updateLog(string logLine)
         {
-            App.Current.Dispatcher.Invoke(delegate
+            try
             {
-                try
+                App.Current.Dispatcher.Invoke(delegate
                 {
-                    txtLogs.AppendText(logLine + Environment.NewLine);
-                }
-                catch(Exception e)
-                {
-                    
-                }
-            });
+                    try
+                    {
+                        txtLogs.AppendText(logLine + Environment.NewLine);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                });
+            }
+            catch(Exception e)
+            {
+
+            }
                 //txtLogs.SelectionStart = txtLogs.TextLength;
                 //txtLogs.SelectionLength = 0;
                 //txtLogs.ScrollToCaret();

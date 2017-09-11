@@ -148,6 +148,11 @@ namespace CloudCoinIE.UserControls
             int exp_250 = Convert.ToInt16(countTwoFifties.Value);
             //Warn if too many coins
 
+            if(exp_1+ exp_5 + exp_25+ exp_100 + exp_250  == 0)
+            {
+                Console.WriteLine("Can not export 0 coins");
+                return;
+            }
 
             //updateLog(Convert.ToString(bankTotals[1] + frackedTotals[1] + bankTotals[2] + frackedTotals[2] + bankTotals[3] + frackedTotals[3] + bankTotals[4] + frackedTotals[4] + bankTotals[5] + frackedTotals[5] + partialTotals[1] + partialTotals[2] + partialTotals[3] + partialTotals[4] + partialTotals[5]));
 
