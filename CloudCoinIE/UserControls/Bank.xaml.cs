@@ -29,6 +29,7 @@ namespace CloudCoinIE.UserControls
         {
             InitializeComponent();
             showCoins();
+
         }
 
         public void showCoins()

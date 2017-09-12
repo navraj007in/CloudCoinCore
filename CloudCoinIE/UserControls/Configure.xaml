@@ -11,21 +11,21 @@
             <GroupBox Width="450" Height="290" Header="Bank Tools" Margin="0,15" HorizontalAlignment="Center" x:Name="groupExport">
                 <StackPanel  Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <Button x:Name="cmdBackup" Content="Backup Bank" Click="cmdBackup_Click" Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140"/>
+                        <Button x:Name="cmdBackup" Content="Backup Bank" Click="cmdBackup_Click" Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="160"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <Button x:Name="cmdShowFolders" Content="Show Folders" Click ="cmdShowFolders_Click"  Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140"/>
+                        <Button x:Name="cmdShowFolders" Content="Show Folders" Click ="cmdShowFolders_Click"  Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="160"/>
                     </StackPanel>
 
                     <Label Content="Choose CloudCoin Directory" Visibility="Collapsed"/>
                     <StackPanel Orientation="Horizontal">
-                        <Button x:Name="cmdDirectory" Click="cmdDirectory_Click" Content="Change Working Directory" Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140" />
+                        <Button x:Name="cmdDirectory" Click="cmdDirectory_Click" Content="Change Working Directory" Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="160" />
 
                     </StackPanel>
                     <TextBlock Margin="0,5" TextWrapping="WrapWithOverflow" x:Name="lblDirectory" />
 
                     <StackPanel Orientation="Horizontal" Margin="0">
-                        <Button x:Name="cmdRestore" Content="Restore Cloudcoins" Visibility="Collapsed" Click ="cmdRestore_Click"  Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="140"/>
+                        <Button x:Name="cmdRestore" Content="Restore Cloudcoins" Visibility="Collapsed" Click ="cmdRestore_Click"  Background="{StaticResource AccentColorBrush}"  Foreground="White" Width="160"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Margin="0">
                         <TextBlock TextWrapping="WrapWithOverflow" Text="By Clicking the Change Directory button, you can change the location of your working directory. If there are no working folders in the new location, new empty ones will be created. Any CloudCoins in your old root will stay in those folders and will not be deleted or moved. You can always change back to those folders to see their contents. This makes it easier for you to store you coins on a USB drive or have multiple accounts on the same computer." />

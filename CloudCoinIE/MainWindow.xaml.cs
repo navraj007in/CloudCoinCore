@@ -66,7 +66,7 @@ namespace CloudCoinIE
 
             fileUtils.CreateDirectoryStructure();
             watch();
-            FileAssociations.SetAssociation(".stack", "CloudCoinIE", "CloudCoin File", rootFolder + Path.DirectorySeparatorChar + "CloudCoinIE.exe");
+            FileAssociations.SetAssociation("stack", "CloudCoinIE", "CloudCoin File", rootFolder + Path.DirectorySeparatorChar + "CloudCoinIE.exe");
             new Thread(delegate () {
                 fix();
             }).Start();
