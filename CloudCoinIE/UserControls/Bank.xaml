@@ -10,9 +10,9 @@
     <Grid>
 
         <StackPanel Orientation="Vertical">
-            <Label HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource AccentColorBrush}">Coins</Label>
-            <Label HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource AccentColorBrush}" x:Name="lblTotalCoins">0</Label>
-            <GroupBox Width="450" Height="220" Header="Details" Margin="0" HorizontalAlignment="Center">
+            <Label HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource AccentColorBrush}" Visibility="Collapsed">Coins</Label>
+            <Label HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource AccentColorBrush}" x:Name="lblTotalCoins">Total Coins in Bank 0</Label>
+            <GroupBox Width="450" Height="220" Header="Bank Details" Margin="0" HorizontalAlignment="Center">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Label Margin="10,2">Denomination</Label>

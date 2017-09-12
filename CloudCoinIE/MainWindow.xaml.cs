@@ -20,6 +20,8 @@ using ToastNotifications;
 using ToastNotifications.Position;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
 namespace CloudCoinIE
 {
@@ -56,6 +58,7 @@ namespace CloudCoinIE
         public static FileUtils fileUtils;
         public MainWindow()
         {
+            showDisclaimer();
             setupFolders();
             InitializeComponent();
             export.RefreshCoins += new EventHandler(Refresh);
@@ -63,12 +66,40 @@ namespace CloudCoinIE
 
             fileUtils.CreateDirectoryStructure();
             watch();
-
+            FileAssociations.SetAssociation(".stack", "CloudCoinIE", "CloudCoin File", rootFolder + Path.DirectorySeparatorChar + "CloudCoinIE.exe");
             new Thread(delegate () {
                 fix();
             }).Start();
 
         }
+
+        private void showDisclaimer()
+        {
+            //Properties.Settings.Default["FirstRun"] = false;
+
+            bool firstRun = (bool)Properties.Settings.Default["FirstRun"];
+            if ( firstRun == false)
+            {
+                //First application run
+                //Update setting
+                Properties.Settings.Default["FirstRun"] = true;
+                //Save setting
+                Properties.Settings.Default.Save();
+
+                Disclaimer disclaimer = new Disclaimer();
+                disclaimer.ShowDialog();
+
+                //Create new instance of Dialog you want to show
+                //FirstDialogForm fdf = new FirstDialogForm();
+                //Show the dialog
+                //fdf.ShowDialog();
+            }
+            else
+            {
+                //Not first time of running application.
+            }
+        }
+
 
         FileSystemWatcher watcherImport;
         FileSystemWatcher watcherBank;
@@ -157,6 +188,7 @@ namespace CloudCoinIE
             Properties.Settings.Default.WorkSpace = workspace;
                 return workspace;
         }
+
         public void fix()
         {
             //Check RAIDA Status
@@ -193,6 +225,9 @@ namespace CloudCoinIE
             Console.Out.WriteLine("  If your coins are not completely fixed, you may 'fix fracked' again.");
         }//end fix
 
+        [DllImport("shell32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern void SHChangeNotify(uint wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
+
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // If data is dirty, notify user and ask for a response
@@ -210,5 +245,76 @@ namespace CloudCoinIE
 
         }
     }
-}
+    public class FileAssociation
+    {
+        public string Extension { get; set; }
+        public string ProgId { get; set; }
+        public string FileTypeDescription { get; set; }
+        public string ExecutableFilePath { get; set; }
+    }
+
+    public class FileAssociations
+    {
+        // needed so that Explorer windows get refreshed after the registry is updated
+        [System.Runtime.InteropServices.DllImport("Shell32.dll")]
+        private static extern int SHChangeNotify(int eventId, int flags, IntPtr item1, IntPtr item2);
+
+        private const int SHCNE_ASSOCCHANGED = 0x8000000;
+        private const int SHCNF_FLUSH = 0x1000;
+
+        public static void EnsureAssociationsSet()
+        {
+            var filePath = Process.GetCurrentProcess().MainModule.FileName;
+            EnsureAssociationsSet(
+                new FileAssociation
+                {
+                    Extension = ".ucs",
+                    ProgId = "UCS_Editor_File",
+                    FileTypeDescription = "UCS File",
+                    ExecutableFilePath = filePath
+                });
+        }
+
+        public static void EnsureAssociationsSet(params FileAssociation[] associations)
+        {
+            bool madeChanges = false;
+            foreach (var association in associations)
+            {
+                madeChanges |= SetAssociation(
+                    association.Extension,
+                    association.ProgId,
+                    association.FileTypeDescription,
+                    association.ExecutableFilePath);
+            }
+
+            if (madeChanges)
+            {
+                SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_FLUSH, IntPtr.Zero, IntPtr.Zero);
+            }
+        }
+
+        public static bool SetAssociation(string extension, string progId, string fileTypeDescription, string applicationFilePath)
+        {
+            bool madeChanges = false;
+            madeChanges |= SetKeyDefaultValue(@"Software\Classes\" + extension, progId);
+            madeChanges |= SetKeyDefaultValue(@"Software\Classes\" + progId, fileTypeDescription);
+            madeChanges |= SetKeyDefaultValue($@"Software\Classes\{progId}\shell\open\command", "\"" + applicationFilePath + "\" \"%1\"");
+            return madeChanges;
+        }
+
+        private static bool SetKeyDefaultValue(string keyPath, string value)
+        {
+            using (var key = Registry.CurrentUser.CreateSubKey(keyPath))
+            {
+                if (key.GetValue(null) as string != value)
+                {
+                    key.SetValue(null, value);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+    }
     

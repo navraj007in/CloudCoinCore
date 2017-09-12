@@ -54,6 +54,7 @@
 
                 </StackPanel>                
             </GroupBox>
+            <ProgressBar IsIndeterminate="True" x:Name="echoProgress" Visibility="Collapsed"/>
             <Button Background="{StaticResource AccentColorBrush}" Foreground="White" x:Name="cmdRefresh" Click="cmdEcho_Click">Refresh</Button>
             <Label x:Name="lblHealth" />
         </StackPanel> 

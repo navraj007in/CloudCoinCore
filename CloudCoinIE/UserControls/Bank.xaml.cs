@@ -55,7 +55,7 @@ namespace CloudCoinIE.UserControls
             setLabelText(lblQtrValue, Convert.ToString((bankTotals[3] + frackedTotals[3] + partialTotals[3]) * 25));
             setLabelText(lblHundredValue, Convert.ToString((bankTotals[4] + frackedTotals[4] + partialTotals[4]) * 100));
             setLabelText(lblTwoFiftiesValue, Convert.ToString((bankTotals[5] + frackedTotals[5] + partialTotals[5]) * 250));
-            setLabelText(lblTotalCoins, "Total Coins : " + Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
+            setLabelText(lblTotalCoins, "Total Coins in Bank : " + Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
 
         }// end show
 

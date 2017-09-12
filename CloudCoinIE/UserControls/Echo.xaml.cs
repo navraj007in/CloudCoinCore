@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-
+using System.ComponentModel;
 using System.IO;
 using Founders;
 
@@ -22,6 +22,7 @@ namespace CloudCoinIE.UserControls
     /// </summary>
     public partial class Echo : UserControl
     {
+        private readonly BackgroundWorker worker = new BackgroundWorker();
         public static string[] countries = new String[] { "Australia", "Macedonia", "Philippines", "Serbia", "Bulgaria", "Russia", "Switzerland", "United Kingdom", "Punjab", "India", "Croatia", "USA", "India", "Taiwan", "Moscow", "St.Petersburg", "Columbia", "Singapore", "Germany", "Canada", "Venezuela", "Hyperbad", "USA", "Ukraine", "Luxenburg" };
         Button[] raidas = new Button[25];
 
@@ -72,13 +73,68 @@ namespace CloudCoinIE.UserControls
             raidas[23] = lblUkraine;
             raidas[24] = lblLuxemberg;
 
+            worker.DoWork += Worker_DoWork;
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+        }
+
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            echoProgress.Visibility = Visibility.Collapsed;
+            int totalReady = 0;
+            cmdRefresh.IsEnabled = true;
+            for (int i = 0; i < 25; i++)
+            {
+        
+                // Console.Out.Write(RAIDA_Status.failsEcho[i]);
+                if (RAIDA_Status.failsEcho[i])
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+
+                }
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+
+                    totalReady++;
+                }
+                if (RAIDA_Status.failsEcho[i])
+                    raidas[i].Background = Brushes.Red;
+                else
+                    raidas[i].Background = Brushes.Green;
+
+            }
+
+            if (totalReady < 16)//
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Out.WriteLine("  Not enough RAIDA servers can be contacted to import new coins.");// );
+                Console.Out.WriteLine("  Is your device connected to the Internet?");// );
+                Console.Out.WriteLine("  Is a router blocking your connection?");// );
+                Console.ForegroundColor = ConsoleColor.White;
+                lblHealth.Foreground = Brushes.Red;
+
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Out.WriteLine("The RAIDA is ready for counterfeit detection.");// );
+                lblHealth.Foreground = Brushes.Green;
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }//end if enough RAIDA
+             lblHealth.Content = "  RAIDA Health: " + totalReady + " / 25: ";
+
+        }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
             echoRaida();
+
         }
 
         public bool echoRaida()
         {
 
-            cmdRefresh.IsEnabled = false;
 
             RAIDA_Status.resetEcho();
             RAIDA raida1 = new RAIDA(5000);
@@ -109,10 +165,10 @@ namespace CloudCoinIE.UserControls
                     Console.Out.Write(strPad + countries[i]);
                     totalReady++;
                 }
-                if (RAIDA_Status.failsEcho[i])
-                    raidas[i].Background = Brushes.Red;
-                else
-                    raidas[i].Background = Brushes.Green;
+                //if (RAIDA_Status.failsEcho[i])
+                //    raidas[i].Background = Brushes.Red;
+                //else
+                //    raidas[i].Background = Brushes.Green;
 
                 if (i == 4 || i == 9 || i == 14 || i == 19) { Console.WriteLine(); }
             }//end for
@@ -121,36 +177,26 @@ namespace CloudCoinIE.UserControls
             Console.Out.WriteLine("");
             Console.Out.Write("  RAIDA Health: " + totalReady + " / 25: ");//"RAIDA Health: " + totalReady );
             //lblHealth.Text = "  RAIDA Health: " + totalReady + " / 25: ";
-
-                // Running on the UI thread
-                lblHealth.Content = "  RAIDA Health: " + totalReady + " / 25: "; ;
-                cmdRefresh.IsEnabled = true;
-
-            //Check if enough are good 
             if (totalReady < 16)//
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Out.WriteLine("  Not enough RAIDA servers can be contacted to import new coins.");// );
-                Console.Out.WriteLine("  Is your device connected to the Internet?");// );
-                Console.Out.WriteLine("  Is a router blocking your connection?");// );
-                Console.ForegroundColor = ConsoleColor.White;
-                lblHealth.Foreground = Brushes.Red;
                 return false;
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Out.WriteLine("The RAIDA is ready for counterfeit detection.");// );
-                lblHealth.Foreground = Brushes.Green;
-                Console.ForegroundColor = ConsoleColor.White;
                 return true;
-            }//end if enough RAIDA
-        }//End echo
+            }
+                // Running on the UI thread
+                //                cmdRefresh.IsEnabled = true;
 
-        
-        private void cmdEcho_Click(object sender, RoutedEventArgs e)
-        {
-            echoRaida();
-        }
+                //Check if enough are good 
+            }//End echo
+
+
+            private void cmdEcho_Click(object sender, RoutedEventArgs e)
+            {
+            echoProgress.Visibility = Visibility.Visible;
+            cmdRefresh.IsEnabled = false;
+            worker.RunWorkerAsync();
+            }
     }
 }

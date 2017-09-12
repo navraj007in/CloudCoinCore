@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.IO;
 using System.Threading;
 using System.Windows.Interactivity;
+using Microsoft.Win32;
 
 namespace CloudCoinIE.UserControls
 {
@@ -56,6 +57,20 @@ namespace CloudCoinIE.UserControls
 
         private void cmdImport_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Jpeg files (*.jpg)|*.jpg|Stack files (*.stack)|*.stack|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = fileUtils.ImportFolder;
+            openFileDialog.Multiselect = true;
+            
+            if (openFileDialog.ShowDialog() == true)
+            {
+                foreach (string filename in openFileDialog.FileNames)
+                {
+                    File.Copy(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
+                    Console.WriteLine((filename));
+                }
+            }
+
             int totalRAIDABad = 0;
             for (int i = 0; i < 25; i++)
             {
@@ -77,6 +92,9 @@ namespace CloudCoinIE.UserControls
                 txtLogs.AppendText("Check to make sure your internet is working.");
                 txtLogs.AppendText("Make sure no routers at your work are blocking access to the RAIDA.");
                 txtLogs.AppendText("Try to Echo RAIDA and see if the status has changed.");
+
+                cmdImport.IsEnabled = true;
+                cmdRestore.IsEnabled = true;
 
                 return;
             }
@@ -129,6 +147,13 @@ namespace CloudCoinIE.UserControls
                 updateLog("No coins in import Folder");
 
                 Console.ForegroundColor = ConsoleColor.White;
+                App.Current.Dispatcher.Invoke(delegate
+                {
+
+                    cmdRestore.IsEnabled = true;
+                    cmdImport.IsEnabled = true;
+                });
+
             }
             else
             {
@@ -150,9 +175,9 @@ namespace CloudCoinIE.UserControls
             detector.txtLogs = txtLogs;
             int[] detectionResults = detector.detectAll();
             Console.Out.WriteLine("  Total imported to bank: " + detectionResults[0]);//"Total imported to bank: "
-            Console.Out.WriteLine("  Total imported to fracked: " + detectionResults[2]);//"Total imported to fracked: "
+            //Console.Out.WriteLine("  Total imported to fracked: " + detectionResults[2]);//"Total imported to fracked: "
             updateLog("  Total imported to bank: " + detectionResults[0]);
-            updateLog("  Total imported to fracked: " + detectionResults[2]);
+            //updateLog("  Total imported to fracked: " + detectionResults[2]);
             // And the bank and the fractured for total
             Console.Out.WriteLine("  Total Counterfeit: " + detectionResults[1]);//"Total Counterfeit: "
             Console.Out.WriteLine("  Total Kept in suspect folder: " + detectionResults[3]);//"Total Kept in suspect folder: " 

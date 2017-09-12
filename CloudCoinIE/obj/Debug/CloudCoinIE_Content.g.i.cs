@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("android-chrome-512x512_131495165950459079.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cloudcoinlogo2.png")]
 
 

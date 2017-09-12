@@ -13,7 +13,7 @@
 
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,5">
                 <Button Margin="0,10" Height="35" Width="120" Foreground="White" HorizontalAlignment="Center" Background="{StaticResource AccentColorBrush}" x:Name="cmdImport" Click="cmdImport_Click">Import</Button>
-                <Button x:Name="cmdRestore" Content="Restore Cloudcoins" Click ="cmdRestore_Click"  Margin="4" Background="{StaticResource AccentColorBrush}" Height="35" Foreground="White" Width="120"/>
+                <Button x:Name="cmdRestore" Content="Restore Cloudcoins" Click ="cmdRestore_Click"  Margin="4" Background="{StaticResource AccentColorBrush}" Height="35" Foreground="White" Width="120" Visibility="Collapsed"/>
             </StackPanel>
 
 
