@@ -532,10 +532,10 @@ namespace Founders
             Console.Out.WriteLine("");
             Console.ForegroundColor = ConsoleColor.White;
 
-            UpdateStatus("Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
+            //UpdateStatus("Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
             if(txtLogs!=null)
             {
-                updateLog("Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
+              //  updateLog("Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
             }
             // check if failed
             //  string fmt = "00";

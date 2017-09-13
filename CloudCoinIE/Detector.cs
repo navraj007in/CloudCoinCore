@@ -38,12 +38,13 @@ namespace Founders
             this.fileUtils = fileUtils;
         }// end Detect constructor
 
-
+        public int totalImported = 0;
         /*  PUBLIC METHODS */
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
+        /// 
         public int[] detectAll()
         {
             // LOAD THE .suspect COINS ONE AT A TIME AND TEST THEM
@@ -107,11 +108,13 @@ namespace Founders
                         {
                             case "bank":
                                 totalValueToBank++;
+                                totalImported += detectedCC.getDenomination();
                                 alreadyExists = this.fileUtils.writeTo(this.fileUtils.bankFolder, detectedCC.cc);
                                 break;
                             case "fracked":
                                 totalValueToFractured++;
                                 alreadyExists = this.fileUtils.writeTo(this.fileUtils.frackedFolder, detectedCC.cc);
+                                totalImported += detectedCC.getDenomination();
                                 break;
                             case "counterfeit":
                                 totalValueToCounterfeit++;

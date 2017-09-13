@@ -70,7 +70,7 @@ namespace CloudCoinIE
             new Thread(delegate () {
                 fix();
             }).Start();
-
+            raida.cmdEcho_Click(this, new RoutedEventArgs());
         }
 
         private void showDisclaimer()
@@ -231,17 +231,17 @@ namespace CloudCoinIE
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // If data is dirty, notify user and ask for a response
-            if (!import.cmdImport.IsEnabled)
-            {
-                string msg = "Import is in progress!";
-                MessageBoxResult result =
-                  MessageBox.Show(
-                    msg,
-                    "CloudCoins",
-                    MessageBoxButton.OK ,
-                    MessageBoxImage.Warning);
-                e.Cancel = true;
-            }
+            //if (!import.cmdImport.IsEnabled)
+            //{
+            //    string msg = "Import is in progress!";
+            //    MessageBoxResult result =
+            //      MessageBox.Show(
+            //        msg,
+            //        "CloudCoins",
+            //        MessageBoxButton.OK ,
+            //        MessageBoxImage.Warning);
+            //    e.Cancel = true;
+            //}
 
         }
     }

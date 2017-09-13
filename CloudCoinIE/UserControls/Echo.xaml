@@ -14,7 +14,7 @@
                         <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblAustralia">Australia</Button>
                         <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblMacedonia">Macedonia</Button>
 
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblPhillipines">Philipines</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblPhillipines">Philippines</Button>
                         <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblSerbia">Serbia</Button>
                         <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblBulgaria">Bulgaria</Button>
                     </StackPanel>
@@ -48,7 +48,7 @@
 
                         <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblUSA2">USA</Button>
                         <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblUkraine">Ukraine</Button>
-                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblLuxemberg">Luxemberg</Button>
+                        <Button Width="80" Background="{StaticResource AccentColorBrush}" Margin="4" Foreground="White" x:Name="lblLuxemberg">Luxembourg</Button>
                     </StackPanel>
 
 

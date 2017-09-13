@@ -36,6 +36,7 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\PInvoke.Windows.Core.
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\bin\Debug\Validation.xml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\UserControls\Bank.baml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\UserControls\Echo.baml
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\Disclaimer.g.cs
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\MainWindow.g.cs
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\UserControls\Bank.g.cs
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\UserControls\Configure.g.cs
@@ -47,16 +48,15 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\GeneratedInternalType
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE_MarkupCompile.cache
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE_MarkupCompile.lref
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\App.baml
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\Disclaimer.baml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\MainWindow.baml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\UserControls\Configure.baml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\UserControls\Export.baml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\UserControls\Import.baml
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.g.resources
+D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.AboutBox1.resources
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.Properties.Resources.resources
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.csproj.GenerateResource.Cache
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.exe
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.pdb
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.csprojResolveAssemblyReference.cache
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\CloudCoinIE.AboutBox1.resources
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\Disclaimer.g.cs
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\Disclaimer.baml

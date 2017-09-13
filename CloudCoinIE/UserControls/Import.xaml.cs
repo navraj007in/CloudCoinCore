@@ -61,15 +61,40 @@ namespace CloudCoinIE.UserControls
             openFileDialog.Filter = "Jpeg files (*.jpg)|*.jpg|Stack files (*.stack)|*.stack|All files (*.*)|*.*";
             openFileDialog.InitialDirectory = fileUtils.ImportFolder;
             openFileDialog.Multiselect = true;
-            
+
             if (openFileDialog.ShowDialog() == true)
             {
                 foreach (string filename in openFileDialog.FileNames)
                 {
-                    File.Copy(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
-                    Console.WriteLine((filename));
+                    try
+                    {
+                        if (!File.Exists(fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename)))
+                            File.Copy(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
+                        else
+                        {
+                            string msg = "File " + filename + " already exists. Do you want to overwrite it?";
+                            MessageBoxResult result =
+                              MessageBox.Show(
+                                msg,
+                                "CloudCoins",
+                                MessageBoxButton.YesNo,
+                                MessageBoxImage.Warning);
+                            if (result == MessageBoxResult.Yes)
+                            {
+                                File.Copy(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename), true);
+
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        updateLog(ex.Message);
+                    }
                 }
             }
+            else
+                return;
 
             int totalRAIDABad = 0;
             for (int i = 0; i < 25; i++)
@@ -183,11 +208,12 @@ namespace CloudCoinIE.UserControls
             Console.Out.WriteLine("  Total Kept in suspect folder: " + detectionResults[3]);//"Total Kept in suspect folder: " 
             updateLog("  Total Counterfeit: " + detectionResults[1]);
             updateLog("  Total Kept in suspect folder: " + detectionResults[3]);
+            updateLog("  Total Notes imported to Bank: " + detector.totalImported);
 
             //            showCoins();
             stopwatch.Stop();
             Console.Out.WriteLine(stopwatch.Elapsed + " ms");
-            updateLog(stopwatch.Elapsed + " ms");
+            updateLog("Time to import "+ detectionResults[0] +" Coins: "+ stopwatch.Elapsed.ToCustomString() + "");
 
             string messageBoxText = "Finished Importing Coins.";
             string caption = "Coins";
@@ -198,9 +224,9 @@ namespace CloudCoinIE.UserControls
             MessageBox.Show(messageBoxText, caption, button, icon);
             App.Current.Dispatcher.Invoke(delegate
             {
-
                 cmdRestore.IsEnabled = true;
                 cmdImport.IsEnabled = true;
+                progressBar.Value = 100;
             });
         }//end detect
 
@@ -249,6 +275,13 @@ namespace CloudCoinIE.UserControls
                     cmdImport_Click(this, new RoutedEventArgs());
                 }
             }
+        }
+    }
+    public static class MyExtensions
+    {
+        public static string ToCustomString(this TimeSpan span)
+        {
+            return string.Format("{0:00}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds);
         }
     }
 }

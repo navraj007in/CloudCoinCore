@@ -117,7 +117,7 @@ namespace Founders
         }//end write all jpegs
 
         /* Write JSON to .stack File  */
-        public bool writeJSONFile(int m1, int m5, int m25, int m100, int m250, String tag)
+        public bool writeJSONFile(int m1, int m5, int m25, int m100, int m250, String tag,int mode =0,string backupDir="")
         {
             bool jsonExported = true;
             int totalSaved = m1 + (m5 * 5) + (m25 * 25) + (m100 * 100) + (m250 * 250);
@@ -344,6 +344,11 @@ namespace Founders
             json = json + "\t] " + Environment.NewLine;
             json += "}";
             String filename = (this.fileUtils.exportFolder + Path.DirectorySeparatorChar + totalSaved + ".CloudCoins." + tag + ".stack");
+
+            if(mode == 1)
+            {
+                filename = (backupDir + Path.DirectorySeparatorChar + totalSaved + ".CloudCoins." + tag + ".stack");
+            }
             if (File.Exists(filename))
             {
                 // tack on a random number if a file already exists with the same tag
@@ -357,6 +362,7 @@ namespace Founders
             CoreLogger.Log("Writing to : " + filename);
             Console.Out.WriteLine(filename);
             /*DELETE FILES THAT HAVE BEEN EXPORTED*/
+            if(mode == 0)
             for (int cc = 0; cc < coinsToDelete.Length; cc++)
             {
                 // Console.Out.WriteLine("Deleting " + coinsToDelete[cc]);

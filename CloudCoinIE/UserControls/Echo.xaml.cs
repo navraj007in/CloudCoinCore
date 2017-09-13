@@ -192,7 +192,7 @@ namespace CloudCoinIE.UserControls
             }//End echo
 
 
-            private void cmdEcho_Click(object sender, RoutedEventArgs e)
+            public void cmdEcho_Click(object sender, RoutedEventArgs e)
             {
             echoProgress.Visibility = Visibility.Visible;
             cmdRefresh.IsEnabled = false;

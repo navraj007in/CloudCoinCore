@@ -25,8 +25,8 @@
             <TabItem Header="Export">
                 <cont:Export x:Name="export"/>
             </TabItem>
-            <TabItem Header="RAIDA">
-                <cont:Echo></cont:Echo>
+            <TabItem Header="RAIDA" >
+                <cont:Echo x:Name="raida"></cont:Echo>
             </TabItem>
             <TabItem Header="Tools">
                 <cont:Configure />
