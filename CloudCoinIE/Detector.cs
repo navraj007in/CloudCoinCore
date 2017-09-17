@@ -54,7 +54,7 @@ namespace Founders
             int totalValueToCounterfeit = 0;
             int totalValueToFractured = 0;
             int totalValueToKeptInSuspect = 0;
-            bool coinSupect = false;
+            bool coinSuspect = false;
             CloudCoin newCC;
             for (int j = 0; j < suspectFileNames.Length; j++)
             {
@@ -102,6 +102,25 @@ namespace Founders
                         }//end if it is the first coin we are detecting
 
                         cu.consoleReport();
+                        if (numOfFails > 5)
+                        {
+                            //Check for threats.
+                            if (containsThreat(cu.cc.pown))
+                            {  //This coin may be trying to charge back
+                                Frack_Fixer ff = new Frack_Fixer(fileUtils, 10000);
+                                cu = ff.fixCoin(cu.cc);
+                                for(int i = 0; i < 25; i++) { cu.pans[i] = cu.generatePan(); } // end for each pan
+                                cu = this.raida.detectCoin(cu, detectTime);
+                                //Check if the number of fails is now below 5. 
+                                int failCount = cu.cc.pown.Split('f').Length - 1;
+                                //if it is above 5, make it counterfeit. Powning is not working.
+                                if ( failCount > 5 ) {
+                                    cu.setFolder( "counterfeit" );
+                                    cu.consoleReport();
+                                }//end if over 5
+                            }//End if there is  a threat
+                        }//End if number of fails is greator than 5
+
 
                         bool alreadyExists = false;//Does the file already been imported?
                         switch ( cu.getFolder().ToLower())
@@ -122,14 +141,14 @@ namespace Founders
                                 break;
                             case "suspect":
                                 totalValueToKeptInSuspect++;
-                                coinSupect = true;//Coin will remain in suspect folder
+                                coinSuspect = true;//Coin will remain in suspect folder
                                 break;
                         }//end switch
 
 
 
                         // end switch on the place the coin will go 
-                        if (!coinSupect)//Leave coin in the suspect folder if RAIDA is down
+                        if (!coinSuspect)//Leave coin in the suspect folder if RAIDA is down
                         {
                             File.Delete(this.fileUtils.suspectFolder + suspectFileNames[j]);//Take the coin out of the suspect folder
                         }
@@ -193,7 +212,7 @@ namespace Founders
             int totalValueToCounterfeit = 0;
             int totalValueToFractured = 0;
             int totalValueToKeptInSuspect = 0;
-            bool coinSupect = false;
+            bool coinSuspect = false;
             CloudCoin newCC;
             for (int j = 0; j < suspectFileNames.Length; j++)
             {
@@ -250,14 +269,14 @@ namespace Founders
                                 break;
                             case "suspect":
                                 totalValueToKeptInSuspect++;
-                                coinSupect = true;//Coin will remain in suspect folder
+                                coinSuspect = true;//Coin will remain in suspect folder
                                 break;
                         }//end switch
 
 
 
                         // end switch on the place the coin will go 
-                        if (!coinSupect)//Leave coin in the suspect folder if RAIDA is down
+                        if (!coinSuspect)//Leave coin in the suspect folder if RAIDA is down
                         {
                             File.Delete(this.fileUtils.suspectFolder + suspectFileNames[j]);//Take the coin out of the suspect folder
                         }
