@@ -154,7 +154,7 @@ namespace Founders
             results[3] = totalValueToKeptInSuspect;
             return results;
         }//Detect All
-
+/*
         public int[] partialDetectAll()
         {
             // LOAD THE .suspect COINS ONE AT A TIME AND TEST THEM
@@ -260,6 +260,33 @@ namespace Founders
             results[2] = totalValueToFractured;
             results[3] = totalValueToKeptInSuspect;
             return results;
-        }//Detect All
+        }//End Partial Detect
+	    
+	    */
+        public bool containsThreat(string pown)
+        {
+            bool threat = false;
+            string doublePown = pown + pown;
+            //There are four threat patterns that would allow attackers to seize other 
+            //String UP_LEFT = "ff***f";
+            //String UP_RIGHT = "ff***pf";
+            //String DOWN_LEFT = "fp***ff";
+            //String DOWN_RIGHT = "pf***ff";
+
+
+            Match UP_LEFT = Regex.Match(doublePown, @"ff[a-z][a-z][a-z]fp", RegexOptions.IgnoreCase);
+            Match UP_RIGHT = Regex.Match(doublePown, @"ff[a-z][a-z][a-z]pf", RegexOptions.IgnoreCase);
+            Match DOWN_LEFT = Regex.Match(doublePown, @"fp[a-z][a-z][a-z]ff", RegexOptions.IgnoreCase);
+            Match DOWN_RIGHT = Regex.Match(doublePown, @"pf[a-z][a-z][a-z]ff", RegexOptions.IgnoreCase);
+
+            //Check if 
+            if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success)
+            {
+                threat = true;
+            }//end if coin contains threats.
+
+
+            return threat;
+        }//End Contains Threat
     }
 }
