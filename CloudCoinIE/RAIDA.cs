@@ -226,6 +226,8 @@ namespace Founders
 
         public void get_Tickets(int[] triad, String[] ans, int nn, int sn, int denomination, int milliSecondsToTimeOut)
         {
+            //Empty the status of any old ticket info. 
+            RAIDA_Status.resetTickets();
             //Console.WriteLine("Get Tickets called. ");
             var t00 = Task.Factory.StartNew(() => get_Ticket(0, triad[00], nn, sn, ans[00], denomination));
             var t01 = Task.Factory.StartNew(() => get_Ticket(1, triad[01], nn, sn, ans[01], denomination));

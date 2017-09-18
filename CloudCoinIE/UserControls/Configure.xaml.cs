@@ -41,7 +41,7 @@ namespace CloudCoinIE.UserControls
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
                     string sMessageBoxText = "Do you want to Change CloudCoin Folder?";
-                    string sCaption = "My Test Application";
+                    string sCaption = "Change Cloudcoin Directory";
 
                     MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
                     MessageBoxImage icnMessageBox = MessageBoxImage.Warning;

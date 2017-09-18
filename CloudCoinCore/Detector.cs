@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Founders
 {
@@ -11,7 +12,6 @@ namespace Founders
         FileUtils fileUtils;
         int detectTime = 5000;
         
-
 
         /*  CONSTRUCTOR */
         public Detector(FileUtils fileUtils, int timeout)
@@ -36,7 +36,7 @@ namespace Founders
             int totalValueToCounterfeit = 0;
             int totalValueToFractured = 0;
             int totalValueToKeptInSuspect = 0;
-            bool coinSupect = false;
+            bool coinSuspect = false;
             CloudCoin newCC;
             for (int j = 0; j < suspectFileNames.Length; j++)
             {
@@ -75,6 +75,28 @@ namespace Founders
                         }//end if it is the first coin we are detecting
 
                         cu.consoleReport();
+						if (numOfFails > 5)
+                        {
+                            //Check for threats.
+                            if (containsThreat(cu.cc.pown))
+                            {  //This coin may be trying to charge back
+                                 Console.Out.WriteLine("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
+                                 CoreLogger.Log("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
+                    
+                                Frack_Fixer ff = new Frack_Fixer(fileUtils, 10000);
+                                cu = ff.fixCoin(cu.cc);
+                                for(int i = 0; i < 25; i++) { cu.pans[i] = cu.generatePan(); } // end for each pan
+                                cu = this.raida.detectCoin(cu, detectTime);//Detect again to make sure it is powned
+                                //Check if the number of fails is now below 5. 
+                                int failCount = cu.cc.pown.Split('f').Length - 1;
+                                //if it is above 5, make it counterfeit. Powning is not working.
+                                if ( failCount > 5 ) {
+                                    cu.setFolder( "counterfeit" );
+                                    cu.consoleReport();
+                                }//end if over 5
+                            }//End if there is  a threat
+                        }//End if number of fails is greator than 5
+
 
                         bool alreadyExists = false;//Does the file already been imported?
                         switch ( cu.getFolder().ToLower())
@@ -93,14 +115,14 @@ namespace Founders
                                 break;
                             case "suspect":
                                 totalValueToKeptInSuspect++;
-                                coinSupect = true;//Coin will remain in suspect folder
+                                coinSuspect = true;//Coin will remain in suspect folder
                                 break;
                         }//end switch
 
 
 
                         // end switch on the place the coin will go 
-                        if (!coinSupect)//Leave coin in the suspect folder if RAIDA is down
+                        if (!coinSuspect)//Leave coin in the suspect folder if RAIDA is down
                         {
                             File.Delete(this.fileUtils.suspectFolder + suspectFileNames[j]);//Take the coin out of the suspect folder
                         }
@@ -133,7 +155,7 @@ namespace Founders
             results[3] = totalValueToKeptInSuspect;
             return results;
         }//Detect All
-
+/*
         public int[] partialDetectAll()
         {
             // LOAD THE .suspect COINS ONE AT A TIME AND TEST THEM
@@ -143,7 +165,7 @@ namespace Founders
             int totalValueToCounterfeit = 0;
             int totalValueToFractured = 0;
             int totalValueToKeptInSuspect = 0;
-            bool coinSupect = false;
+            bool coinSuspect = false;
             CloudCoin newCC;
             for (int j = 0; j < suspectFileNames.Length; j++)
             {
@@ -200,14 +222,14 @@ namespace Founders
                                 break;
                             case "suspect":
                                 totalValueToKeptInSuspect++;
-                                coinSupect = true;//Coin will remain in suspect folder
+                                coinSuspect = true;//Coin will remain in suspect folder
                                 break;
                         }//end switch
 
 
 
                         // end switch on the place the coin will go 
-                        if (!coinSupect)//Leave coin in the suspect folder if RAIDA is down
+                        if (!coinSuspect)//Leave coin in the suspect folder if RAIDA is down
                         {
                             File.Delete(this.fileUtils.suspectFolder + suspectFileNames[j]);//Take the coin out of the suspect folder
                         }
@@ -239,6 +261,33 @@ namespace Founders
             results[2] = totalValueToFractured;
             results[3] = totalValueToKeptInSuspect;
             return results;
-        }//Detect All
+        }//End Partial Detect
+	    
+	    */
+        public bool containsThreat(string pown)
+        {
+            bool threat = false;
+            string doublePown = pown + pown;
+            //There are four threat patterns that would allow attackers to seize other 
+            //String UP_LEFT = "ff***f";
+            //String UP_RIGHT = "ff***pf";
+            //String DOWN_LEFT = "fp***ff";
+            //String DOWN_RIGHT = "pf***ff";
+
+
+            Match UP_LEFT = Regex.Match(doublePown, @"ff[a-z][a-z][a-z]fp", RegexOptions.IgnoreCase);
+            Match UP_RIGHT = Regex.Match(doublePown, @"ff[a-z][a-z][a-z]pf", RegexOptions.IgnoreCase);
+            Match DOWN_LEFT = Regex.Match(doublePown, @"fp[a-z][a-z][a-z]ff", RegexOptions.IgnoreCase);
+            Match DOWN_RIGHT = Regex.Match(doublePown, @"pf[a-z][a-z][a-z]ff", RegexOptions.IgnoreCase);
+
+            //Check if 
+            if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success)
+            {
+                threat = true;
+            }//end if coin contains threats.
+
+
+            return threat;
+        }//End Contains Threat
     }
 }
