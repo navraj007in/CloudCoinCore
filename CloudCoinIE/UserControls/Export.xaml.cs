@@ -37,9 +37,10 @@ namespace CloudCoinIE.UserControls
         public Export()
         {
             InitializeComponent();
+            calcMaximums();
             showCoins();
         }
-        public void showCoins()
+        public void calcMaximums()
         {
             Console.Out.WriteLine("");
             // This is for consol apps.
@@ -75,49 +76,96 @@ namespace CloudCoinIE.UserControls
             try
             {
                 total = Convert.ToInt16(countOnes.Value) + Convert.ToInt16(countFive.Value) * 5 + Convert.ToInt16(countQtrs.Value) * 25 + Convert.ToInt16(countHundreds.Value) * 100 + Convert.ToInt16(countTwoFifties.Value) * 250;
-                if (total > 0)
-                    groupExport.Header = "Export Your Coins - " + total;
-                else
-                    groupExport.Header = "Export Your Coins " ;
-
+                //if (total > 0)
+                //    groupExport.Header = "Export Your Coins - " + total;
+                //else
+                //    groupExport.Header = "Export Your Coins " ;
+                cmdExport.Content = "Export " + total + " Coins";
             }
             catch (Exception e)
             {
 
             }
         }
+
+        public void showCoins()
+        {
+            Console.Out.WriteLine("");
+            // This is for consol apps.
+            Banker bank = new Banker(MainWindow.fileUtils);
+            int[] bankTotals = bank.countCoins(MainWindow.fileUtils.bankFolder);
+            int[] frackedTotals = bank.countCoins(MainWindow.fileUtils.frackedFolder);
+            int[] partialTotals = bank.countCoins(MainWindow.fileUtils.partialFolder);
+            // int[] counterfeitTotals = bank.countCoins( counterfeitFolder );
+
+            //Output  " 12.3"
+
+
+            setLabelText(lblOnesCount, Convert.ToString(bankTotals[1] + frackedTotals[1] + partialTotals[1]));
+            setLabelText(lblFivesCount, Convert.ToString(bankTotals[2] + frackedTotals[2] + partialTotals[2]));
+            setLabelText(lblQtrCount, Convert.ToString(bankTotals[3] + frackedTotals[3] + partialTotals[3]));
+            setLabelText(lblHundredCount, Convert.ToString(bankTotals[4] + frackedTotals[4] + partialTotals[4]));
+            setLabelText(lblTwoFiftiesCount, Convert.ToString(bankTotals[5] + frackedTotals[5] + partialTotals[5]));
+
+            setLabelText(lblOnesValue, Convert.ToString(bankTotals[1] + frackedTotals[1] + partialTotals[1]));
+            setLabelText(lblFivesValue, Convert.ToString((bankTotals[2] + frackedTotals[2] + partialTotals[2]) * 5));
+            setLabelText(lblQtrValue, Convert.ToString((bankTotals[3] + frackedTotals[3] + partialTotals[3]) * 25));
+            setLabelText(lblHundredValue, Convert.ToString((bankTotals[4] + frackedTotals[4] + partialTotals[4]) * 100));
+            setLabelText(lblTwoFiftiesValue, Convert.ToString((bankTotals[5] + frackedTotals[5] + partialTotals[5]) * 250));
+//            setLabelText(lblTotalCoins, "Total Coins in Bank : " + Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
+  //          setLabelText(lblValuesTotal, Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
+    //        setLabelText(lblNotesTotal, Convert.ToString(
+    //            Convert.ToInt16(lblOnesCount.Content.ToString()) +
+     //           Convert.ToInt16(lblFivesCount.Content.ToString()) +
+     //           Convert.ToInt16(lblQtrCount.Content.ToString()) +
+       //         Convert.ToInt16(lblHundredCount.Content.ToString()) +
+     //           Convert.ToInt16(lblTwoFiftiesCount.Content.ToString())
+     //           ));
+
+
+        }// end show
+
         private void countOnes_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
-            if(countOnes!=null && lblOnesValue!=null)
-                lblOnesValue.Content = Convert.ToInt16(countOnes.Value);
+            if(countOnes!=null && lblOnesExport!=null)
+                lblOnesExport.Content = Convert.ToInt16(countOnes.Value);
             updateTotal();
+        }
+        private void setLabelText(Label lbl, string text)
+        {
+            App.Current.Dispatcher.Invoke(delegate
+            {
+                if (lbl != null)
+                    lbl.Content = text;
+            });
+
         }
 
         private void countFive_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
-            if (countFive != null && lblFivesValue != null)
-                lblFivesValue.Content = Convert.ToInt16(countFive.Value) * 5;
+            if (countFive != null && lblFivesExport != null)
+                lblFivesExport.Content = Convert.ToInt16(countFive.Value) * 5;
             updateTotal();
         }
 
         private void countQtrs_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
-            if (countQtrs != null && lblQtrValue != null)
-                lblQtrValue.Content = Convert.ToInt16(countQtrs.Value) * 25;
+            if (countQtrs != null && lblQtrsExport != null)
+                lblQtrsExport.Content = Convert.ToInt16(countQtrs.Value) * 25;
             updateTotal();
         }
 
         private void countHundreds_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
-            if (countHundreds != null && lblHundredValue != null)
-                lblHundredValue.Content = Convert.ToInt16(countHundreds.Value) * 100;
+            if (countHundreds != null && lblHundredsExport != null)
+                lblHundredsExport.Content = Convert.ToInt16(countHundreds.Value) * 100;
             updateTotal();
         }
 
         private void countTwoFifties_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
-            if (countTwoFifties != null && lblTwoFiftiesValue != null)
-                lblTwoFiftiesValue.Content = Convert.ToInt16(countTwoFifties.Value) * 250;
+            if (countTwoFifties != null && lblTwoFiftiesExport != null)
+                lblTwoFiftiesExport.Content = Convert.ToInt16(countTwoFifties.Value) * 250;
             updateTotal();
         }
 

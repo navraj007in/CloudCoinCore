@@ -12,55 +12,71 @@
     <Grid>
         <StackPanel Orientation="Vertical">
 
-            <GroupBox Width="450" Height="290" Header="Export Your Coins" Margin="0,15" HorizontalAlignment="Center" x:Name="groupExport">
+            <GroupBox Width="460" Height="300" Header="Export Your Coins" Margin="0,5" HorizontalAlignment="Center" x:Name="groupExport">
                 <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal" Visibility="Visible">
                         <Label Margin="10,2">Denomination</Label>
                         <Label Margin="10,2" >Count</Label>
                         <Label Margin="30,2" >Total</Label>
+                        <Label Margin="15,2" >Export Count</Label>
+                        <Label Margin="0,2" >Export Total</Label>
 
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" >
+                    <Canvas Margin="10,10" >
                         <Label Margin="10,2">1s</Label>
-                        <Controls:NumericUpDown Minimum="0" Maximum="25" Value="0" Margin="50,2" x:Name="countOnes" ValueChanged="countOnes_ValueChanged"/>
-                        <Label x:Name="lblOnesValue">0</Label>
+                        <Label x:Name="lblOnesCount" Canvas.Left="115" >0</Label>
+                        <Label x:Name="lblOnesValue" Canvas.Left="185" >0</Label>
+                        <Controls:NumericUpDown Minimum="0" Maximum="25" Value="0" Canvas.Left="270" x:Name="countOnes" ValueChanged="countOnes_ValueChanged"/>
+                        <Label x:Name="lblOnesExport" Canvas.Left="365" >0</Label>
 
-                    </StackPanel>
-                    <Line></Line>
+                    </Canvas>
 
-                    <StackPanel Orientation="Horizontal" Visibility="Visible">
+
+                    <Canvas Margin="10,15" Visibility="Visible">
                         <Label Margin="10,2">5s</Label>
-                        <Controls:NumericUpDown Minimum="0" Maximum="25" Value="0" Margin="50,2" x:Name="countFive" ValueChanged="countFive_ValueChanged"/>
-                        <Label Margin="2,2" x:Name="lblFivesValue">0</Label>
+                        <Label Canvas.Left="115" x:Name="lblFivesCount">0</Label>
+                        <Label Canvas.Left="185" x:Name="lblFivesValue">0</Label>
 
-                    </StackPanel>
+                        <Controls:NumericUpDown Minimum="0" Maximum="25" Value="0" Canvas.Left="270" x:Name="countFive" ValueChanged="countFive_ValueChanged"/>
+                        <Label x:Name="lblFivesExport" Canvas.Left="365" >0</Label>
+
+                    </Canvas>
                     <Line></Line>
 
-                    <StackPanel Orientation="Horizontal" Visibility="Visible">
+                    <Canvas Margin="10,15" Visibility="Visible">
                         <Label Margin="10,2">25s</Label>
-                        <Controls:NumericUpDown Minimum="0" Maximum="25" Value="0" Margin="44,2" x:Name="countQtrs" ValueChanged="countQtrs_ValueChanged"/>
-                        <Label Margin="7,2" x:Name="lblQtrValue">0</Label>
+                        <Label Canvas.Left="115" x:Name="lblQtrCount">0</Label>
+                        <Label Canvas.Left="185" x:Name="lblQtrValue">0</Label>
 
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Visibility="Visible">
+                        <Controls:NumericUpDown Minimum="0" Maximum="25" Value="0"  x:Name="countQtrs" Canvas.Left="270" ValueChanged="countQtrs_ValueChanged"/>
+                        <Label x:Name="lblQtrsExport" Canvas.Left="365" >0</Label>
+
+                    </Canvas>
+                    <Canvas Margin="10,15" Visibility="Visible">
                         <Label Margin="10,2">100s</Label>
-                        <Controls:NumericUpDown Minimum="0" Maximum="25" Value="0" Margin="40,2" x:Name="countHundreds" ValueChanged="countHundreds_ValueChanged"/>
-                        <Label Margin="11,2" x:Name="lblHundredValue">0</Label>
+                        <Label Canvas.Left="115" x:Name="lblHundredCount">0</Label>
+                        <Label Canvas.Left="185" x:Name="lblHundredValue">0</Label>
 
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Visibility="Visible">
+                        <Controls:NumericUpDown Minimum="0" Maximum="25" Value="0"  x:Name="countHundreds" Canvas.Left="270" ValueChanged="countHundreds_ValueChanged"/>
+                        <Label x:Name="lblHundredsExport" Canvas.Left="365" >0</Label>
+
+                    </Canvas>
+                    <Canvas Margin="10,15"  Visibility="Visible">
                         <Label Margin="10,2">250s</Label>
-                        <Controls:NumericUpDown Minimum="0" Maximum="25" Value="0" Margin="40,2" x:Name="countTwoFifties" ValueChanged="countTwoFifties_ValueChanged"/>
-                        <Label Margin="11,2" x:Name="lblTwoFiftiesValue">0</Label>
+                        <Label Canvas.Left="115" x:Name="lblTwoFiftiesCount">0</Label>
+                        <Label Canvas.Left="185" x:Name="lblTwoFiftiesValue">0</Label>
 
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="10,4" HorizontalAlignment="Center">
+                        <Controls:NumericUpDown Minimum="0" Maximum="25" Value="0" x:Name="countTwoFifties" Canvas.Left="270" ValueChanged="countTwoFifties_ValueChanged" UpDownButtonsWidth="20"/>
+                        <Label x:Name="lblTwoFiftiesExport" Canvas.Left="365" >0</Label>
+
+                    </Canvas>
+                    <StackPanel Orientation="Horizontal" Margin="10,3" HorizontalAlignment="Center">
                         <RadioButton x:Name="rdbStack"  Content="Stack" IsChecked="True"/>
                         <RadioButton x:Name="rdbJpeg" Margin="5" Content="Jpeg"/>
                     </StackPanel>
-                    <TextBox x:Name="txtTag" Margin="10,2"/>
-                    <Button x:Name="cmdExport" Margin="10,2" Width="100" Content="Export" Foreground="White" Background="{StaticResource AccentColorBrush}" Click="cmdExport_Click"/>
+                    <TextBox x:Name="txtTag" Margin="10,1"/>
+                    <Button x:Name="cmdExport" Margin="10,3" Width="200" Content="Export" Foreground="White" Background="{StaticResource AccentColorBrush}" Click="cmdExport_Click"/>
 
                 </StackPanel>
             </GroupBox>

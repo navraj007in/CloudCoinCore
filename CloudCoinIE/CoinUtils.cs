@@ -152,7 +152,134 @@ namespace Founders
                 }
             }
         }//end calculate hp
+/*
+        public String gradeCoin()
+        {
+            int passed = 0;
+            int failed = 0;
+            int other = 0;
+            String passedDesc = "";
+            String failedDesc = "";
+            String otherDesc = "";
+            char[] pownArray = cc.pown.ToCharArray();
 
+            for (int i = 0; (i < 25); i++)
+            {
+                if ( pownArray[i] == 'p')
+                {
+                    passed++;
+                }
+                else if ( pownArray[i] == 'f')
+                {
+                    failed++;
+                }
+                else
+                {
+                    other++;
+                }
+            }// end if pass, fail or unknown
+
+            // Calculate passed
+            if (passed == 25)
+            {
+                passedDesc = "100% Passed!";
+            }
+            else if (passed > 17)
+            {
+                passedDesc = "Super Majority";
+            }
+            else if (passed > 13)
+            {
+                passedDesc = "Majority";
+            }
+            else if (passed == 0)
+            {
+                passedDesc = "None";
+            }
+            else if (passed < 5)
+            {
+                passedDesc = "Super Minority";
+            }
+            else
+            {
+                passedDesc = "Minority";
+            }
+
+            // Calculate failed
+            if (failed == 25)
+            {
+                failedDesc = "100% Failed!";
+            }
+            else if (failed > 17)
+            {
+                failedDesc = "Super Majority";
+            }
+            else if (failed > 13)
+            {
+                failedDesc = "Majority";
+            }
+            else if (failed == 0)
+            {
+                failedDesc = "None";
+            }
+            else if (failed < 5)
+            {
+                failedDesc = "Super Minority";
+            }
+            else
+            {
+                failedDesc = "Minority";
+            }
+
+            // Calcualte Other RAIDA Servers did not help. 
+            switch (other)
+            {
+                case 0:
+                    otherDesc = "RAIDA 100% good";
+                    break;
+                case 1:
+                case 2:
+                    otherDesc = "Four or less RAIDA errors";
+                    break;
+                case 3:
+                case 4:
+                    otherDesc = "Four or less RAIDA errors";
+                    break;
+                case 5:
+                case 6:
+                    otherDesc = "Six or less RAIDA errors";
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                    otherDesc = "Between 7 and 12 RAIDA errors";
+                    break;
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                case 21:
+                case 22:
+                case 23:
+                case 24:
+                case 25:
+                    otherDesc = "RAIDA total failure";
+                    break;
+                default:
+                    otherDesc = "FAILED TO EVALUATE RAIDA HEALTH";
+                    break;
+            }
+            // end RAIDA other errors and unknowns
+            return "\n " + passedDesc + " said Passed. " + "\n " + failedDesc + " said Failed. \n RAIDA Status: " + otherDesc;
+        }// end grade coin
+*/
         public void calcExpirationDate()
         {
             DateTime expirationDate = DateTime.Today.AddYears(YEARSTILEXPIRE);
