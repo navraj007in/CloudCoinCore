@@ -11,9 +11,9 @@
 
         <StackPanel Orientation="Vertical">
             <Label HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource AccentColorBrush}" Visibility="Collapsed">Coins</Label>
-            <Label HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource AccentColorBrush}" x:Name="lblTotalCoins">Total Coins in Bank 0</Label>
+            <Label HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource AccentColorBrush}" x:Name="lblTotalCoins" Visibility="Hidden">Total Coins in Bank 0</Label>
             <GroupBox Width="450" Height="220" Header="Bank Details" Margin="0" HorizontalAlignment="Center">
-                <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical" >
                     <StackPanel Orientation="Horizontal">
                         <Label Margin="10,2">Denomination</Label>
                         <Label Margin="10,2" >Count</Label>
@@ -53,6 +53,13 @@
                         <Label Canvas.Left="205" x:Name="lblTwoFiftiesValue">0</Label>
 
                     </Canvas>
+                    <Canvas Margin="10,20">
+                        <Label Margin="10,2">Total</Label>
+                        <Label Canvas.Left="115" x:Name="lblNotesTotal">0</Label>
+                        <Label Canvas.Left="205" x:Name="lblValuesTotal">0</Label>
+
+                    </Canvas>
+
                 </StackPanel>
             </GroupBox>
 

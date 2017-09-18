@@ -58,7 +58,7 @@ namespace CloudCoinIE.UserControls
         private void cmdImport_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Jpeg files (*.jpg)|*.jpg|Stack files (*.stack)|*.stack|All files (*.*)|*.*";
+            openFileDialog.Filter = "Stack (*.stack, *.jpg,*.jpeg)|*.stack;*.jpg;*.jpeg|Stack files (*.stack)|*.stack|Jpeg files (*.jpg)|*.jpg|All files (*.*)|*.*";
             openFileDialog.InitialDirectory = fileUtils.ImportFolder;
             openFileDialog.Multiselect = true;
 
@@ -69,7 +69,7 @@ namespace CloudCoinIE.UserControls
                     try
                     {
                         if (!File.Exists(fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename)))
-                            File.Copy(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
+                            File.Move(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
                         else
                         {
                             string msg = "File " + filename + " already exists. Do you want to overwrite it?";
@@ -81,8 +81,15 @@ namespace CloudCoinIE.UserControls
                                 MessageBoxImage.Warning);
                             if (result == MessageBoxResult.Yes)
                             {
-                                File.Copy(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename), true);
-
+                                try
+                                {
+                                    File.Delete(fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
+                                    File.Move(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
+                                }
+                                catch(Exception ex)
+                                {
+                                    
+                                }
                             }
                         }
 
