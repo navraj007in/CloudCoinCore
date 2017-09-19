@@ -18,6 +18,11 @@ using System.IO;
 using System.Threading;
 using System.Windows.Interactivity;
 using Microsoft.Win32;
+using ToastNotifications;
+using ToastNotifications.Position;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
+using System.Windows.Threading;
 
 namespace CloudCoinIE.UserControls
 {
@@ -53,55 +58,125 @@ namespace CloudCoinIE.UserControls
         public Import()
         {
             InitializeComponent();
+            Dispatcher.BeginInvoke(new Action(() => resumeImport()), 
+                DispatcherPriority.ContextIdle, null);
+            //resumeImport();
         }
 
-        private void cmdImport_Click(object sender, RoutedEventArgs e)
+        private void resumeImport()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Stack (*.stack, *.jpg,*.jpeg)|*.stack;*.jpg;*.jpeg|Stack files (*.stack)|*.stack|Jpeg files (*.jpg)|*.jpg|All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = fileUtils.ImportFolder;
-            openFileDialog.Multiselect = true;
-
-            if (openFileDialog.ShowDialog() == true)
+            int count = Directory.GetFiles(MainWindow.suspectFolder ).Length;
+            if(count >0 )
             {
-                foreach (string filename in openFileDialog.FileNames)
+                Notifier notifier = new Notifier(cfg =>
                 {
-                    try
-                    {
-                        if (!File.Exists(fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename)))
-                            File.Move(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
-                        else
-                        {
-                            string msg = "File " + filename + " already exists. Do you want to overwrite it?";
-                            MessageBoxResult result =
-                              MessageBox.Show(
-                                msg,
-                                "CloudCoins",
-                                MessageBoxButton.YesNo,
-                                MessageBoxImage.Warning);
-                            if (result == MessageBoxResult.Yes)
-                            {
-                                try
-                                {
-                                    File.Delete(fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
-                                    File.Move(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
-                                }
-                                catch(Exception ex)
-                                {
-                                    
-                                }
-                            }
-                        }
+                    cfg.PositionProvider = new WindowPositionProvider(
+                        parentWindow: Application.Current.MainWindow,
+                        corner: Corner.TopRight,
+                        offsetX: 10,
+                        offsetY: 10);
 
-                    }
-                    catch (Exception ex)
+                    cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                        notificationLifetime: TimeSpan.FromSeconds(3),
+                        maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                    cfg.Dispatcher = Application.Current.Dispatcher;
+                });
+
+                notifier.ShowInformation("Unimported Coins found. Resuming import operation.");
+
+            int totalRAIDABad = 0;
+                for (int i = 0; i < 25; i++)
+                {
+                    if (RAIDA_Status.failsEcho[i])
                     {
-                        updateLog(ex.Message);
+                        totalRAIDABad += 1;
                     }
                 }
+                if (totalRAIDABad > 8)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Out.WriteLine("You do not have enough RAIDA to perform an import operation.");
+                    Console.Out.WriteLine("Check to make sure your internet is working.");
+                    Console.Out.WriteLine("Make sure no routers at your work are blocking access to the RAIDA.");
+                    Console.Out.WriteLine("Try to Echo RAIDA and see if the status has changed.");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    txtLogs.AppendText("You do not have enough RAIDA to perform an import operation.");
+                    txtLogs.AppendText("Check to make sure your internet is working.");
+                    txtLogs.AppendText("Make sure no routers at your work are blocking access to the RAIDA.");
+                    txtLogs.AppendText("Try to Echo RAIDA and see if the status has changed.");
+
+                    cmdImport.IsEnabled = true;
+                    cmdRestore.IsEnabled = true;
+
+                    return;
+                }
+                cmdImport.IsEnabled = false;
+                cmdRestore.IsEnabled = false;
+                progressBar.Visibility = Visibility.Visible;
+                new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;
+                    import();
+
+                    /* run your code here */
+                }).Start();
+
             }
-            else
-                return;
+        }
+        private void cmdImport_Click(object sender, RoutedEventArgs e)
+        {
+            int count = Directory.GetFiles(MainWindow.importFolder).Length;
+            if (count == 0)
+            {
+
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Cloudcoins (*.stack, *.jpg,*.jpeg)|*.stack;*.jpg;*.jpeg|Stack files (*.stack)|*.stack|Jpeg files (*.jpg)|*.jpg|All files (*.*)|*.*";
+                openFileDialog.InitialDirectory = fileUtils.ImportFolder;
+                openFileDialog.Multiselect = true;
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    foreach (string filename in openFileDialog.FileNames)
+                    {
+                        try
+                        {
+                            if (!File.Exists(fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename)))
+                                File.Move(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
+                            else
+                            {
+                                string msg = "File " + filename + " already exists. Do you want to overwrite it?";
+                                MessageBoxResult result =
+                                  MessageBox.Show(
+                                    msg,
+                                    "CloudCoins",
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Warning);
+                                if (result == MessageBoxResult.Yes)
+                                {
+                                    try
+                                    {
+                                        File.Delete(fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
+                                        File.Move(filename, fileUtils.ImportFolder + Path.DirectorySeparatorChar + Path.GetFileName(filename));
+                                    }
+                                    catch (Exception ex)
+                                    {
+
+                                    }
+                                }
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            updateLog(ex.Message);
+                        }
+                    }
+                }
+                else
+                    return;
+            }
 
             int totalRAIDABad = 0;
             for (int i = 0; i < 25; i++)
@@ -139,11 +214,10 @@ namespace CloudCoinIE.UserControls
                 import();
 
                 /* run your code here */
-                Console.WriteLine("Hello, world");
             }).Start();
         }
 
-        public void import()
+        public void import(int resume = 0)
         {
 
             //Check RAIDA Status
@@ -172,7 +246,7 @@ namespace CloudCoinIE.UserControls
 
             Console.ForegroundColor = ConsoleColor.White;
             Importer importer = new Importer(fileUtils);
-            if (!importer.importAll())//Moves all CloudCoins from the Import folder into the Suspect folder. 
+            if (!importer.importAll() && resume == 0)//Moves all CloudCoins from the Import folder into the Suspect folder. 
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Out.WriteLine("  No coins in import folder.");// "No coins in import folder.");
