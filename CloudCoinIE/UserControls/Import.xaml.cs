@@ -65,6 +65,10 @@ namespace CloudCoinIE.UserControls
 
         private void resumeImport()
         {
+            cmdImport.IsEnabled = false;
+            cmdRestore.IsEnabled = false;
+            progressBar.Visibility = Visibility.Visible;
+
             int count = Directory.GetFiles(MainWindow.suspectFolder ).Length;
             if(count >0 )
             {
@@ -85,40 +89,35 @@ namespace CloudCoinIE.UserControls
 
                 notifier.ShowInformation("Unimported Coins found. Resuming import operation.");
 
-            int totalRAIDABad = 0;
-                for (int i = 0; i < 25; i++)
-                {
-                    if (RAIDA_Status.failsEcho[i])
-                    {
-                        totalRAIDABad += 1;
-                    }
-                }
-                if (totalRAIDABad > 8)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Out.WriteLine("You do not have enough RAIDA to perform an import operation.");
-                    Console.Out.WriteLine("Check to make sure your internet is working.");
-                    Console.Out.WriteLine("Make sure no routers at your work are blocking access to the RAIDA.");
-                    Console.Out.WriteLine("Try to Echo RAIDA and see if the status has changed.");
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                    txtLogs.AppendText("You do not have enough RAIDA to perform an import operation.");
-                    txtLogs.AppendText("Check to make sure your internet is working.");
-                    txtLogs.AppendText("Make sure no routers at your work are blocking access to the RAIDA.");
-                    txtLogs.AppendText("Try to Echo RAIDA and see if the status has changed.");
-
-                    cmdImport.IsEnabled = true;
-                    cmdRestore.IsEnabled = true;
-
-                    return;
-                }
-                cmdImport.IsEnabled = false;
-                cmdRestore.IsEnabled = false;
-                progressBar.Visibility = Visibility.Visible;
                 new Thread(() =>
                 {
+
                     Thread.CurrentThread.IsBackground = true;
-                    import();
+
+                    MainWindow.echoRaida();
+
+                    int totalRAIDABad = 0;
+                    for (int i = 0; i < 25; i++)
+                    {
+                        if (RAIDA_Status.failsEcho[i])
+                        {
+                            totalRAIDABad += 1;
+                        }
+                    }
+                    if (totalRAIDABad > 8)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Out.WriteLine("You do not have enough RAIDA to perform an import operation.");
+                        Console.Out.WriteLine("Check to make sure your internet is working.");
+                        Console.Out.WriteLine("Make sure no routers at your work are blocking access to the RAIDA.");
+                        Console.Out.WriteLine("Try to Echo RAIDA and see if the status has changed.");
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                        insufficientRAIDA();
+                        return;
+                    }
+                    else
+                        import();
 
                     /* run your code here */
                 }).Start();
@@ -130,7 +129,6 @@ namespace CloudCoinIE.UserControls
             int count = Directory.GetFiles(MainWindow.importFolder).Length;
             if (count == 0)
             {
-
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "Cloudcoins (*.stack, *.jpg,*.jpeg)|*.stack;*.jpg;*.jpeg|Stack files (*.stack)|*.stack|Jpeg files (*.jpg)|*.jpg|All files (*.*)|*.*";
                 openFileDialog.InitialDirectory = fileUtils.ImportFolder;
@@ -195,13 +193,7 @@ namespace CloudCoinIE.UserControls
                 Console.Out.WriteLine("Try to Echo RAIDA and see if the status has changed.");
                 Console.ForegroundColor = ConsoleColor.White;
 
-                txtLogs.AppendText("You do not have enough RAIDA to perform an import operation.");
-                txtLogs.AppendText("Check to make sure your internet is working.");
-                txtLogs.AppendText("Make sure no routers at your work are blocking access to the RAIDA.");
-                txtLogs.AppendText("Try to Echo RAIDA and see if the status has changed.");
-
-                cmdImport.IsEnabled = true;
-                cmdRestore.IsEnabled = true;
+                insufficientRAIDA();
 
                 return;
             }
@@ -322,6 +314,20 @@ namespace CloudCoinIE.UserControls
             });
         }
 
+        private void insufficientRAIDA()
+        {
+            App.Current.Dispatcher.Invoke(delegate
+            {
+                txtLogs.AppendText("You do not have enough RAIDA to perform an import operation.");
+                txtLogs.AppendText("Check to make sure your internet is working.");
+                txtLogs.AppendText("Make sure no routers at your work are blocking access to the RAIDA.");
+                txtLogs.AppendText("Try to Echo RAIDA and see if the status has changed.");
+
+                cmdImport.IsEnabled = true;
+                cmdRestore.IsEnabled = true;
+            });
+
+        }
         private void updateLog(string logLine)
         {
             App.Current.Dispatcher.Invoke(delegate

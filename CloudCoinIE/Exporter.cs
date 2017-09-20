@@ -354,7 +354,7 @@ namespace Founders
                 // tack on a random number if a file already exists with the same tag
                 Random rnd = new Random();
                 int tagrand = rnd.Next(999);
-                filename = (this.fileUtils.exportFolder  + totalSaved + ".CloudCoins." + tag + tagrand + ".stack");
+                filename = (this.fileUtils.exportFolder + Path.DirectorySeparatorChar + totalSaved + ".CloudCoins." + tag + tagrand + ".stack");
             }//end if file exists
 
             File.WriteAllText(filename, json);

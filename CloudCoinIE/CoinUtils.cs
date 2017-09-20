@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace Founders
 {
-    class CoinUtils
+    public class CoinUtils
     {
         //  instance variables
         public CloudCoin cc;

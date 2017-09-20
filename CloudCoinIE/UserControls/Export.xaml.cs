@@ -99,6 +99,11 @@ namespace CloudCoinIE.UserControls
             // int[] counterfeitTotals = bank.countCoins( counterfeitFolder );
 
             //Output  " 12.3"
+            onesTotal = bankTotals[1] + frackedTotals[1] + partialTotals[1];
+            fivesTotal = bankTotals[2] + frackedTotals[2] + partialTotals[2];
+            qtrsTotal = bankTotals[3] + frackedTotals[3] + partialTotals[3];
+            hundredsTotal = bankTotals[4] + frackedTotals[4] + partialTotals[4];
+            TwoFiftiesTotal = bankTotals[5] + frackedTotals[5] + partialTotals[5];
 
 
             setLabelText(lblOnesCount, Convert.ToString(bankTotals[1] + frackedTotals[1] + partialTotals[1]));
@@ -112,15 +117,31 @@ namespace CloudCoinIE.UserControls
             setLabelText(lblQtrValue, Convert.ToString((bankTotals[3] + frackedTotals[3] + partialTotals[3]) * 25));
             setLabelText(lblHundredValue, Convert.ToString((bankTotals[4] + frackedTotals[4] + partialTotals[4]) * 100));
             setLabelText(lblTwoFiftiesValue, Convert.ToString((bankTotals[5] + frackedTotals[5] + partialTotals[5]) * 250));
-//            setLabelText(lblTotalCoins, "Total Coins in Bank : " + Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
-  //          setLabelText(lblValuesTotal, Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
-    //        setLabelText(lblNotesTotal, Convert.ToString(
-    //            Convert.ToInt16(lblOnesCount.Content.ToString()) +
-     //           Convert.ToInt16(lblFivesCount.Content.ToString()) +
-     //           Convert.ToInt16(lblQtrCount.Content.ToString()) +
-       //         Convert.ToInt16(lblHundredCount.Content.ToString()) +
-     //           Convert.ToInt16(lblTwoFiftiesCount.Content.ToString())
-     //           ));
+
+            App.Current.Dispatcher.Invoke(delegate
+            {
+
+                countOnes.Maximum = onesTotal;
+                countFive.Maximum = fivesTotal;
+                countQtrs.Maximum = qtrsTotal;
+                countHundreds.Maximum = hundredsTotal;
+                countTwoFifties.Maximum = TwoFiftiesTotal;
+                countOnes.Value = 0;
+                countFive.Value = 0;
+                countQtrs.Value = 0;
+                countHundreds.Value = 0;
+                countTwoFifties.Value = 0;
+            });
+
+            //            setLabelText(lblTotalCoins, "Total Coins in Bank : " + Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
+            //          setLabelText(lblValuesTotal, Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
+            //        setLabelText(lblNotesTotal, Convert.ToString(
+            //            Convert.ToInt16(lblOnesCount.Content.ToString()) +
+            //           Convert.ToInt16(lblFivesCount.Content.ToString()) +
+            //           Convert.ToInt16(lblQtrCount.Content.ToString()) +
+            //         Convert.ToInt16(lblHundredCount.Content.ToString()) +
+            //           Convert.ToInt16(lblTwoFiftiesCount.Content.ToString())
+            //           ));
 
 
         }// end show
