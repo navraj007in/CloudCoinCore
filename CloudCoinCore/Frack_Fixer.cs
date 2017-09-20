@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Founders
 {
-    class Frack_Fixer
+    public class Frack_Fixer
     {
         /* INSTANCE VARIABLES */
         private FileUtils fileUtils;
@@ -45,43 +45,55 @@ namespace Founders
                 /*2. ARE ALL TRUSTED RAIDA IN THE CORNER READY TO HELP?*/
                 Console.WriteLine("Pown is " + cc.pown);
                 char[] pown_chars = cc.pown.ToCharArray();
-                
 
-                if ( !pown_chars[ trustedTriad[0] ].Equals('p')  || !pown_chars[ trustedTriad[1] ].Equals('p') || !pown_chars[ trustedTriad[2] ].Equals('p'))
+
+                //See if First Trusted RAIDA can help
+                if (!pown_chars[trustedTriad[0]].Equals('p'))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Out.WriteLine("");
-                    Console.Out.WriteLine("One of the trusted servers can't help on  " + corner);
-                    Console.WriteLine("RAIDA " + trustedTriad[0] + " is " + pown_chars[trustedTriad[0]]);
-                    Console.WriteLine("RAIDA " + trustedTriad[1] + " is " + pown_chars[trustedTriad[1]]);
-                    Console.WriteLine("RAIDA " + trustedTriad[2] + " is " + pown_chars[trustedTriad[2]]);
-                    CoreLogger.Log("One of the trusted servers can't help on  " + corner);
-                    Console.WriteLine("RAIDA " + trustedTriad[0] + " is " + pown_chars[trustedTriad[0]]);
-                    CoreLogger.Log("RAIDA " + trustedTriad[1] + " is " + pown_chars[trustedTriad[1]]);
-                    CoreLogger.Log("RAIDA " + trustedTriad[2] + " is " + pown_chars[trustedTriad[2]]);
+                    Console.Out.WriteLine("RAIDA " + trustedTriad[0] + " can't help on corner  " + corner);
+                    CoreLogger.Log("RAIDA " + trustedTriad[0] + " can't help on corner  " + corner);
                     CoreLogger.Log("");
                     Console.ForegroundColor = ConsoleColor.White;
-                    return "One of the trusted servers can't help on  " + corner; 
-
+                    return "RAIDA " + trustedTriad[0] + " can't help on corner  " + corner;
                 }
-                //  Console.Out.WriteLine("Fails echo 0 " + RAIDA_Status.failsEcho[trustedTriad[0]]);
-                //  Console.Out.WriteLine("Fails echo 1 " + RAIDA_Status.failsEcho[trustedTriad[1]]);
-                //  Console.Out.WriteLine("Fails echo 2 " + RAIDA_Status.failsEcho[trustedTriad[2]]);
-                //  Console.Out.WriteLine("Fails failsDetect 0 " + RAIDA_Status.failsDetect[trustedTriad[0]]);
-                // Console.Out.WriteLine("Fails failsDetect 1 " + RAIDA_Status.failsDetect[trustedTriad[1]]);
-                // Console.Out.WriteLine("Fails failsDetect 2 " + RAIDA_Status.failsDetect[trustedTriad[2]]);
+                //See if Second Trusted RAIDA can help
+                if ( !pown_chars[trustedTriad[1]].Equals('p') )
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Out.WriteLine("");
+                    Console.Out.WriteLine("RAIDA " + trustedTriad[1] + " can't help on corner  " + corner);
+                    CoreLogger.Log("RAIDA " + trustedTriad[1] + " can't help on corner  " + corner);
+                    CoreLogger.Log("");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return "RAIDA " + trustedTriad[1] + " can't help on corner  " + corner;
+                }
+
+                //See if Third Trusted RAIDA can help
+                if (!pown_chars[trustedTriad[2]].Equals('p'))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Out.WriteLine("");
+                    Console.Out.WriteLine("RAIDA " + trustedTriad[2] + " can't help on corner  " + corner);
+                    CoreLogger.Log("RAIDA " + trustedTriad[2] + " can't help on corner  " + corner);
+                    CoreLogger.Log("");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return "RAIDA " + trustedTriad[2] + " can't help on corner  " + corner;
+                }
 
                 if (!RAIDA_Status.failsEcho[trustedTriad[0]] || !RAIDA_Status.failsDetect[trustedTriad[0]] || !RAIDA_Status.failsEcho[trustedTriad[1]] || !RAIDA_Status.failsDetect[trustedTriad[1]] || !RAIDA_Status.failsEcho[trustedTriad[2]] || !RAIDA_Status.failsDetect[trustedTriad[2]])
                 {
                     /*3. GET TICKETS AND UPDATE RAIDA STATUS TICKETS*/
                     string[] ans = { cc.an[trustedTriad[0]], cc.an[trustedTriad[1]], cc.an[trustedTriad[2]] };
                     raida.get_Tickets(trustedTriad, ans, cc.nn, cc.sn, cu.getDenomination(), 3000);
+                    
                     /*4. ARE ALL TICKETS GOOD?*/
                     if (RAIDA_Status.hasTicket[trustedTriad[0]] && RAIDA_Status.hasTicket[trustedTriad[1]] && RAIDA_Status.hasTicket[trustedTriad[2]])
                     {
                         /*5.T YES, so REQUEST FIX*/
                         DetectionAgent da = new DetectionAgent(raida_ID, 5000);
-                        Response fixResponse = da.fix(trustedTriad, RAIDA_Status.tickets[trustedTriad[0]], RAIDA_Status.tickets[trustedTriad[1]], RAIDA_Status.tickets[trustedTriad[2]], cc.an[raida_ID]);
+                        Response fixResponse = da.fix(trustedTriad, RAIDA_Status.tickets[trustedTriad[0]], RAIDA_Status.tickets[trustedTriad[1]], RAIDA_Status.tickets[trustedTriad[2]], cc.an[raida_ID]).Result;
                         /*6. DID THE FIX WORK?*/
                         if (fixResponse.success)
                         {
@@ -291,10 +303,10 @@ namespace Founders
                 }//end if RAIDA past status is passed and does not need to be fixed
             }//end for each AN
 
-            for (int raida_ID = 25; raida_ID > 0; raida_ID--)
+            for (int raida_ID = 24; raida_ID > -1; raida_ID--)
             {
                 //  Console.WriteLine("Past Status for " + raida_ID + ", " + brokeCoin.pastStatus[raida_ID]);
-                Console.WriteLine("Pown is " + cu.cc.pown);
+               // Console.WriteLine("Pown is " + cu.cc.pown);
                 if (cu.getPastStatus(raida_ID).ToLower() != "pass")//will try to fix everything that is not perfect pass.
                 {
                     cu.cc.an[raida_ID] = cu.generatePan();//Assign the AN a new PAN for security. 
@@ -346,4 +358,3 @@ namespace Founders
 
     }//end class
 }//end namespace
-
