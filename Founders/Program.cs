@@ -1,8 +1,10 @@
-﻿using Founders;
+
+using Founders;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+
 
 namespace Founders
 {
@@ -10,8 +12,9 @@ namespace Founders
     {
         public static KeyboardReader reader = new KeyboardReader();
         //  public static String rootFolder = System.getProperty("user.dir") + File.separator +"bank" + File.separator ;
-        public static String rootFolder = AppContext.BaseDirectory + Path.DirectorySeparatorChar;
 
+        // public static String rootFolder = AppContext.BaseDirectory + Path.DirectorySeparatorChar;
+        public static String rootFolder = AppContext.BaseDirectory;
         public static String prompt = "> ";
         public static String[] commandsAvailable = new String[] { "echo raida", "show coins", "import", "export", "fix fracked", "show folders", "export stack files with one note each", "quit" };
 
@@ -24,6 +27,7 @@ namespace Founders
 
         static void Main(string[] args)
         {
+            
             fileUtils.CreateDirectoryStructure();
             int argLength = args.Length;
             if (argLength > 0)
@@ -43,9 +47,6 @@ namespace Founders
 
             switch (command)
             {
-                case "--help":
-                    printHelp();
-                    break;
                 case "echo":
                     echoRaida();
                     break;
@@ -70,16 +71,6 @@ namespace Founders
                 default:
                     break;
             }
-        }
-        public static void printHelp()
-        {
-            Console.WriteLine(" echo        :           Echo RAIDA");
-            Console.WriteLine(" import      :           Import Coins");
-            Console.WriteLine(" export      :           Export Coins");
-            Console.WriteLine(" showfolders :           Show Folders");
-            Console.WriteLine(" fix         :           Fix Fracked Coins");
-
-
         }
         public static void run()
         {
@@ -130,7 +121,7 @@ namespace Founders
                         break;
                     case 9:
                         //testMind();
-                        partialImport();
+                        //partialImport();
                         break;
                     case 10:
                         toMind();
@@ -147,11 +138,11 @@ namespace Founders
 
         public static void printWelcome()
         {
-            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Out.WriteLine("                                                                  ");
             Console.Out.WriteLine("                   CloudCoin Founders Edition                     ");
-            Console.Out.WriteLine("                      Version: July.31.2017                       ");
+            Console.Out.WriteLine("                   Version: September.19.2017                      ");
             Console.Out.WriteLine("          Used to Authenticate, Store and Payout CloudCoins       ");
             Console.Out.WriteLine("      This Software is provided as is with all faults, defects    ");
             Console.Out.WriteLine("          and errors, and without warranty of any kind.           ");
@@ -242,16 +233,20 @@ namespace Founders
 
             //Output  " 12.3"
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.Out.WriteLine("                                                                    ");
             Console.Out.WriteLine("    Total Coins in Bank:    " + string.Format("{0,8:N0}", (bankTotals[0] + frackedTotals[0] + partialTotals[0])) + "                                ");
             Console.Out.WriteLine("                                                                    ");
             Console.Out.WriteLine("                 1s         5s         25s       100s       250s    ");
             Console.Out.WriteLine("                                                                    ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.Out.WriteLine("   Perfect:   " + string.Format("{0,7}", bankTotals[1]) + "    " + string.Format("{0,7}", bankTotals[2]) + "    " + string.Format("{0,7}", bankTotals[3]) + "    " + string.Format("{0,7}", bankTotals[4]) + "    " + string.Format("{0,7}", bankTotals[5]) + "   ");
             Console.Out.WriteLine("                                                                    ");
-            Console.Out.WriteLine("   Partial:   " + string.Format("{0,7}", partialTotals[1]) + "    " + string.Format("{0,7}", partialTotals[2]) + "    " + string.Format("{0,7}", partialTotals[3]) + "    " + string.Format("{0,7}", partialTotals[4]) + "    " + string.Format("{0,7}", partialTotals[5]) + "   ");
-            Console.Out.WriteLine("                                                                    ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            // Console.Out.WriteLine("   Partial:   " + string.Format("{0,7}", partialTotals[1]) + "    " + string.Format("{0,7}", partialTotals[2]) + "    " + string.Format("{0,7}", partialTotals[3]) + "    " + string.Format("{0,7}", partialTotals[4]) + "    " + string.Format("{0,7}", partialTotals[5]) + "   ");
+            // Console.Out.WriteLine("                                                                    ");
             Console.Out.WriteLine("   Fracked:   " + string.Format("{0,7}", frackedTotals[1]) + "    " + string.Format("{0,7}", frackedTotals[2]) + "    " + string.Format("{0,7}", frackedTotals[3]) + "    " + string.Format("{0,7}", frackedTotals[4]) + "    " + string.Format("{0,7}", frackedTotals[5]) + "   ");
             Console.Out.WriteLine("                                                                    ");
             Console.ForegroundColor = ConsoleColor.White;
@@ -261,17 +256,17 @@ namespace Founders
 
         public static void showFolders()
         {
-            Console.Out.WriteLine(" Your Root folder is:" + "\n " + rootFolder);
-            Console.Out.WriteLine(" Your Import folder is:" + "\n  " + fileUtils.importFolder);
-            Console.Out.WriteLine(" Your Imported folder is:" + "\n  " + fileUtils.importedFolder);
-            Console.Out.WriteLine(" Your Suspect folder is: " + "\n  " + fileUtils.suspectFolder);
-            Console.Out.WriteLine(" Your Trash folder is:" + "\n  " + fileUtils.trashFolder);
-            Console.Out.WriteLine(" Your Bank folder is:" + "\n  " + fileUtils.bankFolder);
-            Console.Out.WriteLine(" Your Fracked folder is:" + "\n  " + fileUtils.frackedFolder);
-            Console.Out.WriteLine(" Your Templates folder is:" + "\n  " + fileUtils.templateFolder);
-            Console.Out.WriteLine(" Your Directory folder is:" + "\n  " + fileUtils.directoryFolder);
-            Console.Out.WriteLine(" Your Counterfeits folder is:" + "\n  " + fileUtils.counterfeitFolder);
-            Console.Out.WriteLine(" Your Export folder is:" + "\n  " + fileUtils.exportFolder);
+            Console.Out.WriteLine(" Root:        " + rootFolder);
+            Console.Out.WriteLine(" Import:      " + fileUtils.importFolder);
+            Console.Out.WriteLine(" Imported:    "  + fileUtils.importedFolder);
+            Console.Out.WriteLine(" Suspect:     "  + fileUtils.suspectFolder);
+            Console.Out.WriteLine(" Trash:       " + fileUtils.trashFolder);
+            Console.Out.WriteLine(" Bank:        "  + fileUtils.bankFolder);
+            Console.Out.WriteLine(" Fracked:     "  + fileUtils.frackedFolder);
+            Console.Out.WriteLine(" Templates:   "  + fileUtils.templateFolder);
+            Console.Out.WriteLine(" Directory:   "  + fileUtils.directoryFolder);
+            Console.Out.WriteLine(" Counterfeits:"  + fileUtils.counterfeitFolder);
+            Console.Out.WriteLine(" Export:      "  + fileUtils.exportFolder);
         } // end show folders
 
         public static void import()
@@ -406,7 +401,7 @@ namespace Founders
             Console.Out.WriteLine("");
             Console.Out.WriteLine("  Partially Detecting Authentication of Suspect Coins");// "Detecting Authentication of Suspect Coins");
             Detector detector = new Detector(fileUtils, timeout);
-            int[] detectionResults = detector.partialDetectAll();
+            int[] detectionResults = { 0 };//detector.partialDetectAll();
             Console.Out.WriteLine("  Total imported to partial: " + detectionResults[0]);//"Total imported to bank: "
             Console.Out.WriteLine("  Total imported to fracked: " + detectionResults[2]);//"Total imported to fracked: "
                                                                                          // And the bank and the fractured for total
