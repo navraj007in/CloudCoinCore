@@ -65,13 +65,14 @@ namespace CloudCoinIE.UserControls
 
         private void resumeImport()
         {
-            cmdImport.IsEnabled = false;
-            cmdRestore.IsEnabled = false;
-            progressBar.Visibility = Visibility.Visible;
 
             int count = Directory.GetFiles(MainWindow.suspectFolder ).Length;
             if(count >0 )
             {
+                cmdImport.IsEnabled = false;
+                cmdRestore.IsEnabled = false;
+                progressBar.Visibility = Visibility.Visible;
+
                 Notifier notifier = new Notifier(cfg =>
                 {
                     cfg.PositionProvider = new WindowPositionProvider(
