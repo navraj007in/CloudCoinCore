@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -38,31 +38,28 @@ namespace Founders
             int totalValueToKeptInSuspect = 0;
             bool coinSuspect = false;
             CloudCoin newCC;
-            for (int j = 0; j < suspectFileNames.Length; j++)
+
+
+            for (int j = 0; j < suspectFileNames.Length; j++)//for every coins in the suspect folder
             {
                 try
                 {
                     if (File.Exists(this.fileUtils.bankFolder + suspectFileNames[j]))
                     {//Coin has already been imported. Delete it from import folder move to trash.
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Out.WriteLine("You tried to import a coin that has already been imported.");
-                        CoreLogger.Log("You tried to import a coin that has already been imported.");
-                        File.Move(this.fileUtils.suspectFolder + suspectFileNames[j], this.fileUtils.trashFolder + suspectFileNames[j]);
-                        Console.Out.WriteLine("Suspect CloudCoin was moved to Trash folder.");
-                        CoreLogger.Log("Suspect CloudCoin was moved to Trash folder.");
-                        Console.ForegroundColor = ConsoleColor.White;
+                        coinExists( suspectFileNames[j]);
                     }
                     else
                     {
                         newCC = this.fileUtils.loadOneCloudCoinFromJsonFile(this.fileUtils.suspectFolder + suspectFileNames[j]);
                         CoinUtils cu = new CoinUtils(newCC);
-                        Console.Out.WriteLine("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
-                        CoreLogger.Log("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
+                        Console.Out.WriteLine("  Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
+                        CoreLogger.Log("  Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
                         Console.Out.WriteLine("");
 
                         CoinUtils detectedCC = this.raida.detectCoin(cu, detectTime);
                         cu.calcExpirationDate();
 
+                        int numOfFails = 0;
                         if (j == 0)//If we are detecting the first coin, note if the RAIDA are working
                         {
                             for (int i = 0; i < 25; i++)// Checks any servers are down so we don't try to check them again. 
@@ -71,17 +68,27 @@ namespace Founders
                                 {
                                     raida.raidaIsDetecting[i] = false;//Server is not working correctly, don't try it agian
                                 }
+                                else if (cu.getPastStatus(i) == "fail")
+                                {
+                                    numOfFails++;
+                                }
                             }
                         }//end if it is the first coin we are detecting
 
                         cu.consoleReport();
-						if (numOfFails > 5)
+						if ( cu.cc.pown.Split('f').Length - 1 > 5)//Check if there are more than 5 fails.
                         {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("   WARNING: Moe than 5 fails.");
+                            Console.ForegroundColor = ConsoleColor.White;
                             //Check for threats.
                             if (containsThreat(cu.cc.pown))
-                            {  //This coin may be trying to charge back
-                                 Console.Out.WriteLine("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
-                                 CoreLogger.Log("Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
+                            {  //This coin may have strings attached
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("   WARNING: Strings may be attached to this coins");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.Out.WriteLine("  Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
+                                 CoreLogger.Log("  Now scanning coin " + (j + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
                     
                                 Frack_Fixer ff = new Frack_Fixer(fileUtils, 10000);
                                 cu = ff.fixCoin(cu.cc);
@@ -130,9 +137,9 @@ namespace Founders
                         {
                             this.fileUtils.writeTo(this.fileUtils.suspectFolder, detectedCC.cc);
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Out.WriteLine("Not enough RAIDA were contacted to determine if the coin is authentic.");
-                            Console.Out.WriteLine("Try again later.");
-                            CoreLogger.Log("Not enough RAIDA were contacted to determine if the coin is authentic. Try again later.");
+                            Console.Out.WriteLine("  Not enough RAIDA were contacted to determine if the coin is authentic.");
+                            Console.Out.WriteLine("  Try again later.");
+                            CoreLogger.Log("  Not enough RAIDA were contacted to determine if the coin is authentic. Try again later.");
                             Console.ForegroundColor = ConsoleColor.White;
                         }//end if else
 
@@ -289,5 +296,19 @@ namespace Founders
 
             return threat;
         }//End Contains Threat
+
+        public void coinExists( String suspectFileName) {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Out.WriteLine("  You tried to import a coin that has already been imported.");
+            CoreLogger.Log("  You tried to import a coin that has already been imported.");
+            File.Move(this.fileUtils.suspectFolder + suspectFileName, this.fileUtils.trashFolder + suspectFileName);
+            Console.Out.WriteLine("  Suspect CloudCoin was moved to Trash folder.");
+            CoreLogger.Log("  Suspect CloudCoin was moved to Trash folder.");
+            Console.ForegroundColor = ConsoleColor.White;
+
+
+        }//end coin exists
+
+
     }
 }
