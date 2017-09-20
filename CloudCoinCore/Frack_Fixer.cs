@@ -34,8 +34,8 @@ namespace Founders
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Out.WriteLine("");
-                Console.Out.WriteLine("RAIDA Fails Echo or Fix. Try again when RAIDA online.");
-                CoreLogger.Log("RAIDA Fails Echo or Fix. Try again when RAIDA online.");
+                Console.Out.WriteLine("  RAIDA Fails Echo or Fix. Try again when RAIDA online.");
+                CoreLogger.Log("  RAIDA Fails Echo or Fix. Try again when RAIDA online.");
                 Console.Out.WriteLine("");
                 Console.ForegroundColor = ConsoleColor.White;
                 return "RAIDA Fails Echo or Fix. Try again when RAIDA online.";
@@ -52,8 +52,8 @@ namespace Founders
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Out.WriteLine("");
-                    Console.Out.WriteLine("RAIDA " + trustedTriad[0] + " can't help on corner  " + corner);
-                    CoreLogger.Log("RAIDA " + trustedTriad[0] + " can't help on corner  " + corner);
+                    Console.Out.WriteLine("  RAIDA " + trustedTriad[0] + " can't help on corner  " + corner);
+                    CoreLogger.Log("  RAIDA " + trustedTriad[0] + " can't help on corner  " + corner);
                     CoreLogger.Log("");
                     Console.ForegroundColor = ConsoleColor.White;
                     return "RAIDA " + trustedTriad[0] + " can't help on corner  " + corner;
@@ -63,8 +63,8 @@ namespace Founders
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Out.WriteLine("");
-                    Console.Out.WriteLine("RAIDA " + trustedTriad[1] + " can't help on corner  " + corner);
-                    CoreLogger.Log("RAIDA " + trustedTriad[1] + " can't help on corner  " + corner);
+                    Console.Out.WriteLine("  RAIDA " + trustedTriad[1] + " can't help on corner  " + corner);
+                    CoreLogger.Log("  RAIDA " + trustedTriad[1] + " can't help on corner  " + corner);
                     CoreLogger.Log("");
                     Console.ForegroundColor = ConsoleColor.White;
                     return "RAIDA " + trustedTriad[1] + " can't help on corner  " + corner;
@@ -75,8 +75,8 @@ namespace Founders
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Out.WriteLine("");
-                    Console.Out.WriteLine("RAIDA " + trustedTriad[2] + " can't help on corner  " + corner);
-                    CoreLogger.Log("RAIDA " + trustedTriad[2] + " can't help on corner  " + corner);
+                    Console.Out.WriteLine("  RAIDA " + trustedTriad[2] + " can't help on corner  " + corner);
+                    CoreLogger.Log("  RAIDA " + trustedTriad[2] + " can't help on corner  " + corner);
                     CoreLogger.Log("");
                     Console.ForegroundColor = ConsoleColor.White;
                     return "RAIDA " + trustedTriad[2] + " can't help on corner  " + corner;
@@ -99,8 +99,8 @@ namespace Founders
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.Out.WriteLine("");
-                            Console.Out.WriteLine("RAIDA" + raida_ID + " unfracked successfully.");
-                            CoreLogger.Log("RAIDA" + raida_ID + " unfracked successfully.");
+                            Console.Out.WriteLine("  RAIDA" + raida_ID + " unfracked successfully.");
+                            CoreLogger.Log("  RAIDA" + raida_ID + " unfracked successfully.");
                             Console.Out.WriteLine("");
                             Console.ForegroundColor = ConsoleColor.White;
                             return "RAIDA" + raida_ID + " unfracked successfully.";
@@ -110,8 +110,8 @@ namespace Founders
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.Out.WriteLine("");
-                            Console.Out.WriteLine("RAIDA failed to accept tickets on corner " + corner);
-                            CoreLogger.Log("RAIDA failed to accept tickets on corner " + corner);
+                            Console.Out.WriteLine( "  RAIDA failed to accept tickets on corner " + corner);
+                            CoreLogger.Log("  RAIDA failed to accept tickets on corner " + corner);
                             Console.Out.WriteLine("");
                             Console.ForegroundColor = ConsoleColor.White;
                             return "RAIDA failed to accept tickets on corner " + corner;
@@ -121,22 +121,22 @@ namespace Founders
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Out.WriteLine("");
-                        Console.Out.WriteLine("Trusted servers failed to provide tickets for corner " + corner);
-                        CoreLogger.Log("Trusted servers failed to provide tickets for corner " + corner);
+                        Console.Out.WriteLine("  Trusted servers failed to provide tickets for corner " + corner);
+                        CoreLogger.Log("  Trusted servers failed to provide tickets for corner " + corner);
                         Console.Out.WriteLine("");
                         Console.ForegroundColor = ConsoleColor.White;
 
-                        return "Trusted servers failed to provide tickets for corner " + corner;//no three good tickets
+                        return "  Trusted servers failed to provide tickets for corner " + corner;//no three good tickets
                     }//end if all good
                 }//end if trused triad will echo and detect (Detect is used to get ticket)
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Out.WriteLine("");
-                Console.Out.WriteLine("One or more of the trusted triad will not echo and detect.So not trying.");
-                CoreLogger.Log("One or more of the trusted triad will not echo and detect.So not trying.");
+                Console.Out.WriteLine("  One or more of the trusted triad will not echo and detect.So not trying.");
+                CoreLogger.Log("  One or more of the trusted triad will not echo and detect.So not trying.");
                 Console.Out.WriteLine("");
                 Console.ForegroundColor = ConsoleColor.White;
-                return "One or more of the trusted triad will not echo and detect. So not trying.";
+                return "  One or more of the trusted triad will not echo and detect. So not trying.";
             }//end if RAIDA fails to fix. 
 
         }//end fix one
@@ -270,10 +270,8 @@ namespace Founders
                 {
                     cu.cc.an[raida_ID] = cu.generatePan();//Assign the AN a new PAN for security. 
                     Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.Out.WriteLine("");
-                    Console.WriteLine("Attempting to fix RAIDA " + raida_ID);
-                    CoreLogger.Log("Attempting to fix RAIDA " + raida_ID);
-                    Console.Out.WriteLine("");
+                    Console.Write("  Attempting to fix RAIDA " + raida_ID +" ");
+                    CoreLogger.Log("  Attempting to fix RAIDA " + raida_ID);
                     Console.ForegroundColor = ConsoleColor.White;
 
                     fixer = new FixitHelper(raida_ID, brokeCoin.an.ToArray());
@@ -282,8 +280,8 @@ namespace Founders
                     corner = 1;
                     while (!fixer.finnished)
                     {
-                        Console.WriteLine(" Using corner " + corner);
-                        CoreLogger.Log(" Using corner " + corner);
+                        Console.Write(" Using corner " + corner + " ");
+                        CoreLogger.Log(" Using corner " + corner + " ");
                         fix_result = fixOneGuidCorner(raida_ID, brokeCoin, corner, fixer.currentTriad);
                         // Console.WriteLine(" fix_result: " + fix_result + " for corner " + corner);
                         if (fix_result.Contains("success"))
@@ -311,10 +309,8 @@ namespace Founders
                 {
                     cu.cc.an[raida_ID] = cu.generatePan();//Assign the AN a new PAN for security. 
                     Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.Out.WriteLine("");
-                    Console.WriteLine("Attempting to fix RAIDA " + raida_ID);
-                    CoreLogger.Log("Attempting to fix RAIDA " + raida_ID);
-                    Console.Out.WriteLine("");
+                    Console.Write("  Attempting to fix RAIDA " + raida_ID + " ");
+                    CoreLogger.Log("  Attempting to fix RAIDA " + raida_ID);
                     Console.ForegroundColor = ConsoleColor.White;
 
                     fixer = new FixitHelper(raida_ID, brokeCoin.an.ToArray());
@@ -323,8 +319,8 @@ namespace Founders
                     corner = 1;
                     while (!fixer.finnished)
                     {
-                        Console.WriteLine(" Using corner " + corner);
-                        CoreLogger.Log(" Using corner " + corner);
+                        Console.Write(" Using corner " + corner + " ");
+                        CoreLogger.Log(" Using corner " + corner + " ");
                         fix_result = fixOneGuidCorner(raida_ID, brokeCoin, corner, fixer.currentTriad);
                         // Console.WriteLine(" fix_result: " + fix_result + " for corner " + corner);
                         if (fix_result.Contains("success"))
@@ -345,8 +341,8 @@ namespace Founders
             }//end for each AN
             DateTime after = DateTime.Now;
             TimeSpan ts = after.Subtract(before);
-            Console.WriteLine("Time spent fixing RAIDA in milliseconds: " + ts.Milliseconds);
-            CoreLogger.Log("Time spent fixing RAIDA in milliseconds: " + ts.Milliseconds);
+            Console.WriteLine("  Time spent fixing RAIDA in milliseconds: " + ts.Milliseconds);
+            CoreLogger.Log("  Time spent fixing RAIDA in milliseconds: " + ts.Milliseconds);
 
             cu.calculateHP();//how many fails did it get
                              //  cu.gradeCoin();// sets the grade and figures out what the file extension should be (bank, fracked, counterfeit, lost
@@ -358,3 +354,4 @@ namespace Founders
 
     }//end class
 }//end namespace
+
