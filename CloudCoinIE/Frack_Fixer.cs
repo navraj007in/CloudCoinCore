@@ -93,7 +93,7 @@ namespace Founders
                     {
                         /*5.T YES, so REQUEST FIX*/
                         DetectionAgent da = new DetectionAgent(raida_ID, 5000);
-                        Response fixResponse = da.fix(trustedTriad, RAIDA_Status.tickets[trustedTriad[0]], RAIDA_Status.tickets[trustedTriad[1]], RAIDA_Status.tickets[trustedTriad[2]], cc.an[raida_ID]);
+                        Response fixResponse = da.fix(trustedTriad, RAIDA_Status.tickets[trustedTriad[0]], RAIDA_Status.tickets[trustedTriad[1]], RAIDA_Status.tickets[trustedTriad[2]], cc.an[raida_ID]).Result;
                         /*6. DID THE FIX WORK?*/
                         if (fixResponse.success)
                         {

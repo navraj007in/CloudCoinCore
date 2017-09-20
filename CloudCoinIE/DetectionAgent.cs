@@ -82,14 +82,14 @@ namespace Founders
          * @param d int that is the Denomination of the Coin
          * @return Response object. 
          */
-        public Response detect(int nn, int sn, String an, String pan, int d)
+        public async Task<Response> detect(int nn, int sn, String an, String pan, int d)
         {
             Response detectResponse = new Response();
             detectResponse.fullRequest = this.fullUrl + "detect?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + pan + "&denomination=" + d + "&b=t";
             DateTime before = DateTime.Now;
             try
             {
-                detectResponse.fullResponse = getHtml(detectResponse.fullRequest).Result;
+                detectResponse.fullResponse = await getHtml(detectResponse.fullRequest);
                 DateTime after = DateTime.Now; TimeSpan ts = after.Subtract(before);
                 detectResponse.milliseconds = Convert.ToInt32(ts.Milliseconds);
 
@@ -133,7 +133,7 @@ namespace Founders
         * @param d int that is the Denomination of the Coin
         * @return Response object. 
         */
-        public Response get_ticket(int nn, int sn, String an, int d)
+        public async Task<Response> get_ticket(int nn, int sn, String an, int d)
         {
             Response get_ticketResponse = new Response();
             get_ticketResponse.fullRequest = fullUrl + "get_ticket?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + an + "&denomination=" + d;
@@ -141,7 +141,7 @@ namespace Founders
 
             try
             {
-                get_ticketResponse.fullResponse = getHtml(get_ticketResponse.fullRequest).Result;
+                get_ticketResponse.fullResponse = await getHtml(get_ticketResponse.fullRequest);
                 DateTime after = DateTime.Now; TimeSpan ts = after.Subtract(before);
                 get_ticketResponse.milliseconds = Convert.ToInt32(ts.Milliseconds);
 
@@ -189,7 +189,7 @@ namespace Founders
          * @param pan string proposed authenticity number (to replace the wrong AN the RAIDA has)
          * @return string status sent back from the server: sucess, fail or error. 
          */
-        public Response fix(int[] triad, String m1, String m2, String m3, String pan)
+        public async Task<Response> fix(int[] triad, String m1, String m2, String m3, String pan)
         {
             Response fixResponse = new Response();
             DateTime before = DateTime.Now;
@@ -199,7 +199,7 @@ namespace Founders
 
             try
             {
-                fixResponse.fullResponse = getHtml(fixResponse.fullRequest).Result;
+                fixResponse.fullResponse = await getHtml(fixResponse.fullRequest);
                 if (fixResponse.fullResponse.Contains("success"))
                 {
                     fixResponse.outcome = "success";

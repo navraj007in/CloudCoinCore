@@ -89,7 +89,7 @@ namespace Founders
         public async Task detectOne(int raida_id, int nn, int sn, String an, String pan, int d)
         {
             DetectionAgent da = new DetectionAgent(raida_id, 5000);
-            responseArray[raida_id] = da.detect(nn, sn, an, pan, d);
+            responseArray[raida_id] = await da.detect(nn, sn, an, pan, d);
             
             
         }//end detectOne
@@ -220,7 +220,7 @@ namespace Founders
         public async Task get_Ticket(int i, int raidaID, int nn, int sn, String an, int d)
         {
             DetectionAgent da = new DetectionAgent(raidaID, 5000);
-            responseArray[raidaID] = da.get_ticket(nn, sn, an, d);
+            responseArray[raidaID] = await da.get_ticket(nn, sn, an, d);
             
            
         }//end get ticket
