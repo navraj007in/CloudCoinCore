@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Linq;
 
@@ -77,7 +77,7 @@ namespace Founders
             result = result.ToLower();
             while (!args.Any(result.Contains))
             {
-                Console.Out.WriteLine("Please enter one of the following: " + ConvertStringArrayToString(args));// "Please enter one of the following: " );
+                Console.Out.WriteLine("  Please enter one of the following: " + ConvertStringArrayToString(args));// "Please enter one of the following: " );
                 Console.Out.Write(this.prompt);
                 result = this.readString(args);
             }
@@ -104,8 +104,8 @@ namespace Founders
                 }
                 catch (FormatException e)
                 {
-                    Console.Out.WriteLine("Input is not an integer. " + this.errorMessages[INT_MESSAGE]);// "Input is not an integer. ";
-                    CoreLogger.Log("Input is not an integer. " + this.errorMessages[INT_MESSAGE]);
+                    Console.Out.WriteLine("  Input is not an integer. " + this.errorMessages[INT_MESSAGE]);// "Input is not an integer. ";
+                    CoreLogger.Log("  Input is not an integer. " + this.errorMessages[INT_MESSAGE]);
                     CoreLogger.Log(e.ToString());
                     Console.Out.Write(this.prompt);
                 }
@@ -129,7 +129,7 @@ namespace Founders
                     number = Convert.ToInt32(inputString);
                     if (((number < min) || (number > max)))
                     {
-                        Console.Out.WriteLine("Please enter an integer between " + min + " & " + max);//"Please enter an integer between " 
+                        Console.Out.WriteLine("  Please enter an integer between " + min + " & " + max);//"Please enter an integer between " 
                     }
                     else
                     {
@@ -139,8 +139,8 @@ namespace Founders
                 }
                 catch (FormatException e)
                 {
-                    Console.Out.WriteLine("Input is not an integer. Please enter an integer between " + min + " & " + max);//"Input is not an integer. Please enter an integer between " 
-                    CoreLogger.Log("Input is not an integer. Please enter an integer between " + min + " & " + max);
+                    Console.Out.WriteLine("  Input is not an integer. Please enter an integer between " + min + " & " + max);//"Input is not an integer. Please enter an integer between " 
+                    CoreLogger.Log("  Input is not an integer. Please enter an integer between " + min + " & " + max);
                     CoreLogger.Log(e.ToString());
                     Console.Out.Write(this.prompt);
                 }
@@ -155,7 +155,7 @@ namespace Founders
             int result = this.readInt();
             while (!this.checkInArray(result, args))
             {
-                Console.Out.WriteLine("Please enter one of the following: " + string.Join(",", args));// "Please enter one of the following: "
+                Console.Out.WriteLine("  Please enter one of the following: " + string.Join(",", args));// "Please enter one of the following: "
                 Console.Out.Write(this.prompt);
                 result = this.readInt(args);
             }
@@ -207,7 +207,7 @@ namespace Founders
             {
                 Console.WriteLine(e);
                 CoreLogger.Log(e.ToString());
-                Console.WriteLine("Fatal error. Exiting program.");// "Fatal error. Exiting program.");
+                Console.WriteLine("  Fatal error. Exiting program.");// "Fatal error. Exiting program.");
                 return (char)charAsInt;
             }
 
