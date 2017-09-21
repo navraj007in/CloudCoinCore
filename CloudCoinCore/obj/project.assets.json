@@ -7554,10 +7554,10 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CloudCoinPCLLibrary\\CloudCoinCore\\CloudCoinCore\\CloudCoinCore.csproj",
+      "projectUniqueName": "C:\\cc\\CloudCoinCore\\CloudCoinCore\\CloudCoinCore.csproj",
       "projectName": "CloudCoinCore",
-      "projectPath": "D:\\CloudCoinPCLLibrary\\CloudCoinCore\\CloudCoinCore\\CloudCoinCore.csproj",
-      "outputPath": "D:\\CloudCoinPCLLibrary\\CloudCoinCore\\CloudCoinCore\\obj\\",
+      "projectPath": "C:\\cc\\CloudCoinCore\\CloudCoinCore\\CloudCoinCore.csproj",
+      "outputPath": "C:\\cc\\CloudCoinCore\\CloudCoinCore\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"

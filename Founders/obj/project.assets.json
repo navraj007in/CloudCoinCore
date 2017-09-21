@@ -7567,10 +7567,10 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CloudCoinPCLLibrary\\CloudCoinCore\\Founders\\Founders.csproj",
+      "projectUniqueName": "C:\\cc\\CloudCoinCore\\Founders\\Founders.csproj",
       "projectName": "Founders",
-      "projectPath": "D:\\CloudCoinPCLLibrary\\CloudCoinCore\\Founders\\Founders.csproj",
-      "outputPath": "D:\\CloudCoinPCLLibrary\\CloudCoinCore\\Founders\\obj\\",
+      "projectPath": "C:\\cc\\CloudCoinCore\\Founders\\Founders.csproj",
+      "outputPath": "C:\\cc\\CloudCoinCore\\Founders\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"
@@ -7578,8 +7578,8 @@
       "frameworks": {
         "netcoreapp1.1": {
           "projectReferences": {
-            "D:\\CloudCoinPCLLibrary\\CloudCoinCore\\CloudCoinCore\\CloudCoinCore.csproj": {
-              "projectPath": "D:\\CloudCoinPCLLibrary\\CloudCoinCore\\CloudCoinCore\\CloudCoinCore.csproj"
+            "C:\\cc\\CloudCoinCore\\CloudCoinCore\\CloudCoinCore.csproj": {
+              "projectPath": "C:\\cc\\CloudCoinCore\\CloudCoinCore\\CloudCoinCore.csproj"
             }
           }
         }

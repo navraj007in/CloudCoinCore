@@ -39,7 +39,7 @@ namespace CloudCoinIE.UserControls
     }
     public partial class Import : UserControl
     {
-        public static int timeout = 10000; // Milliseconds to wait until the request is ended. 
+        public static int timeout = 5000; // Milliseconds to wait until the request is ended. 
 
 
         public static int exportOnes = 0;

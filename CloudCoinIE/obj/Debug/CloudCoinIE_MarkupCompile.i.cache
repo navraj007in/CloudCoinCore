@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\obj\Debug\
+C:\cc\CloudCoinCore\CloudCoinIE\obj\Debug\
 CloudCoinIE
 none
 false
 DEBUG;TRACE
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinIE\App.xaml
+C:\cc\CloudCoinCore\CloudCoinIE\App.xaml
 7-663913363
 
 38-1653806869
-80639032251
+801622806067
 Disclaimer.xaml;MainWindow.xaml;UserControls\Bank.xaml;UserControls\Configure.xaml;UserControls\Echo.xaml;UserControls\Export.xaml;UserControls\Import.xaml;
 cloudcoinlogo2.png
-False
+True
 
