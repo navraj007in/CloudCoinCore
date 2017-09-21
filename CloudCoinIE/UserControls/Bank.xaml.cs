@@ -60,10 +60,10 @@ namespace CloudCoinIE.UserControls
             setLabelText(lblValuesTotal, Convert.ToString(bankTotals[0] + frackedTotals[0] + partialTotals[0]));
 
             setLabelText(lblNotesTotal, Convert.ToString(bankTotals[1] + frackedTotals[1] + partialTotals[1]
-                + bankTotals[2] + frackedTotals[2] + partialTotals[2])
+                + bankTotals[2] + frackedTotals[2] + partialTotals[2]
                 + bankTotals[3] + frackedTotals[3] + partialTotals[3]
                 + bankTotals[4] + frackedTotals[4] + partialTotals[4]
-                + bankTotals[5] + frackedTotals[5] + partialTotals[5]);
+                + bankTotals[5] + frackedTotals[5] + partialTotals[5]));
 
 
         }// end show
