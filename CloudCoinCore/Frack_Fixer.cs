@@ -88,6 +88,21 @@ namespace Founders
                     string[] ans = { cc.an[trustedTriad[0]], cc.an[trustedTriad[1]], cc.an[trustedTriad[2]] };
                     raida.get_Tickets(trustedTriad, ans, cc.nn, cc.sn, cu.getDenomination(), 3000);
                     
+                    
+                                //Check to see if the coin actully is counterfeits and all the so called "p"s are actually "f"s. 
+                    if (raida.responseArray[trustedTriad[0]].fullResponse.Contains("fail") 
+                        && raida.responseArray[trustedTriad[1]].fullResponse.Contains("fail")
+                        && raida.responseArray[trustedTriad[2]].fullResponse.Contains("fail")
+                        ) {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Out.WriteLine("");
+                        Console.Out.WriteLine("The coin is actually counterfeit. RAIDA marked 'passed' turned out to be fails." );
+                        Console.Out.WriteLine("");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return "counterfeit " + corner;
+
+                    }//end if p's are actully fs. 
+                    
                     /*4. ARE ALL TICKETS GOOD?*/
                     if (RAIDA_Status.hasTicket[trustedTriad[0]] && RAIDA_Status.hasTicket[trustedTriad[1]] && RAIDA_Status.hasTicket[trustedTriad[2]])
                     {
@@ -122,6 +137,7 @@ namespace Founders
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Out.WriteLine("");
                         Console.Out.WriteLine("  Trusted servers failed to provide tickets for corner " + corner);
+                        Console.Out.WriteLine("RAIDa" + trustedTriad[0] + " " + RAIDA_Status.tickets[trustedTriad[0]]  + ", RAIDa" + trustedTriad[1] + " " + RAIDA_Status.tickets[trustedTriad[1]] + ", RAIDa" + trustedTriad[2] + " " + RAIDA_Status.tickets[trustedTriad[2]]);
                         CoreLogger.Log("  Trusted servers failed to provide tickets for corner " + corner);
                         Console.Out.WriteLine("");
                         Console.ForegroundColor = ConsoleColor.White;
@@ -264,6 +280,12 @@ namespace Founders
             // For every guid, check to see if it is fractured
             for (int raida_ID = 0; raida_ID < 25; raida_ID++)
             {
+                //Check to see if the coin has been marked counterfeit and should be moved to trash
+               // Console.Out.WriteLine("The folder is " + cu.getFolder().ToLower());
+                if (cu.cc.pown == "fffffffffffffffffffffffff") {
+                    cu.setFolder("counterfeit");
+                    return cu; }
+                
                 //  Console.WriteLine("Past Status for " + raida_ID + ", " + brokeCoin.pastStatus[raida_ID]);
 
                 if (cu.getPastStatus(raida_ID).ToLower() != "pass")//will try to fix everything that is not perfect pass.
@@ -290,6 +312,13 @@ namespace Founders
                             cu.setPastStatus("pass", raida_ID);
                             fixer.finnished = true;
                             corner = 1;
+                        }
+                        else if (fix_result.Contains("counterfeit"))
+                        {
+                            for (int j = 0; j < 25; j++) { cu.setPastStatus("fail", j); }//Set all status to fail so the coin will be moved to counterfeit. 
+                            cu.setFolder("counterfeit");
+                            fixer.finnished = true;
+                            return cu;
                         }
                         else
                         {
@@ -329,6 +358,13 @@ namespace Founders
                             cu.setPastStatus("pass", raida_ID);
                             fixer.finnished = true;
                             corner = 1;
+                        }
+                         else if (fix_result.Contains("counterfeit"))
+                        {
+                            for (int j = 0; j < 25; j++) { cu.setPastStatus("fail", j); }//Set all status to fail so the coin will be moved to counterfeit. 
+                            cu.setFolder("counterfeit");
+                            fixer.finnished = true;
+                            return cu;
                         }
                         else
                         {
