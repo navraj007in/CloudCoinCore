@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -26,29 +26,37 @@ namespace Founders
         public String exportFolder;
         public String partialFolder;
         public String languageFolder;
+        public String detectedFolder;
+        public String receiptsFolder;
+        public String dangerFolder;
+        public String lostFolder;
 
 
         public static FileUtils GetInstance(String rootFolder)
         {
-        String importFolder = rootFolder + "Import" + Path.DirectorySeparatorChar;
-        String importedFolder = rootFolder + "Imported" + Path.DirectorySeparatorChar;
-        String trashFolder = rootFolder + "Trash" + Path.DirectorySeparatorChar;
-        String suspectFolder = rootFolder + "Suspect" + Path.DirectorySeparatorChar;
-        String frackedFolder = rootFolder + "Fracked" + Path.DirectorySeparatorChar;
-        String bankFolder = rootFolder + "Bank" + Path.DirectorySeparatorChar;
-        String templateFolder = rootFolder + "Templates" + Path.DirectorySeparatorChar;
-        String counterfeitFolder = rootFolder + "Counterfeit" + Path.DirectorySeparatorChar;
-        String directoryFolder = rootFolder + "Directory" + Path.DirectorySeparatorChar;
-        String exportFolder = rootFolder + "Export" + Path.DirectorySeparatorChar;
-        String languageFolder = rootFolder + "Language" + Path.DirectorySeparatorChar;
-        String partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
+            String importFolder = rootFolder + "Import" + Path.DirectorySeparatorChar;
+            String importedFolder = rootFolder + "Imported" + Path.DirectorySeparatorChar;
+            String trashFolder = rootFolder + "Trash" + Path.DirectorySeparatorChar;
+            String suspectFolder = rootFolder + "Suspect" + Path.DirectorySeparatorChar;
+            String frackedFolder = rootFolder + "Fracked" + Path.DirectorySeparatorChar;
+            String bankFolder = rootFolder + "Bank" + Path.DirectorySeparatorChar;
+            String templateFolder = rootFolder + "Templates" + Path.DirectorySeparatorChar;
+            String counterfeitFolder = rootFolder + "Counterfeit" + Path.DirectorySeparatorChar;
+            String directoryFolder = rootFolder + "Directory" + Path.DirectorySeparatorChar;
+            String exportFolder = rootFolder + "Export" + Path.DirectorySeparatorChar;
+            String languageFolder = rootFolder + "Language" + Path.DirectorySeparatorChar;
+            String partialFolder = rootFolder + "Partial" + Path.DirectorySeparatorChar;
+            String detectedFolder = rootFolder + "Detected" + Path.DirectorySeparatorChar;
+            String receiptsFolder = rootFolder + "Reciepts" + Path.DirectorySeparatorChar;
+            String dangerFolder = rootFolder + "Danger" + Path.DirectorySeparatorChar;
+            String lostFolder = rootFolder + "Lost" + Path.DirectorySeparatorChar;
 
-        FileUtils fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder);
+            FileUtils fileUtils = new FileUtils(rootFolder, importFolder, importedFolder, trashFolder, suspectFolder, frackedFolder, bankFolder, templateFolder, counterfeitFolder, directoryFolder, exportFolder, partialFolder, detectedFolder, receiptsFolder, dangerFolder, lostFolder);
 
             return fileUtils;
         }
         /* CONSTRUCTOR */
-        private FileUtils(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder, String partialFolder)
+        public FileUtils(String rootFolder, String importFolder, String importedFolder, String trashFolder, String suspectFolder, String frackedFolder, String bankFolder, String templateFolder, String counterfeitFolder, String directoryFolder, String exportFolder, String partialFolder, String detectedFolder, String receiptsFolder, String dangerFolder, String lostFolder)
         {
             //  initialise instance variables
             this.rootFolder = rootFolder;
@@ -63,11 +71,15 @@ namespace Founders
             this.directoryFolder = directoryFolder;
             this.exportFolder = exportFolder;
             this.partialFolder = partialFolder;
-            
+            this.detectedFolder = detectedFolder;
+            this.receiptsFolder = receiptsFolder;
+            this.dangerFolder = dangerFolder;
+            this.lostFolder = lostFolder;
+
         }  // End constructor
 
         /* PUBLIC METHODS */
- 
+
         // This loads a JSON file (.stack) from the hard drive that contains only one CloudCoin and turns it into an object. 
         //   This uses Newton soft but causes a enrror System.IO.FileNotFoundException. Could not load file 'Newtonsoft.Json'  
         public CloudCoin loadOneCloudCoinFromJsonFile(String loadFilePath)
@@ -87,8 +99,7 @@ namespace Founders
 
             try
             {
-                 returnCC = JsonConvert.DeserializeObject<CloudCoin>(incomeJson);
-
+                returnCC = JsonConvert.DeserializeObject<CloudCoin>(incomeJson);
             }
             catch (JsonReaderException)
             {
@@ -101,24 +112,27 @@ namespace Founders
                 Console.WriteLine("1 for yes, 2 for no.");
                 KeyboardReader reader = new KeyboardReader();
                 int answer = reader.readInt(1, 2);
-                if (answer == 1) {
+                if (answer == 1)
+                {
                     //Get rid of ed and aoid
                     //Get file names in bank folder
-                    String[] fileNames = new DirectoryInfo( bankFolder ).GetFiles().Select(o => o.Name).ToArray();
-                    for (int i = 0; i < fileNames.Length; i++ )
+                    String[] fileNames = new DirectoryInfo(bankFolder).GetFiles().Select(o => o.Name).ToArray();
+                    for (int i = 0; i < fileNames.Length; i++)
                     {
-                        Console.WriteLine("Fixing " + bankFolder +"\\"+ fileNames[i]);
+                        Console.WriteLine("Fixing " + bankFolder + "\\" + fileNames[i]);
                         CoreLogger.Log("Fixing " + bankFolder + "\\" + fileNames[i]);
-                        string text = File.ReadAllText( bankFolder + "\\" + fileNames[i] );
-                    text = text.Replace("\"aoid\": [\"memo\"=\"\"]", "");
-                    File.WriteAllText( bankFolder + "\\" + fileNames[i], text);
+                        string text = File.ReadAllText(bankFolder + "\\" + fileNames[i]);
+                        text = text.Replace("\"aoid\": [\"memo\"=\"\"]", "");
+                        File.WriteAllText(bankFolder + "\\" + fileNames[i], text);
 
                     }//End for all files in bank
                     CoreLogger.Log("Done Fixing. The program will now exit. Please restart. Press any key.");
                     Console.WriteLine("Done Fixing. The program will now exit. Please restart. Press any key.");
                     Console.Read();
                     Environment.Exit(0);
-                } else {
+                }
+                else
+                {
                     CoreLogger.Log("Leaving files as is. You maybe able to fix the manually by editing the files.");
                     Console.WriteLine("Leaving files as is. You maybe able to fix the manually by editing the files.");
                     Console.WriteLine("Done Fixing. The program will now exit. Please restart. Press any key.");
@@ -155,9 +169,9 @@ namespace Founders
 
         public Stack loadManyCloudCoinFromJsonFile(String loadFilePath, string incomeJson)
         {
-            
-                Stack returnCC = JsonConvert.DeserializeObject<Stack>(incomeJson);
-           
+
+            Stack returnCC = JsonConvert.DeserializeObject<Stack>(incomeJson);
+
 
             return returnCC;
         }//end load one CloudCoin from JSON
@@ -170,7 +184,8 @@ namespace Founders
             byte[] jpegHeader = new byte[455];
             Console.Out.WriteLine("Load file path " + loadFilePath);
             CoreLogger.Log("Load file path " + loadFilePath);
-            using (FileStream fileStream = new FileStream(loadFilePath, FileMode.Open, FileAccess.Read)) {
+            using (FileStream fileStream = new FileStream(loadFilePath, FileMode.Open, FileAccess.Read))
+            {
                 try
                 {
                     int count;                            // actual number of bytes read
@@ -184,7 +199,7 @@ namespace Founders
             }
             wholeString = bytesToHexString(jpegHeader);
             CloudCoin returnCC = this.parseJpeg(wholeString);
-           // Console.Out.WriteLine("From FileUtils returnCC.fileName " + returnCC.fileName);
+            // Console.Out.WriteLine("From FileUtils returnCC.fileName " + returnCC.fileName);
             return returnCC;
         }//end load one CloudCoin from JSON
 
@@ -257,7 +272,7 @@ namespace Founders
             CoinUtils cu = new CoinUtils(cc);
             cu.calcExpirationDate();
             json += tab + tab + quote + "ed" + quote + ":" + quote + cu.cc.ed + quote + "," + Environment.NewLine; // "ed":"9-2016",
-            if( string.IsNullOrEmpty(cc.pown) ) { cc.pown = "uuuuuuuuuuuuuuuuuuuuuuuuu"; }//Set pown to unknow if it is not set. 
+            if (string.IsNullOrEmpty(cc.pown)) { cc.pown = "uuuuuuuuuuuuuuuuuuuuuuuuu"; }//Set pown to unknow if it is not set. 
             json += tab + tab + quote + "pown" + quote + ":" + quote + cc.pown + quote + "," + Environment.NewLine;// "pown":"uuupppppffpppppfuuf",
             json += tab + tab + quote + "aoid" + quote + ": []" + Environment.NewLine;
             json += tab + tab + "}" + Environment.NewLine;
@@ -327,7 +342,7 @@ namespace Founders
             SKBitmap bitmapimage;
             //using (var ms = new MemoryStream(jpegBytes))
             {
-               
+
                 //bitmapimage = new Bitmap(ms);
                 bitmapimage = SKBitmap.Decode(jpegBytes);
             }
@@ -335,12 +350,13 @@ namespace Founders
             //Graphics graphics = Graphics.FromImage(bitmapimage);
             //graphics.SmoothingMode = SmoothingMode.AntiAlias;
             //graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            SKPaint textPaint = new SKPaint() {
+            SKPaint textPaint = new SKPaint()
+            {
                 IsAntialias = true,
                 Color = SKColors.White,
                 TextSize = 14,
                 Typeface = SKTypeface.FromFamilyName("Arial")
-        };
+            };
             //PointF drawPointAddress = new PointF(30.0F, 25.0F);
 
             canvas.DrawText(String.Format("{0:N0}", cc.sn) + " of 16,777,216 on Network: 1", 30, 40, textPaint);
