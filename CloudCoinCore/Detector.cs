@@ -79,7 +79,7 @@ namespace Founders
 						if ( cu.cc.pown.Split('f').Length - 1 > 5)//Check if there are more than 5 fails.
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("   WARNING: Moe than 5 fails.");
+                            Console.WriteLine("   WARNING: More than 5 fails.");
                             Console.ForegroundColor = ConsoleColor.White;
                             //Check for threats.
                             if (containsThreat(cu.cc.pown))
