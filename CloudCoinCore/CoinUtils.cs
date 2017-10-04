@@ -1,6 +1,7 @@
-﻿
+using PCLCrypto;
 using System;
-using System.Security.Cryptography;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Founders
 {
@@ -9,23 +10,24 @@ namespace Founders
         //  instance variables
         public CloudCoin cc;
         public String[] pans = new String[25];// Proposed Authenticty Numbers
+        public string pastPown = "uuuuuuuuuuuuuuuuuuuuuuuuu";//Used to see if there are any improvments in defracking
         public String edHex;// Months from zero date that the coin will expire. 
         public int hp;// HitPoints (1-25, One point for each server not failed)
         public String fileName;
         public String json;
         public byte[] jpeg;
         public const int YEARSTILEXPIRE = 2;
-        public enum Folder { Suspect, Counterfeit, Fracked, Bank, Trash };
+        public enum Folder { Suspect, Counterfeit, Fracked, Bank, Trash, Detected, Lost, Dangerous};
         public Folder folder;
         public String[] gradeStatus = new String[3];// What passed, what failed, what was undetected
 
 
         //CONSTRUCTORS
-        public CoinUtils( CloudCoin cc )
+        public CoinUtils(CloudCoin cc)
         {
             //  initialise instance variables
             this.cc = cc;
-            for (int i = 0; i < 25; i++) {    pans[i] = this.generatePan();  } // end for each pan
+            for (int i = 0; i < 25; i++) { pans[i] = this.generatePan(); } // end for each pan
             edHex = "FF";//Max allowed. 
             hp = 25;//Max allowed
             fileName = this.getDenomination() + ".CloudCoin." + cc.nn + "." + cc.sn + ".";
@@ -44,8 +46,8 @@ namespace Founders
         public string getPastStatus(int raida_id)
         {
             string returnString = "";
-            char[] pownArray = cc.pown.ToCharArray(); 
-            switch ( pownArray[raida_id] )
+            char[] pownArray = cc.pown.ToCharArray();
+            switch (pownArray[raida_id])
             {
                 case 'e': returnString = "error"; break;
                 case 'f': returnString = "fail"; break;
@@ -62,11 +64,11 @@ namespace Founders
             char[] pownArray = cc.pown.ToCharArray();
             switch (status)
             {
-                case "error": pownArray[raida_id] = 'e';  break;
-                case "fail": pownArray[raida_id] = 'f';  break;
+                case "error": pownArray[raida_id] = 'e'; break;
+                case "fail": pownArray[raida_id] = 'f'; break;
                 case "pass": pownArray[raida_id] = 'p'; break;
-                case "undetected": pownArray[raida_id] = 'u';  break;
-                case "noresponse": pownArray[raida_id] = 'n';  break;
+                case "undetected": pownArray[raida_id] = 'u'; break;
+                case "noresponse": pownArray[raida_id] = 'n'; break;
             }//end switch
             cc.pown = new string(pownArray);
             return true;
@@ -81,7 +83,10 @@ namespace Founders
                 case Folder.Counterfeit: returnString = "Counterfeit"; break;
                 case Folder.Fracked: returnString = "Fracked"; break;
                 case Folder.Suspect: returnString = "Suspect"; break;
+                case Folder.Detected: returnString = "Detected"; break;
+                case Folder.Dangerous: returnString = "Dangerous"; break;
                 case Folder.Trash: returnString = "Trash"; break;
+                case Folder.Lost: returnString = "Lost"; break;
             }//end switch
             return returnString;
         }//end getPastStatus
@@ -96,6 +101,9 @@ namespace Founders
                 case "fracked": folder = Folder.Fracked; break;
                 case "suspect": folder = Folder.Suspect; break;
                 case "trash": folder = Folder.Trash; break;
+                case "danger": folder = Folder.Fracked; break;
+                case "lost": folder = Folder.Suspect; break;
+                case "detected": folder = Folder.Trash; break;
             }//end switch
             return setGood;
         }//end set past status
@@ -147,171 +155,41 @@ namespace Founders
                 }
             }
         }//end calculate hp
-/*
-        public String gradeCoin()
-        {
-            int passed = 0;
-            int failed = 0;
-            int other = 0;
-            String passedDesc = "";
-            String failedDesc = "";
-            String otherDesc = "";
-            char[] pownArray = cc.pown.ToCharArray();
-
-            for (int i = 0; (i < 25); i++)
-            {
-                if ( pownArray[i] == 'p')
-                {
-                    passed++;
-                }
-                else if ( pownArray[i] == 'f')
-                {
-                    failed++;
-                }
-                else
-                {
-                    other++;
-                }
-            }// end if pass, fail or unknown
-
-            // Calculate passed
-            if (passed == 25)
-            {
-                passedDesc = "100% Passed!";
-            }
-            else if (passed > 17)
-            {
-                passedDesc = "Super Majority";
-            }
-            else if (passed > 13)
-            {
-                passedDesc = "Majority";
-            }
-            else if (passed == 0)
-            {
-                passedDesc = "None";
-            }
-            else if (passed < 5)
-            {
-                passedDesc = "Super Minority";
-            }
-            else
-            {
-                passedDesc = "Minority";
-            }
-
-            // Calculate failed
-            if (failed == 25)
-            {
-                failedDesc = "100% Failed!";
-            }
-            else if (failed > 17)
-            {
-                failedDesc = "Super Majority";
-            }
-            else if (failed > 13)
-            {
-                failedDesc = "Majority";
-            }
-            else if (failed == 0)
-            {
-                failedDesc = "None";
-            }
-            else if (failed < 5)
-            {
-                failedDesc = "Super Minority";
-            }
-            else
-            {
-                failedDesc = "Minority";
-            }
-
-            // Calcualte Other RAIDA Servers did not help. 
-            switch (other)
-            {
-                case 0:
-                    otherDesc = "RAIDA 100% good";
-                    break;
-                case 1:
-                case 2:
-                    otherDesc = "Four or less RAIDA errors";
-                    break;
-                case 3:
-                case 4:
-                    otherDesc = "Four or less RAIDA errors";
-                    break;
-                case 5:
-                case 6:
-                    otherDesc = "Six or less RAIDA errors";
-                    break;
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                case 11:
-                case 12:
-                    otherDesc = "Between 7 and 12 RAIDA errors";
-                    break;
-                case 13:
-                case 14:
-                case 15:
-                case 16:
-                case 17:
-                case 18:
-                case 19:
-                case 20:
-                case 21:
-                case 22:
-                case 23:
-                case 24:
-                case 25:
-                    otherDesc = "RAIDA total failure";
-                    break;
-                default:
-                    otherDesc = "FAILED TO EVALUATE RAIDA HEALTH";
-                    break;
-            }
-            // end RAIDA other errors and unknowns
-            return "\n " + passedDesc + " said Passed. " + "\n " + failedDesc + " said Failed. \n RAIDA Status: " + otherDesc;
-        }// end grade coin
-*/
+         
         public void calcExpirationDate()
         {
             DateTime expirationDate = DateTime.Today.AddYears(YEARSTILEXPIRE);
             cc.ed = (expirationDate.Month + "-" + expirationDate.Year);
             //  Console.WriteLine("ed = " + cc.ed);
-            DateTime zeroDate = new DateTime( 2016, 08, 13);  
+            DateTime zeroDate = new DateTime(2016, 08, 13);
             // DateTime zeroDate = DateTime.Parse("8/13/2016 8:33:21 AM");
             int monthsAfterZero = (int)(expirationDate.Subtract(zeroDate).Days / (365.25 / 12));
             //Turn positive and up to down to floor
-          // Console.WriteLine("Months after zero = " + monthsAfterZero);
+            // Console.WriteLine("Months after zero = " + monthsAfterZero);
             this.edHex = monthsAfterZero.ToString("X2");
         }// end calc exp date
 
         public String generatePan()
         {
-            using (var rng = RandomNumberGenerator.Create())
+            byte[] cryptoRandomBuffer = new byte[16];
+            NetFxCrypto.RandomNumberGenerator.GetBytes(cryptoRandomBuffer);
+
+            Guid pan = new Guid(cryptoRandomBuffer);
+            String rawpan = pan.ToString("N");
+            String fullPan = "";
+            switch (rawpan.Length)//Make sure the pan is 32 characters long. The odds of this happening are slim but it will happen.
             {
-                byte[] cryptoRandomBuffer = new byte[16];
-                rng.GetBytes(cryptoRandomBuffer);
-
-                Guid pan = new Guid(cryptoRandomBuffer);
-                String rawpan = pan.ToString("N");
-                String fullPan = "";
-                switch (rawpan.Length)//Make sure the pan is 32 characters long. The odds of this happening are slim but it will happen.
-                {
-                    case 27: fullPan = ("00000" + rawpan); break;
-                    case 28: fullPan = ("0000" + rawpan); break;
-                    case 29: fullPan = ("000" + rawpan); break;
-                    case 30: fullPan = ("00" + rawpan); break;
-                    case 31: fullPan = ("0" + rawpan); break;
-                    case 32: fullPan = rawpan; break;
-                    case 33: fullPan = rawpan.Substring(0, rawpan.Length - 1); break;//trim one off end
-                    case 34: fullPan = rawpan.Substring(0, rawpan.Length - 2); break;//trim one off end
-                }
-
-                return fullPan;
+                case 27: fullPan = ("00000" + rawpan); break;
+                case 28: fullPan = ("0000" + rawpan); break;
+                case 29: fullPan = ("000" + rawpan); break;
+                case 30: fullPan = ("00" + rawpan); break;
+                case 31: fullPan = ("0" + rawpan); break;
+                case 32: fullPan = rawpan; break;
+                case 33: fullPan = rawpan.Substring(0, rawpan.Length - 1); break;//trim one off end
+                case 34: fullPan = rawpan.Substring(0, rawpan.Length - 2); break;//trim one off end
             }
+
+            return fullPan;
         }
 
         public String[] grade()
@@ -467,6 +345,153 @@ namespace Founders
             return this.gradeStatus;
         }// end gradeStatus
 
+        public bool isGradable() {
+            //The coin is considered ungradable if it does not get more than 19 RAIDA available
+            bool returnTruth = false;
+            if (charCount(cc.pown, 'f') + charCount(cc.pown, 'p') > 19) { returnTruth = true; }
+            return returnTruth;
+        }
+
+        public bool isPerfect() {
+            //The coin is considered perfect if it has all passes
+            bool returnTruth = false;
+            if( cc.pown == "ppppppppppppppppppppppppp") { returnTruth = true; }
+            return returnTruth;
+        }//end is perfect
+
+        public bool isCounterfeit() {
+            //The coin is considered counterfeit if it has more than 20 fails
+            bool returnTruth = false;
+            if ( charCount(cc.pown, 'f') > 20) { returnTruth = true; }
+            return returnTruth;
+        }//end is counterfeit
+
+        public bool isFracked() {
+            //The coin is considered fracked if it has any fails
+            bool returnTruth = false;
+            if (charCount(cc.pown, 'f') > 0) { returnTruth = true; }
+            return returnTruth;
+        }//end is fracked
+
+        public bool isDangerous() {
+            //The coin is considered a threat if it has any of the patersns that would allow the last user to take control.
+            //There are four of these patterns: One for each corner. 
+            bool threat = false;
+            if ( charCount(cc.pown, 'f') > 5)
+            {
+                string doublePown = cc.pown + cc.pown;//double it so we see patters that happen on the ends.
+                Match UP_LEFT = Regex.Match(doublePown, @"ff[a-z][a-z][a-z]fp", RegexOptions.IgnoreCase);//String UP_LEFT = "ff***f";
+                Match UP_RIGHT = Regex.Match(doublePown, @"ff[a-z][a-z][a-z]pf", RegexOptions.IgnoreCase);//String UP_RIGHT = "ff***pf";
+                Match DOWN_LEFT = Regex.Match(doublePown, @"fp[a-z][a-z][a-z]ff", RegexOptions.IgnoreCase);//String DOWN_LEFT = "fp***ff";
+                Match DOWN_RIGHT = Regex.Match(doublePown, @"pf[a-z][a-z][a-z]ff", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "pf***ff";
+                //Check if it has a weakness
+                if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success)
+                {
+                    threat = true;
+                }//end if coin contains threats.
+            }
+            return threat;
+        }//end is threat
+
+
+        public bool isFixable()
+            {
+                //The coin is considered fixable if it has any of the patersns that would allow the new owner to fix fracked.
+                //There are four of these patterns: One for each corner. 
+                bool threat = false;
+                if (charCount(cc.pown, 'p') > 5)
+                {
+                    string doublePown = cc.pown + cc.pown;//double it so we see patters that happen on the ends.
+                    Match UP_LEFT = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]pf", RegexOptions.IgnoreCase);//String UP_LEFT = "pp***pf";
+                    Match UP_RIGHT = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]fp", RegexOptions.IgnoreCase);//String UP_RIGHT = "pp***fp";
+                    Match DOWN_LEFT = Regex.Match(doublePown, @"pf[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_LEFT = "pf***pp";
+                    Match DOWN_RIGHT = Regex.Match(doublePown, @"fp[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "fp***pp";
+                                                                                                                //Check if it has a weakness
+                    if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success)
+                    {
+                        threat = true;
+                    }//end if coin contains threats.
+                }
+            return threat;
+        }//end is threat
+
+        public void recordPown() {
+            //records the last pown so we can see if there are improvments
+            pastPown = cc.pown;
+        }//end record pown
+
+
+
+        public void sortToFolder() {
+            //figures out which folder to put it in. 
+            if (isPerfect()) {
+               folder = Folder.Bank;
+                return; 
+            }//if is perfect
+            if (isCounterfeit())
+            {
+                folder = Folder.Counterfeit;
+                return;
+            }//if is perfect
+            if ( !isGradable())
+            {
+                folder = Folder.Suspect;
+                return;
+            }//if is perfect
+            if (!isFracked())
+            {
+                folder = Folder.Bank;
+                return;
+            }//if is perfect
+            if (isDangerous())//Previous owner could try to take it back. 
+            {
+                
+                if (!isFixable()) {
+                    folder = Folder.Counterfeit;
+                    return;
+                }//end if not fixable
+            }
+            else
+            {
+                if (!isFixable()) {
+                    folder = Folder.Fracked;
+                    return;
+                }//end if not fixable 
+            }//end if is dangerous
+
+            recordPown();
+            folder = Folder.Dangerous;//If you get down here, the coin is dangerous and needs to be defracked then detected again.
+        }//end sort folder
+
+        public void sortFoldersAfterFixingDangerous() {
+            if (!isFracked())
+            {
+                folder = Folder.Suspect;
+                return;
+            }
+
+            if (!isFixing())
+            {
+                folder = Folder.Suspect;
+                return;
+            }
+            //else just keep in dangerous
+        }//end sort after fixing dangerous
+
+        public bool isFixing()
+        {
+            //The coin is considered to be fixing if the current pown is better than the past pown
+            bool returnTruth = false;
+            if (charCount(cc.pown, 'p') > charCount(pastPown,'p') ) { returnTruth = true; }
+            return returnTruth;
+        }//end is fracked
+
+
+
+        public int charCount(string pown, char character) {
+             return pown.Count(x => x == character);
+        }
+
         public void setAnsToPans()
         {
             for (int i = 0; (i < 25); i++)
@@ -497,16 +522,73 @@ namespace Founders
             }// for each guid in coin
         }// end set ans to pans if passed
 
-        public char[] consoleReport()
+        public void consoleReport()
         {
             // Used only for console apps
             //  System.out.println("Finished detecting coin index " + j);
             // PRINT OUT ALL COIN'S RAIDA STATUS AND SET AN TO NEW PAN
             char[] pownArray = cc.pown.ToCharArray();
-            string report = "   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ";
-            
-            return pownArray;
+
+            Console.Out.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Out.WriteLine("                                                        ");
+            Console.Out.WriteLine("   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
+            CoreLogger.Log("   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
+            Console.Out.WriteLine("                                                        ");
+            Console.Out.Write("    "); a(pownArray[0]); Console.Out.Write("       "); a(pownArray[1]); Console.Out.Write("       "); a(pownArray[2]); Console.Out.Write("       "); a(pownArray[3]); Console.Out.Write("       "); a(pownArray[4]); Console.Out.WriteLine("    ");
+            Console.Out.WriteLine("                                                        ");
+            Console.Out.Write("    "); a(pownArray[5]); Console.Out.Write("       "); a(pownArray[6]); Console.Out.Write("       "); a(pownArray[7]); Console.Out.Write("       "); a(pownArray[8]); Console.Out.Write("       "); a(pownArray[9]); Console.Out.WriteLine("    ");
+            Console.Out.WriteLine("                                                        ");
+            Console.Out.Write("    "); a(pownArray[10]); Console.Out.Write("       "); a(pownArray[11]); Console.Out.Write("       "); a(pownArray[12]); Console.Out.Write("       "); a(pownArray[13]); Console.Out.Write("       "); a(pownArray[14]); Console.Out.WriteLine("    ");
+            Console.Out.WriteLine("                                                        ");
+            Console.Out.Write("    "); a(pownArray[15]); Console.Out.Write("       "); a(pownArray[16]); Console.Out.Write("       "); a(pownArray[17]); Console.Out.Write("       "); a(pownArray[18]); Console.Out.Write("       "); a(pownArray[19]); Console.Out.WriteLine("    ");
+            Console.Out.WriteLine("                                                ");
+            Console.Out.Write("    "); a(pownArray[20]); Console.Out.Write("       "); a(pownArray[21]); Console.Out.Write("       "); a(pownArray[22]); Console.Out.Write("       "); a(pownArray[23]); Console.Out.Write("       "); a(pownArray[24]); Console.Out.WriteLine("    ");
+            Console.Out.WriteLine("                                                        ");
+            Console.Out.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            // check if failed
+            //  string fmt = "00";
+            // string fi = i.ToString(fmt); // Pad numbers with two digits
+            //    Console.Out.WriteLine("RAIDA" + i + " " + pastStatus[i] + " | ");
+            // Console.Out.WriteLine("AN " + i + ans[i]);
+            // Console.Out.WriteLine("PAN " + i + pans[i]);
+            //  }
+
+            // End for each cloud coin GUID statu
+            //  Console.Out.WriteLine("ed " + ed);
+            //  Console.Out.WriteLine("edHex " + edHex);
+            //  Console.Out.WriteLine("edhp " + hp);
+            // Console.Out.WriteLine("fileName " + fileName);
+            // Console.Out.WriteLine("YEARSTILEXPIRE " + YEARSTILEXPIRE);
+            //   Console.Out.WriteLine("extension " + extension);
+
 
         }//Console Report
+
+        public void a(Char status)
+        {
+            if (status == 'p')
+            {
+                Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Green; Console.Out.Write("Pass"); Console.ForegroundColor = ConsoleColor.White;
+            }
+            else if (status == 'f')
+            {
+                Console.ForegroundColor = ConsoleColor.Red; Console.Out.Write("Fail"); Console.ForegroundColor = ConsoleColor.White;
+            }
+            else if (status == 'n')
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow; Console.Out.Write("Slow"); Console.ForegroundColor = ConsoleColor.White;
+            }
+            else if (status == 'e')
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow; Console.Out.Write("Flaw"); Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow; Console.Out.Write("Skip"); Console.ForegroundColor = ConsoleColor.White;
+            }
+        }//end a Report helper
     }
 }
