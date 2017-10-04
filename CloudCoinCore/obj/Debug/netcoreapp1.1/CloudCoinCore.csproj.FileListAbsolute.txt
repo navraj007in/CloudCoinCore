@@ -12,3 +12,8 @@ D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\Cloud
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.dll
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.pdb
 D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.csprojResolveAssemblyReference.cache
+C:\cc\CloudCoinCore\CloudCoinCore\bin\Debug\netcoreapp1.1\CloudCoinCore.deps.json
+C:\cc\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.csprojResolveAssemblyReference.cache
+C:\cc\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.AssemblyInfo.cs
+C:\cc\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.dll
+C:\cc\CloudCoinCore\CloudCoinCore\obj\Debug\netcoreapp1.1\CloudCoinCore.pdb
