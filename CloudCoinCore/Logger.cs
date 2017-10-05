@@ -65,13 +65,21 @@ namespace Founders
             string classname = Path.GetFileNameWithoutExtension(classpath).ToLower();
             path = logFolder + classname + ".log";
             
-                TextWriter tw = File.AppendText(path);
+         {
+         
+            TextWriter tw = File.AppendText(path);
                 using (tw)
                 {
-                    await tw.WriteLineAsync(DateTime.Now.ToString());
+                    await tw.WriteLineAsync(DateTime.Now.ToLongTimeString());
                     await tw.WriteLineAsync(message);
 
                 }
+            }
+            catch (System.IO.IOException ex)
+            {
+                //Can't write. It is already in use. 
+
+            }
             
             
             
