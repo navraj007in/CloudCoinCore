@@ -1,8 +1,0 @@
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\bin\release\netcoreapp1.1\CloudCoinCore.deps.json
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\bin\release\netcoreapp1.1\CloudCoinCore.dll
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\bin\release\netcoreapp1.1\CloudCoinCore.pdb
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\release\netcoreapp1.1\CloudCoinCore.csproj.CoreCompileInputs.cache
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\release\netcoreapp1.1\CloudCoinCore.AssemblyInfoInputs.cache
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\release\netcoreapp1.1\CloudCoinCore.AssemblyInfo.cs
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\release\netcoreapp1.1\CloudCoinCore.dll
-D:\CloudCoinPCLLibrary\CloudCoinCore\CloudCoinCore\obj\release\netcoreapp1.1\CloudCoinCore.pdb
