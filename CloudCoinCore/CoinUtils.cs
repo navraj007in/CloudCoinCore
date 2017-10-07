@@ -17,7 +17,7 @@ namespace Founders
         public String json;
         public byte[] jpeg;
         public const int YEARSTILEXPIRE = 2;
-        public enum Folder { Suspect, Counterfeit, Fracked, Bank, Trash, Detected, Lost, Dangerous};
+        public enum Folder { Suspect, Counterfeit, Fracked, Bank, Trash, Detected, Lost, Dangerous };
         public Folder folder;
         public String[] gradeStatus = new String[3];// What passed, what failed, what was undetected
 
@@ -73,6 +73,30 @@ namespace Founders
             cc.pown = new string(pownArray);
             return true;
         }//end set past status
+
+        public void  setAOID_NoReplyAN(int RAIDA, string Old_AN)//If the RAIDA had a no reply, save the PAN here incase we need to use it again
+        {
+            //Sample 1=4b07dc3f076e4605a9eb4570c859e2c9
+            string backup_AN = RAIDA + "=" + Old_AN;
+            cc.aoid.Add(backup_AN);
+        }//end set aoid no reply pan
+
+        public string getAOID_NoReplyAN(int RAIDA)//Returns an AN of CloudCoin that got a reply 
+        {
+            string returnAn = "none_found";
+            foreach (string an in cc.aoid)
+            {
+                //Sample 1=4b07dc3f076e4605a9eb4570c859e2c9
+                string[] aoidParts = an.Split('=');
+                if( aoidParts[0] == RAIDA.ToString()){
+                    return aoidParts[1];
+                }//end if
+            }
+            
+            return returnAn;
+        }//end set aoid no reply pan
+
+
 
         public string getFolder()
         {
@@ -155,7 +179,7 @@ namespace Founders
                 }
             }
         }//end calculate hp
-         
+
         public void calcExpirationDate()
         {
             DateTime expirationDate = DateTime.Today.AddYears(YEARSTILEXPIRE);
@@ -345,39 +369,44 @@ namespace Founders
             return this.gradeStatus;
         }// end gradeStatus
 
-        public bool isGradable() {
+        public bool isGradable()
+        {
             //The coin is considered ungradable if it does not get more than 19 RAIDA available
             bool returnTruth = false;
             if (charCount(cc.pown, 'f') + charCount(cc.pown, 'p') > 19) { returnTruth = true; }
             return returnTruth;
         }
 
-        public bool isPerfect() {
+        public bool isPerfect()
+        {
             //The coin is considered perfect if it has all passes
             bool returnTruth = false;
-            if( cc.pown == "ppppppppppppppppppppppppp") { returnTruth = true; }
+            if (cc.pown == "ppppppppppppppppppppppppp") { returnTruth = true; }
             return returnTruth;
         }//end is perfect
 
-        public bool isCounterfeit() {
+        public bool isCounterfeit()
+        {
             //The coin is considered counterfeit if it has more than 20 fails
             bool returnTruth = false;
-            if ( charCount(cc.pown, 'f') > 20) { returnTruth = true; }
+            if (charCount(cc.pown, 'f') > 20) { returnTruth = true; }
             return returnTruth;
         }//end is counterfeit
 
-        public bool isFracked() {
+        public bool isFracked()
+        {
             //The coin is considered fracked if it has any fails
             bool returnTruth = false;
             if (charCount(cc.pown, 'f') > 0) { returnTruth = true; }
             return returnTruth;
         }//end is fracked
 
-        public bool isDangerous() {
+        public bool isDangerous()
+        {
             //The coin is considered a threat if it has any of the patersns that would allow the last user to take control.
             //There are four of these patterns: One for each corner. 
             bool threat = false;
-            if ( charCount(cc.pown, 'f') > 5)
+            if (charCount(cc.pown, 'f') > 5)
             {
                 string doublePown = cc.pown + cc.pown;//double it so we see patters that happen on the ends.
                 Match UP_LEFT = Regex.Match(doublePown, @"ff[a-z][a-z][a-z]fp", RegexOptions.IgnoreCase);//String UP_LEFT = "ff***f";
@@ -395,45 +424,48 @@ namespace Founders
 
 
         public bool isFixable()
+        {
+            //The coin is considered fixable if it has any of the patersns that would allow the new owner to fix fracked.
+            //There are four of these patterns: One for each corner. 
+            bool threat = false;
+            if (charCount(cc.pown, 'p') > 5)
             {
-                //The coin is considered fixable if it has any of the patersns that would allow the new owner to fix fracked.
-                //There are four of these patterns: One for each corner. 
-                bool threat = false;
-                if (charCount(cc.pown, 'p') > 5)
+                string doublePown = cc.pown + cc.pown;//double it so we see patters that happen on the ends.
+                Match UP_LEFT = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]pf", RegexOptions.IgnoreCase);//String UP_LEFT = "pp***pf";
+                Match UP_RIGHT = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]fp", RegexOptions.IgnoreCase);//String UP_RIGHT = "pp***fp";
+                Match DOWN_LEFT = Regex.Match(doublePown, @"pf[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_LEFT = "pf***pp";
+                Match DOWN_RIGHT = Regex.Match(doublePown, @"fp[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "fp***pp";
+                                                                                                            //Check if it has a weakness
+                if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success)
                 {
-                    string doublePown = cc.pown + cc.pown;//double it so we see patters that happen on the ends.
-                    Match UP_LEFT = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]pf", RegexOptions.IgnoreCase);//String UP_LEFT = "pp***pf";
-                    Match UP_RIGHT = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]fp", RegexOptions.IgnoreCase);//String UP_RIGHT = "pp***fp";
-                    Match DOWN_LEFT = Regex.Match(doublePown, @"pf[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_LEFT = "pf***pp";
-                    Match DOWN_RIGHT = Regex.Match(doublePown, @"fp[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "fp***pp";
-                                                                                                                //Check if it has a weakness
-                    if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success)
-                    {
-                        threat = true;
-                    }//end if coin contains threats.
-                }
+                    threat = true;
+                }//end if coin contains threats.
+            }
             return threat;
         }//end is threat
 
-        public void recordPown() {
+        public void recordPown()
+        {
             //records the last pown so we can see if there are improvments
             pastPown = cc.pown;
         }//end record pown
 
 
 
-        public void sortToFolder() {
+        public void sortToFolder()
+        {
             //figures out which folder to put it in. 
-            if (isPerfect()) {
-               folder = Folder.Bank;
-                return; 
+            if (isPerfect())
+            {
+                folder = Folder.Bank;
+                return;
             }//if is perfect
             if (isCounterfeit())
             {
                 folder = Folder.Counterfeit;
                 return;
             }//if is perfect
-            if ( !isGradable())
+            if (!isGradable())
             {
                 folder = Folder.Suspect;
                 return;
@@ -445,15 +477,17 @@ namespace Founders
             }//if is perfect
             if (isDangerous())//Previous owner could try to take it back. 
             {
-                
-                if (!isFixable()) {
+
+                if (!isFixable())
+                {
                     folder = Folder.Counterfeit;
                     return;
                 }//end if not fixable
             }
             else
             {
-                if (!isFixable()) {
+                if (!isFixable())
+                {
                     folder = Folder.Fracked;
                     return;
                 }//end if not fixable 
@@ -463,7 +497,8 @@ namespace Founders
             folder = Folder.Dangerous;//If you get down here, the coin is dangerous and needs to be defracked then detected again.
         }//end sort folder
 
-        public void sortFoldersAfterFixingDangerous() {
+        public void sortFoldersAfterFixingDangerous()
+        {
             if (!isFracked())
             {
                 folder = Folder.Suspect;
@@ -482,14 +517,15 @@ namespace Founders
         {
             //The coin is considered to be fixing if the current pown is better than the past pown
             bool returnTruth = false;
-            if (charCount(cc.pown, 'p') > charCount(pastPown,'p') ) { returnTruth = true; }
+            if (charCount(cc.pown, 'p') > charCount(pastPown, 'p')) { returnTruth = true; }
             return returnTruth;
         }//end is fracked
 
 
 
-        public int charCount(string pown, char character) {
-             return pown.Count(x => x == character);
+        public int charCount(string pown, char character)
+        {
+            return pown.Count(x => x == character);
         }
 
         public void setAnsToPans()
