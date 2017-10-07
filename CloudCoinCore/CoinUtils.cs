@@ -615,11 +615,15 @@ namespace Founders
             }
             else if (status == 'n')
             {
-                Console.ForegroundColor = ConsoleColor.Yellow; Console.Out.Write("Slow"); Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Yellow; Console.Out.Write("NoRe"); Console.ForegroundColor = ConsoleColor.White;
             }
             else if (status == 'e')
             {
-                Console.ForegroundColor = ConsoleColor.Yellow; Console.Out.Write("Flaw"); Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Yellow; Console.Out.Write("Erro"); Console.ForegroundColor = ConsoleColor.White;
+            }
+            else if (status == 'u')
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow; Console.Out.Write("Unde"); Console.ForegroundColor = ConsoleColor.White;
             }
             else
             {
