@@ -319,7 +319,7 @@ namespace Founders
         * @param d int that is the Denomination of the Coin
         * @return Response object. 
         */
-        public async Task<Response> get_ticket(int nn, int sn, String an, int d)
+        public async Task<Response> get_ticket(int nn, int sn, String an, int d, int millisecondsToTimeout)
         {
             Response get_ticketResponse = new Response();
             get_ticketResponse.fullRequest = fullUrl + "get_ticket?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + an + "&denomination=" + d;
