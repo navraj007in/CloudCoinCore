@@ -10,7 +10,6 @@ namespace Founders
 {
     public class DetectionAgent
     {
-        public int readTimeout;
         public int RAIDANumber;
         public String fullUrl;
 
@@ -20,11 +19,10 @@ namespace Founders
         * @param readTimeout A parameter that determines how many milliseconds each request will be allowed to take
         * @param RAIDANumber The number of the RAIDA server 0-24
         */
-        public DetectionAgent(int RAIDANumber, int readTimeout)
+        public DetectionAgent(int RAIDANumber)
         {
             this.RAIDANumber = RAIDANumber;
             fullUrl = "https://RAIDA" + RAIDANumber + ".cloudcoin.global/service/";
-            this.readTimeout = readTimeout;
         }//Detection Agent Constructor
 
 
@@ -70,16 +68,6 @@ namespace Founders
 
             return echoResponse;
         }//end detect
-
-
-
-
-
-
-
-
-
-
 
 
 
