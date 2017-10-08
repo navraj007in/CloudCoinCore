@@ -9,7 +9,7 @@ namespace Founders
     {
         /*  INSTANCE VARIABLES */
         private FileUtils fileUtils;
-        int[] results = new int[4]; // [0] Coins to bank, [1] Coins to fracked [2] Coins to Counterfeit
+        int[] results = new int[5]; // [0] Coins to bank, [1] Coins to fracked [2] Coins to Counterfeit [3] suspect [4] lost
 
         /*  CONSTRUCTOR */
         public Grader(FileUtils fileUtils)
@@ -19,11 +19,12 @@ namespace Founders
             results[1] = 0;//Coins to fracked
             results[2] = 0;//Coins to Counterfeit
             results[3] = 0;//Coins kept in suspect
+            results[4] = 0;//Coins lost in process (no response from server)
         }// end Detect constructor
 
 
         /*  PUBLIC METHODS */
-        public int[] gradeAll()
+        public int[] gradeAll(int msToFixDangerousFracked, int msToRedetectDangerous)
         {
   
             String[] detectedFileNames = new DirectoryInfo(this.fileUtils.detectedFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
@@ -31,6 +32,7 @@ namespace Founders
             int totalValueToCounterfeit = 0;
             int totalValueToFractured = 0;
             int totalValueToKeptInSuspect = 0;
+            int totalValueToLost = 0;
             CloudCoin newCC;
 
 
@@ -55,13 +57,13 @@ namespace Founders
                     {
                         newCC = this.fileUtils.loadOneCloudCoinFromJsonFile(this.fileUtils.detectedFolder + detectedFileNames[j]);
                         CoinUtils cu = new CoinUtils(newCC);
-                    
+
                         //CoinUtils detectedCC = cu;
-
+                        //cu.sortToFolder();//Tells the Coin Utils to set what folder the coins should go to. 
                         cu.consoleReport();
-                        cu.sortToFolder();//Tells the Coin Utils to set what folder the coins should go to. 
+                      
 
-                        //Suspect, Counterfeit, Fracked, Bank, Trash, Detected, Lost, Dangerous
+                        //Suspect, Counterfeit, Fracked, Bank, Trash, Detected, Lost, Dangerous 
                         switch (cu.getFolder().ToLower())
                         {
                             case "bank":
@@ -79,6 +81,11 @@ namespace Founders
                                 fileUtils.writeTo(this.fileUtils.counterfeitFolder, cu.cc);
                                 break;
 
+                            case "lost":
+                                totalValueToLost++;
+                                fileUtils.writeTo(this.fileUtils.lostFolder, cu.cc);
+                                break;
+
                             case "suspect":
                                 totalValueToKeptInSuspect++;
                                 fileUtils.writeTo(this.fileUtils.suspectFolder, cu.cc);
@@ -93,25 +100,42 @@ namespace Founders
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("   WARNING: Strings may be attached to this coins");
                                 Console.ForegroundColor = ConsoleColor.White;
-                                Console.Out.WriteLine("  Now scanning coin " + (j + 1) + " of " + detectedFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
-                                CoreLogger.Log("  Now scanning coin " + (j + 1) + " of " + detectedFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
+                                Console.Out.WriteLine("  Now fixing fracked for " + (j + 1) + " of " + detectedFileNames.Length + " . SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
+                                CoreLogger.Log("  Now fixing fracked for " + (j + 1) + " of " + detectedFileNames.Length + " . SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
 
-                                Frack_Fixer ff = new Frack_Fixer(fileUtils, 10000);
+                                Frack_Fixer ff = new Frack_Fixer(fileUtils, msToFixDangerousFracked);
                                 RAIDA raida = new RAIDA(5000);
-
-                                while (cu.getFolder() == "dangerous")
+                                Console.WriteLine("folder is " + cu.getFolder().ToLower());
+                                while (cu.getFolder().ToLower() == "dangerous")
                                 {// keep fracking fixing until all fixed or no more improvments possible. 
+                                    Console.WriteLine("   calling fix Coin");
                                     cu = ff.fixCoin(cu.cc);
+                                    Console.WriteLine("   sorting after fixing");
                                     cu.sortFoldersAfterFixingDangerous();
                                 }//while folder still dangerous
 
                                 for (int i = 0; i < 25; i++) { cu.pans[i] = cu.generatePan(); } // end for each pan
-                                cu = raida.detectCoin(cu, 5000);//Detect again to make sure it is powned
+                                cu = raida.detectCoin(cu, msToRedetectDangerous);//Detect again to make sure it is powned
                                 cu.consoleReport();
                                 cu.sortToFolder();//Tells the Coin Utils to set what folder the coins should go to. 
+                                switch (cu.getFolder().ToLower()) {
+                                    case "bank":
+                                        totalValueToBank++;
+                                        fileUtils.writeTo(this.fileUtils.bankFolder, cu.cc);
+                                        break;
 
-                                totalValueToCounterfeit++;
-                                fileUtils.writeTo(this.fileUtils.counterfeitFolder, cu.cc);
+                                    case "fracked":
+                                        totalValueToFractured++;
+                                        fileUtils.writeTo(this.fileUtils.frackedFolder, cu.cc);
+                                        break;
+
+                                    default:
+                                        totalValueToCounterfeit++;
+                                        fileUtils.writeTo(this.fileUtils.counterfeitFolder, cu.cc);
+                                        break;
+
+                                }//end switch 
+
                                 break;
                         }//end switch
 
@@ -132,8 +156,8 @@ namespace Founders
             }// end for each coin to import
 
             results[0] = totalValueToBank;
-            results[1] = totalValueToCounterfeit;
-            results[2] = totalValueToFractured;
+            results[1] = totalValueToFractured;
+            results[2] = totalValueToCounterfeit;
             results[3] = totalValueToKeptInSuspect;
 
             return results;
