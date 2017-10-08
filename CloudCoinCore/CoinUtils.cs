@@ -397,7 +397,7 @@ namespace Founders
         {
             //The coin is considered fracked if it has any fails
             bool returnTruth = false;
-            if (charCount(cc.pown, 'f') > 0) { returnTruth = true; }
+            if (charCount(cc.pown, 'f') > 0 || charCount(cc.pown, 'n') > 0) { returnTruth = true; }
             return returnTruth;
         }//end is fracked
 
@@ -406,7 +406,8 @@ namespace Founders
             //The coin is considered a threat if it has any of the patersns that would allow the last user to take control.
             //There are four of these patterns: One for each corner. 
             bool threat = false;
-            if (charCount(cc.pown, 'f') > 5)
+          //  Console.Out.WriteLine( cc.sn + " char count f =" + charCount(cc.pown, 'f'));
+            if ( (charCount(cc.pown, 'f') + charCount(cc.pown, 'n')) > 5)
             {
                 string doublePown = cc.pown + cc.pown;//double it so we see patters that happen on the ends.
                 Match UP_LEFT = Regex.Match(doublePown, @"ff[a-z][a-z][a-z]fp", RegexOptions.IgnoreCase);//String UP_LEFT = "ff***f";
@@ -414,6 +415,11 @@ namespace Founders
                 Match DOWN_LEFT = Regex.Match(doublePown, @"fp[a-z][a-z][a-z]ff", RegexOptions.IgnoreCase);//String DOWN_LEFT = "fp***ff";
                 Match DOWN_RIGHT = Regex.Match(doublePown, @"pf[a-z][a-z][a-z]ff", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "pf***ff";
                 //Check if it has a weakness
+               // if (UP_LEFT.Success) { Console.Out.WriteLine("up left match"); }//end
+                //if (UP_RIGHT.Success) { Console.Out.WriteLine("up right match"); }//end
+               // if (DOWN_LEFT.Success) { Console.Out.WriteLine("down left match"); }//end
+               // if (DOWN_RIGHT.Success) { Console.Out.WriteLine("down right match"); }//end
+
                 if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success)
                 {
                     threat = true;
@@ -428,6 +434,7 @@ namespace Founders
             //The coin is considered fixable if it has any of the patersns that would allow the new owner to fix fracked.
             //There are four of these patterns: One for each corner. 
             bool threat = false;
+           // Console.Out.WriteLine(cc.sn + " char count p =" + charCount(cc.pown, 'p'));
             if (charCount(cc.pown, 'p') > 5)
             {
                 string doublePown = cc.pown + cc.pown;//double it so we see patters that happen on the ends.
@@ -435,11 +442,19 @@ namespace Founders
                 Match UP_RIGHT = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]fp", RegexOptions.IgnoreCase);//String UP_RIGHT = "pp***fp";
                 Match DOWN_LEFT = Regex.Match(doublePown, @"pf[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_LEFT = "pf***pp";
                 Match DOWN_RIGHT = Regex.Match(doublePown, @"fp[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "fp***pp";
-                                                                                                            //Check if it has a weakness
-                if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success)
+                Match UP_LEFT_n = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]pn", RegexOptions.IgnoreCase);//String UP_LEFT = "pp***pn";
+                Match UP_RIGHT_n = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]np", RegexOptions.IgnoreCase);//String UP_RIGHT = "pp***np";
+                Match DOWN_LEFT_n = Regex.Match(doublePown, @"pn[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_LEFT = "pn***pp";
+                Match DOWN_RIGHT_n = Regex.Match(doublePown, @"np[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "np***pp";
+             
+                if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success || UP_LEFT_n.Success || UP_RIGHT_n.Success || DOWN_LEFT_n.Success || DOWN_RIGHT_n.Success)
                 {
                     threat = true;
-                }//end if coin contains threats.
+                }//end if can be fixed.
+              //   if (UP_LEFT.Success) { Console.Out.WriteLine("up left match"); }//end
+              //   if (UP_RIGHT.Success) { Console.Out.WriteLine("up right match"); }//end
+              //   if (DOWN_LEFT.Success) { Console.Out.WriteLine("down left match"); }//end
+              //   if (DOWN_RIGHT.Success) { Console.Out.WriteLine("down right match"); }//end
             }
             return threat;
         }//end is threat
@@ -460,21 +475,28 @@ namespace Founders
                 folder = Folder.Bank;
                 return;
             }//if is perfect
+
             if (isCounterfeit())
             {
                 folder = Folder.Counterfeit;
                 return;
-            }//if is perfect
+            }//if is counterfeit
+
             if (!isGradable())
             {
                 folder = Folder.Suspect;
                 return;
-            }//if is perfect
+            }//if is gradable
+
             if (!isFracked())
             {
                 folder = Folder.Bank;
                 return;
-            }//if is perfect
+            }//if is has no failes but some undetected but is gradable
+
+            //--------------------------------------
+            /*Now look  at fracked coins*/
+
             if (isDangerous())//Previous owner could try to take it back. 
             {
 
@@ -486,7 +508,7 @@ namespace Founders
             }
             else
             {
-                if (!isFixable())
+                if ( isFixable() )
                 {
                     folder = Folder.Fracked;
                     return;
@@ -564,11 +586,12 @@ namespace Founders
             //  System.out.println("Finished detecting coin index " + j);
             // PRINT OUT ALL COIN'S RAIDA STATUS AND SET AN TO NEW PAN
             char[] pownArray = cc.pown.ToCharArray();
-
+            sortToFolder();
             Console.Out.WriteLine("");
             Console.ForegroundColor = ConsoleColor.White;
             Console.Out.WriteLine("                                                        ");
             Console.Out.WriteLine("   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
+            
             CoreLogger.Log("   Authenticity Report SN #" + string.Format("{0,8}", cc.sn) + ", Denomination: " + string.Format("{0,3}", this.getDenomination()) + "  ");
             Console.Out.WriteLine("                                                        ");
             Console.Out.Write("    "); a(pownArray[0]); Console.Out.Write("       "); a(pownArray[1]); Console.Out.Write("       "); a(pownArray[2]); Console.Out.Write("       "); a(pownArray[3]); Console.Out.Write("       "); a(pownArray[4]); Console.Out.WriteLine("    ");
@@ -580,6 +603,7 @@ namespace Founders
             Console.Out.Write("    "); a(pownArray[15]); Console.Out.Write("       "); a(pownArray[16]); Console.Out.Write("       "); a(pownArray[17]); Console.Out.Write("       "); a(pownArray[18]); Console.Out.Write("       "); a(pownArray[19]); Console.Out.WriteLine("    ");
             Console.Out.WriteLine("                                                ");
             Console.Out.Write("    "); a(pownArray[20]); Console.Out.Write("       "); a(pownArray[21]); Console.Out.Write("       "); a(pownArray[22]); Console.Out.Write("       "); a(pownArray[23]); Console.Out.Write("       "); a(pownArray[24]); Console.Out.WriteLine("    ");
+            Console.Out.WriteLine("   Status: " + getFolder());
             Console.Out.WriteLine("                                                        ");
             Console.Out.WriteLine("");
             Console.ForegroundColor = ConsoleColor.White;
