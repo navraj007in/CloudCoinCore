@@ -23,20 +23,21 @@ namespace Founders
 
 
         /* CONSTRUCTOR */
-        public RAIDA(int milliSecondsToTimeOut)
+        public RAIDA()
         { //  initialise instance variables
             this.agent = new DetectionAgent[25];
 
             for (int i = 0; (i < 25); i++)
             {
-                this.agent[i] = new DetectionAgent(i, milliSecondsToTimeOut);
+                this.agent[i] = new DetectionAgent(i);
+                
             } // end for each Raida
         }//End Constructor
 
 
         public async Task echoOne(int raida_id)
         {
-            DetectionAgent da = new DetectionAgent(raida_id, 2000);
+            DetectionAgent da = new DetectionAgent(raida_id);
             responseArray[raida_id] = await da.echo(raida_id);
 
 
@@ -91,24 +92,31 @@ namespace Founders
 
         public async Task detectOne(int raida_id, int nn, int sn, String an, String pan, int d)
         {
-            DetectionAgent da = new DetectionAgent(raida_id, 5000);
+            DetectionAgent da = new DetectionAgent(raida_id);
             responseArray[raida_id] = await da.detect(nn, sn, an, pan, d);
         }//end detectOne
 
-        public async Task detectOneMulti(int raida_id, int[] nn, int[] sn, String[] an, String[] pan, int[] d)
+
+        /* For Multi-Detect*/
+        public async Task detectOneMulti(int raida_id, int[] nn, int[] sn, String[] an, String[] pan, int[] d, int milliSecondsToTimeOut)
         {
-            DetectionAgent da = new DetectionAgent( raida_id, 5000 );
-            Response[] tempArray = await da.multiDetect(nn, sn, an, pan, d);
-            for(int i=0; i<tempArray.Length; i++)//Fill up the array
+            DetectionAgent da = new DetectionAgent( raida_id );
+
+            Response[] tempArray = await da.multiDetect(nn, sn, an, pan, d, milliSecondsToTimeOut);
+
+            for(int i=0; i< tempArray.Length; i++)//Fill up the array
             { 
                 responseArrayMulti[raida_id,i] = tempArray[i];
             }
 
-        }//end detectOne
+        }//end detectOneMulti
 
         public CoinUtils[] detectMultiCoin(CoinUtils[] cu, int milliSecondsToTimeOut)
         {
             //Make arrays to stripe the coins
+
+            responseArrayMulti = new Response[25, cu.Length];
+
             int[] nns = new int[cu.Length];
             int[] sns = new int[cu.Length];
             String[] ans_0 = new String[cu.Length];
@@ -224,56 +232,56 @@ namespace Founders
 
                 dens[i] = cu[i].getDenomination();
             }//end for every coin put in an array
-            
 
-            var t00 = detectOneMulti(00, nns, sns, ans_0, pans_0, dens);
-            var t01 = detectOneMulti(01, nns, sns, ans_1, pans_1, dens);
-            var t02 = detectOneMulti(02, nns, sns, ans_2, pans_2, dens);
-            var t03 = detectOneMulti(03, nns, sns, ans_3, pans_3, dens);
-            var t04 = detectOneMulti(04, nns, sns, ans_4, pans_4, dens);
-            var t05 = detectOneMulti(05, nns, sns, ans_5, pans_5, dens);
-            var t06 = detectOneMulti(06, nns, sns, ans_6, pans_6, dens);
-            var t07 = detectOneMulti(07, nns, sns, ans_7, pans_7, dens);
-            var t08 = detectOneMulti(08, nns, sns, ans_8, pans_8, dens);
-            var t09 = detectOneMulti(09, nns, sns, ans_9, pans_9, dens);
-            var t10 = detectOneMulti(10, nns, sns, ans_10, pans_10, dens);
-            var t11 = detectOneMulti(11, nns, sns, ans_11, pans_11, dens);
-            var t12 = detectOneMulti(12, nns, sns, ans_12, pans_12, dens);
-            var t13 = detectOneMulti(13, nns, sns, ans_13, pans_13, dens);
-            var t14 = detectOneMulti(14, nns, sns, ans_14, pans_14, dens);
-            var t15 = detectOneMulti(15, nns, sns, ans_15, pans_15, dens);
-            var t16 = detectOneMulti(16, nns, sns, ans_16, pans_16, dens);
-            var t17 = detectOneMulti(17, nns, sns, ans_17, pans_17, dens);
-            var t18 = detectOneMulti(18, nns, sns, ans_18, pans_18, dens);
-            var t19 = detectOneMulti(19, nns, sns, ans_19, pans_19, dens);
-            var t20 = detectOneMulti(20, nns, sns, ans_20, pans_20, dens);
-            var t21 = detectOneMulti(21, nns, sns, ans_21, pans_21, dens);
-            var t22 = detectOneMulti(22, nns, sns, ans_22, pans_22, dens);
-            var t23 = detectOneMulti(23, nns, sns, ans_23, pans_23, dens);
-            var t24 = detectOneMulti(24, nns, sns, ans_24, pans_24, dens);
+            Console.WriteLine( "nns=" +nns+  ", sns="+sns+", ans_0=" +ans_0+ ", pans_0=" +pans_0+", dens =" + dens);
+            var t00 = detectOneMulti(00, nns, sns, ans_0, pans_0, dens, milliSecondsToTimeOut);
+            var t01 = detectOneMulti(01, nns, sns, ans_1, pans_1, dens, milliSecondsToTimeOut);
+            var t02 = detectOneMulti(02, nns, sns, ans_2, pans_2, dens, milliSecondsToTimeOut);
+            var t03 = detectOneMulti(03, nns, sns, ans_3, pans_3, dens, milliSecondsToTimeOut);
+            var t04 = detectOneMulti(04, nns, sns, ans_4, pans_4, dens, milliSecondsToTimeOut);
+            var t05 = detectOneMulti(05, nns, sns, ans_5, pans_5, dens, milliSecondsToTimeOut);
+            var t06 = detectOneMulti(06, nns, sns, ans_6, pans_6, dens, milliSecondsToTimeOut);
+            var t07 = detectOneMulti(07, nns, sns, ans_7, pans_7, dens, milliSecondsToTimeOut);
+            var t08 = detectOneMulti(08, nns, sns, ans_8, pans_8, dens, milliSecondsToTimeOut);
+            var t09 = detectOneMulti(09, nns, sns, ans_9, pans_9, dens, milliSecondsToTimeOut);
+            var t10 = detectOneMulti(10, nns, sns, ans_10, pans_10, dens, milliSecondsToTimeOut);
+            var t11 = detectOneMulti(11, nns, sns, ans_11, pans_11, dens, milliSecondsToTimeOut);
+            var t12 = detectOneMulti(12, nns, sns, ans_12, pans_12, dens, milliSecondsToTimeOut);
+            var t13 = detectOneMulti(13, nns, sns, ans_13, pans_13, dens, milliSecondsToTimeOut);
+            var t14 = detectOneMulti(14, nns, sns, ans_14, pans_14, dens, milliSecondsToTimeOut);
+            var t15 = detectOneMulti(15, nns, sns, ans_15, pans_15, dens, milliSecondsToTimeOut);
+            var t16 = detectOneMulti(16, nns, sns, ans_16, pans_16, dens, milliSecondsToTimeOut);
+            var t17 = detectOneMulti(17, nns, sns, ans_17, pans_17, dens, milliSecondsToTimeOut);
+            var t18 = detectOneMulti(18, nns, sns, ans_18, pans_18, dens, milliSecondsToTimeOut);
+            var t19 = detectOneMulti(19, nns, sns, ans_19, pans_19, dens, milliSecondsToTimeOut);
+            var t20 = detectOneMulti(20, nns, sns, ans_20, pans_20, dens, milliSecondsToTimeOut);
+            var t21 = detectOneMulti(21, nns, sns, ans_21, pans_21, dens, milliSecondsToTimeOut);
+            var t22 = detectOneMulti(22, nns, sns, ans_22, pans_22, dens, milliSecondsToTimeOut);
+            var t23 = detectOneMulti(23, nns, sns, ans_23, pans_23, dens, milliSecondsToTimeOut);
+            var t24 = detectOneMulti(24, nns, sns, ans_24, pans_24, dens, milliSecondsToTimeOut);
 
 
             var taskList = new List<Task> { t00, t01, t02, t03, t04, t05, t06, t07, t08, t09, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24 };
-            Task.WaitAll(taskList.ToArray(), milliSecondsToTimeOut);
+
+            Task.WaitAll( taskList.ToArray(), milliSecondsToTimeOut );
             
             //Get data from the detection agents
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < nns.Length; i++)
             {
-                for (int j = 0; j<nns.Length; j++) {//For each coin
-                    if (responseArrayMulti[i, j] != null)
+                for (int j = 0; j<25; j++) {//For each coin
+                    if (responseArrayMulti[j, i] != null)
                     {
-                        cu[i].setPastStatus(responseArrayMulti[i, j].outcome, i);
-                        CoreLogger.Log(cu[i].cc.sn + " detect:" + i + " " + responseArrayMulti[i, j].fullResponse);
+                        cu[i].setPastStatus(responseArrayMulti[j, i].outcome, j);
+                        CoreLogger.Log(cu[i].cc.sn + " detect:" + j + " " + responseArrayMulti[j, i].fullResponse);
                     }
                     else
                     {
-                        cu[i].setPastStatus("undetected", i);
-                    };// should be pass, fail, error or undetected. 
+                        cu[i].setPastStatus("undetected", j);
+                    };// should be pass, fail, error or undetected, or No response. 
                 }//end for each coin checked
 
                 cu[i].setAnsToPansIfPassed();
                 cu[i].calculateHP();
-                // cu.gradeCoin(); // sets the grade and figures out what the file extension should be (bank, fracked, counterfeit, lost
                 cu[i].calcExpirationDate();
                 cu[i].grade();
             }//end for each detection agent
@@ -404,26 +412,26 @@ namespace Founders
         }//end detect coin
 
 
-        public async Task get_Ticket(int i, int raidaID, int nn, int sn, String an, int d)
+        public async Task get_Ticket(int i, int raidaID, int nn, int sn, String an, int d, int millisecondsToTimeout)
         {
-            DetectionAgent da = new DetectionAgent(raidaID, 5000);
-            responseArray[raidaID] = await da.get_ticket(nn, sn, an, d);
+            DetectionAgent da = new DetectionAgent(raidaID);
+            responseArray[raidaID] = await da.get_ticket(nn, sn, an, d, millisecondsToTimeout);
 
 
         }//end get ticket
 
 
-        public void get_Tickets(int[] triad, String[] ans, int nn, int sn, int denomination, int milliSecondsToTimeOut)
+        public void get_Tickets(int[] triad, String[] ans, int nn, int sn, int denomination, int millisecondsToTimeout)
         {
             //Empty the status of any old ticket info. 
             RAIDA_Status.resetTickets();
             //Console.WriteLine("Get Tickets called. ");
-            var t00 = get_Ticket(0, triad[00], nn, sn, ans[00], denomination);
-            var t01 = get_Ticket(1, triad[01], nn, sn, ans[01], denomination);
-            var t02 = get_Ticket(2, triad[02], nn, sn, ans[02], denomination);
+            var t00 = get_Ticket(0, triad[00], nn, sn, ans[00], denomination, millisecondsToTimeout);
+            var t01 = get_Ticket(1, triad[01], nn, sn, ans[01], denomination, millisecondsToTimeout);
+            var t02 = get_Ticket(2, triad[02], nn, sn, ans[02], denomination, millisecondsToTimeout);
 
             var taskList = new List<Task> { t00, t01, t02 };
-            Task.WaitAll(taskList.ToArray(), milliSecondsToTimeOut);
+            Task.WaitAll(taskList.ToArray(), millisecondsToTimeout);
             try
             {
                 CoreLogger.Log(sn + " get ticket:" + triad[00] + " " + responseArray[triad[00]].fullResponse);
