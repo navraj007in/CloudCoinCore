@@ -373,7 +373,10 @@ namespace Founders
         {
             //The coin is considered ungradable if it does not get more than 19 RAIDA available
             bool returnTruth = false;
-            if (charCount(cc.pown, 'f') + charCount(cc.pown, 'p') > 19) { returnTruth = true; }
+            if (charCount(cc.pown, 'f') + charCount(cc.pown, 'p') > 19) {
+                returnTruth = true;
+                Console.Out.WriteLine("isGradable");
+            }
             return returnTruth;
         }
 
@@ -381,7 +384,10 @@ namespace Founders
         {
             //The coin is considered perfect if it has all passes
             bool returnTruth = false;
-            if (cc.pown == "ppppppppppppppppppppppppp") { returnTruth = true; }
+            if (cc.pown == "ppppppppppppppppppppppppp") {
+                returnTruth = true;
+                Console.Out.WriteLine("isPerfect");
+            }
             return returnTruth;
         }//end is perfect
 
@@ -389,7 +395,10 @@ namespace Founders
         {
             //The coin is considered counterfeit if it has more than 20 fails
             bool returnTruth = false;
-            if (charCount(cc.pown, 'f') > 20) { returnTruth = true; }
+            if (charCount(cc.pown, 'f') > 20) {
+                returnTruth = true;
+                Console.Out.WriteLine("isCounterfeit");
+            }
             return returnTruth;
         }//end is counterfeit
 
@@ -397,9 +406,26 @@ namespace Founders
         {
             //The coin is considered fracked if it has any fails
             bool returnTruth = false;
-            if (charCount(cc.pown, 'f') > 0 || charCount(cc.pown, 'n') > 0) { returnTruth = true; }
+            if (charCount(cc.pown, 'f') > 0 || charCount(cc.pown, 'n') > 0) {
+                returnTruth = true;
+                Console.Out.WriteLine("isFracked");
+            }
             return returnTruth;
         }//end is fracked
+
+        public bool noResponses()
+        {
+            //Does the coin has no-responses. This means the RAIDA may be using its PAN or AN
+            //These must be fixed in a special way using both.  
+            bool returnTruth = false;
+            if ( charCount(cc.pown, 'n') > 0)
+            {
+                returnTruth = true;
+                Console.Out.WriteLine("noResponses");
+            }
+            return returnTruth;
+        }//end is fracked
+
 
         public bool isDangerous()
         {
@@ -423,6 +449,7 @@ namespace Founders
                 if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success)
                 {
                     threat = true;
+                    Console.Out.WriteLine("isDangerous");
                 }//end if coin contains threats.
             }
             return threat;
@@ -433,7 +460,7 @@ namespace Founders
         {
             //The coin is considered fixable if it has any of the patersns that would allow the new owner to fix fracked.
             //There are four of these patterns: One for each corner. 
-            bool threat = false;
+            bool canFix = false;
            // Console.Out.WriteLine(cc.sn + " char count p =" + charCount(cc.pown, 'p'));
             if (charCount(cc.pown, 'p') > 5)
             {
@@ -449,15 +476,21 @@ namespace Founders
              
                 if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success || UP_LEFT_n.Success || UP_RIGHT_n.Success || DOWN_LEFT_n.Success || DOWN_RIGHT_n.Success)
                 {
-                    threat = true;
-                }//end if can be fixed.
-              //   if (UP_LEFT.Success) { Console.Out.WriteLine("up left match"); }//end
-              //   if (UP_RIGHT.Success) { Console.Out.WriteLine("up right match"); }//end
-              //   if (DOWN_LEFT.Success) { Console.Out.WriteLine("down left match"); }//end
-              //   if (DOWN_RIGHT.Success) { Console.Out.WriteLine("down right match"); }//end
-            }
-            return threat;
-        }//end is threat
+                    canFix = true;
+                    Console.Out.WriteLine("isFixable");
+                }//end
+            
+                 if (UP_LEFT.Success) { Console.Out.WriteLine("canFix up left match"); }//end
+                 if (UP_RIGHT.Success) { Console.Out.WriteLine("canFix up right match"); }//end
+                 if (DOWN_LEFT.Success) { Console.Out.WriteLine("canFix down left match"); }//end
+                 if (DOWN_RIGHT.Success) { Console.Out.WriteLine("canFix down right match"); }//end
+                if (UP_LEFT_n.Success) { Console.Out.WriteLine("canFix_n up left match"); }//end
+                if (UP_RIGHT_n.Success) { Console.Out.WriteLine("canFix_n up right match"); }//end
+                if (DOWN_LEFT_n.Success) { Console.Out.WriteLine("canFix_n down left match"); }//end
+                if (DOWN_RIGHT_n.Success) { Console.Out.WriteLine("canFix_n down right match"); }//end
+            }//end if more than five passed
+            return canFix;
+        }//end is fixable
 
         public void recordPown()
         {
@@ -484,6 +517,10 @@ namespace Founders
 
             if (!isGradable())
             {
+                if ( noResponses() ) {
+                    folder = Folder.Lost;
+                    return;
+                }//end no responses
                 folder = Folder.Suspect;
                 return;
             }//if is gradable
@@ -503,6 +540,7 @@ namespace Founders
                 if (!isFixable())
                 {
                     folder = Folder.Counterfeit;
+                    Console.Out.WriteLine("!isFixable");
                     return;
                 }//end if not fixable
             }
@@ -524,15 +562,18 @@ namespace Founders
             if (!isFracked())
             {
                 folder = Folder.Suspect;
+                Console.Out.WriteLine("sort after !isFixable");
                 return;
             }
 
             if (!isFixing())
             {
                 folder = Folder.Suspect;
+                Console.Out.WriteLine("sort after !isFixing");
                 return;
             }
             //else just keep in dangerous
+            Console.Out.WriteLine("nothing sorted after");
         }//end sort after fixing dangerous
 
         public bool isFixing()
