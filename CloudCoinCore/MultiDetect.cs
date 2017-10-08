@@ -10,20 +10,19 @@ namespace Founders
         /*  INSTANCE VARIABLES */
         private RAIDA raida;
         private FileUtils fileUtils;
-        private int detectTime;
+   
 
 
         /*  CONSTRUCTOR */
-        public MultiDetect(FileUtils fileUtils, int timeout)
+        public MultiDetect(FileUtils fileUtils)
         {
-            raida = new RAIDA(timeout);
+            raida = new RAIDA();
             this.fileUtils = fileUtils;
-            detectTime = timeout;
         }// end Detect constructor
 
 
   
-        public int detectMulti()
+        public int detectMulti(int detectTime)
         {
             // LOAD THE .suspect COINS ONE AT A TIME AND TEST THEM
             String[] suspectFileNames = new DirectoryInfo(this.fileUtils.suspectFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
@@ -78,11 +77,11 @@ namespace Founders
             CoinUtils[] detectedCC = raida.detectMultiCoin(cu, detectTime);
 
             //Write the coins to the detected folder delete from the suspect
-            for (int c=0; c < detectedCC.Length; c++)
-            {
-                detectedCC[c].consoleReport();
-            }
-
+          //  for (int c=0; c < detectedCC.Length; c++)
+         //   {
+         //       detectedCC[c].consoleReport();
+         //   }
+            return CoinsToDetect;
         }//End detectMulti All
 
 
