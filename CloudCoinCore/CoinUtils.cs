@@ -96,8 +96,6 @@ namespace Founders
             return returnAn;
         }//end set aoid no reply pan
 
-
-
         public string getFolder()
         {
             string returnString = "";
@@ -415,7 +413,7 @@ namespace Founders
 
         public bool noResponses()
         {
-            //Does the coin has no-responses. This means the RAIDA may be using its PAN or AN
+            //Does the coin have no-responses from the RIDA. This means the RAIDA may be using its PAN or AN
             //These must be fixed in a special way using both.  
             bool returnTruth = false;
             if ( charCount(cc.pown, 'n') > 0)
@@ -425,7 +423,6 @@ namespace Founders
             }
             return returnTruth;
         }//end is fracked
-
 
         public bool isDangerous()
         {
@@ -454,7 +451,6 @@ namespace Founders
             }
             return threat;
         }//end is threat
-
 
         public bool isFixable()
         {
@@ -497,8 +493,6 @@ namespace Founders
             //records the last pown so we can see if there are improvments
             pastPown = cc.pown;
         }//end record pown
-
-
 
         public void sortToFolder()
         {
@@ -584,8 +578,6 @@ namespace Founders
             return returnTruth;
         }//end is fracked
 
-
-
         public int charCount(string pown, char character)
         {
             return pown.Count(x => x == character);
@@ -610,13 +602,21 @@ namespace Founders
                 {
                     cc.an[i] = pans[i];
                 }
-                else if (pownArray[i] == 'u' && !RAIDA_Status.failsEcho[i] && partial == false)//Timed out but there server echoed. So it probably changed the PAN just too slow of a response
+                if (pownArray[i] == 'n')//n means there was no reply from the detection request. The RAIDA is probably there because it passed echo (otherwise it would not have been tried. But we don't know. 
                 {
+                    //So we must now save the AN and the PAN so we can try to fix it later should it need to. 
+                    //We assume that the RAIDA got the message but we did not hear back from it. 
                     cc.an[i] = pans[i];
+                    setAOID_NoReplyAN(i, cc.an[i]);//This will put a note and the AN in the AOID so we know what it was.  
                 }
-                else
+                else if (pownArray[i] == 'u')//We did not try to detect because the RAIDA was not echoing. So we cannot update AN. 
                 {
-                    // Just keep the ans and do not change. Hopefully they are not fracked. 
+                    //Just keep the An the same by doing nothing.
+                }
+                else//Else error or fail. 
+                {
+                    // If it is an error we want to keep the an.
+                    //If it is a fail it does not matter.  
                 }
             }// for each guid in coin
         }// end set ans to pans if passed
