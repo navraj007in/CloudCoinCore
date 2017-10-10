@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Founders
 {
-     class Grader
+    public class Grader
     {
         /*  INSTANCE VARIABLES */
         private FileUtils fileUtils;

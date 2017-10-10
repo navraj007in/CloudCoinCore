@@ -1,6 +1,7 @@
-using PCLCrypto;
+
 using System;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 namespace Founders
@@ -193,25 +194,29 @@ namespace Founders
 
         public String generatePan()
         {
-            byte[] cryptoRandomBuffer = new byte[16];
-            NetFxCrypto.RandomNumberGenerator.GetBytes(cryptoRandomBuffer);
-
-            Guid pan = new Guid(cryptoRandomBuffer);
-            String rawpan = pan.ToString("N");
-            String fullPan = "";
-            switch (rawpan.Length)//Make sure the pan is 32 characters long. The odds of this happening are slim but it will happen.
+            using (var rng = RandomNumberGenerator.Create())
             {
-                case 27: fullPan = ("00000" + rawpan); break;
-                case 28: fullPan = ("0000" + rawpan); break;
-                case 29: fullPan = ("000" + rawpan); break;
-                case 30: fullPan = ("00" + rawpan); break;
-                case 31: fullPan = ("0" + rawpan); break;
-                case 32: fullPan = rawpan; break;
-                case 33: fullPan = rawpan.Substring(0, rawpan.Length - 1); break;//trim one off end
-                case 34: fullPan = rawpan.Substring(0, rawpan.Length - 2); break;//trim one off end
-            }
+                byte[] cryptoRandomBuffer = new byte[16];
+                rng.GetBytes(cryptoRandomBuffer);
 
-            return fullPan;
+                Guid pan = new Guid(cryptoRandomBuffer);
+
+                String rawpan = pan.ToString("N");
+                String fullPan = "";
+                switch (rawpan.Length)//Make sure the pan is 32 characters long. The odds of this happening are slim but it will happen.
+                {
+                    case 27: fullPan = ("00000" + rawpan); break;
+                    case 28: fullPan = ("0000" + rawpan); break;
+                    case 29: fullPan = ("000" + rawpan); break;
+                    case 30: fullPan = ("00" + rawpan); break;
+                    case 31: fullPan = ("0" + rawpan); break;
+                    case 32: fullPan = rawpan; break;
+                    case 33: fullPan = rawpan.Substring(0, rawpan.Length - 1); break;//trim one off end
+                    case 34: fullPan = rawpan.Substring(0, rawpan.Length - 2); break;//trim one off end
+                }
+
+                return fullPan;
+            }
         }
 
         public String[] grade()

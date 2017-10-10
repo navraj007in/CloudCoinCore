@@ -161,10 +161,14 @@ namespace Founders
             Directory.CreateDirectory(directoryFolder);
             Directory.CreateDirectory(exportFolder);
             Directory.CreateDirectory(partialFolder);
+            Directory.CreateDirectory(detectedFolder);
+            Directory.CreateDirectory(receiptsFolder);
+            Directory.CreateDirectory(dangerFolder);
+            Directory.CreateDirectory(lostFolder);
 
-            //            Directory.CreateDirectory(languageFolder);
+        //            Directory.CreateDirectory(languageFolder);
 
-        }
+    }
 
 
         public Stack loadManyCloudCoinFromJsonFile(String loadFilePath, string incomeJson)

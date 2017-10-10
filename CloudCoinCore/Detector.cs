@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Founders
 {
-    class Detector
+    public class Detector
     {
         /*  INSTANCE VARIABLES */
          RAIDA raida;

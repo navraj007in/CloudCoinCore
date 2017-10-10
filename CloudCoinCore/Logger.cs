@@ -65,7 +65,7 @@ namespace Founders
             string classname = Path.GetFileNameWithoutExtension(classpath).ToLower();
             path = logFolder + classname + ".log";
             
-         {
+         try{
          
             TextWriter tw = File.AppendText(path);
                 using (tw)
