@@ -52,22 +52,22 @@ namespace Founders
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Out.WriteLine("");
-                    Console.Out.WriteLine("  RAIDA " + trustedTriad[0] + " can't help on corner  " + corner);
-                    CoreLogger.Log("  RAIDA " + trustedTriad[0] + " can't help on corner  " + corner);
+                    Console.Out.WriteLine("  RAIDA " + trustedTriad[0] + " can't help RAIDA " + raida_ID + " fix corner  " + corner);
+                    CoreLogger.Log("  RAIDA " + trustedTriad[0] + " can't help RAIDA " + raida_ID + " fix corner  " + corner);
                     CoreLogger.Log("");
                     Console.ForegroundColor = ConsoleColor.White;
-                    return "RAIDA " + trustedTriad[0] + " can't help on corner  " + corner;
+                    return "RAIDA " + trustedTriad[0] + " can't help RAIDA " + raida_ID + " fix corner  " + corner;
                 }
                 //See if Second Trusted RAIDA can help
                 if (!pown_chars[trustedTriad[1]].Equals('p'))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Out.WriteLine("");
-                    Console.Out.WriteLine("  RAIDA " + trustedTriad[1] + " can't help on corner  " + corner);
-                    CoreLogger.Log("  RAIDA " + trustedTriad[1] + " can't help on corner  " + corner);
+                    Console.Out.WriteLine("  RAIDA " + trustedTriad[1] + " can't help RAIDA " + raida_ID + " fix corner  " + corner);
+                    CoreLogger.Log("  RAIDA " + trustedTriad[1] + " can't help RAIDA " + raida_ID + " fix corner  " + corner);
                     CoreLogger.Log("");
                     Console.ForegroundColor = ConsoleColor.White;
-                    return "RAIDA " + trustedTriad[1] + " can't help on corner  " + corner;
+                    return "RAIDA " + trustedTriad[1] + " can't help RAIDA " + raida_ID + " fix corner  " + corner;
                 }
 
                 //See if Third Trusted RAIDA can help
@@ -75,11 +75,11 @@ namespace Founders
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Out.WriteLine("");
-                    Console.Out.WriteLine("  RAIDA " + trustedTriad[2] + " can't help on corner  " + corner);
-                    CoreLogger.Log("  RAIDA " + trustedTriad[2] + " can't help on corner  " + corner);
+                    Console.Out.WriteLine("  RAIDA " + trustedTriad[2] + " can't help RAIDA " + raida_ID + " fix corner  " + corner);
+                    CoreLogger.Log("  RAIDA " + trustedTriad[2] + " can't help RAIDA " + raida_ID + " fix corner  " + corner);
                     CoreLogger.Log("");
                     Console.ForegroundColor = ConsoleColor.White;
-                    return "RAIDA " + trustedTriad[2] + " can't help on corner  " + corner;
+                    return "RAIDA " + trustedTriad[2] + " can't help RAIDA " + raida_ID + " fix corner  " + corner;
                 }
 
                 if (!RAIDA_Status.failsEcho[trustedTriad[0]] || !RAIDA_Status.failsDetect[trustedTriad[0]] || !RAIDA_Status.failsEcho[trustedTriad[1]] || !RAIDA_Status.failsDetect[trustedTriad[1]] || !RAIDA_Status.failsEcho[trustedTriad[2]] || !RAIDA_Status.failsDetect[trustedTriad[2]])
@@ -126,7 +126,7 @@ namespace Founders
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.Out.WriteLine("");
-                            Console.Out.WriteLine("  RAIDA failed to accept tickets on corner " + corner);
+                            Console.Out.WriteLine("  RAIDA "+ raida_ID +" failed to accept tickets on corner " + corner);
                             CoreLogger.Log("  RAIDA failed to accept tickets on corner " + corner);
                             Console.Out.WriteLine("");
                             Console.ForegroundColor = ConsoleColor.White;
