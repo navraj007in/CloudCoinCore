@@ -110,6 +110,7 @@ namespace Founders
                     if (json.IsSuccessStatusCode)//200 status good
                     {
                         totalResponse = await json.Content.ReadAsStringAsync();
+                        Console.Out.WriteLine("RAIDA " + RAIDANumber + " returned good: " + json.StatusCode);
                       //  Console.Out.WriteLine(totalResponse);
                     }
                     else //404 not found or 500 error. 
