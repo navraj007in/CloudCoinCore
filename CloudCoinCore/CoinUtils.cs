@@ -367,35 +367,47 @@ namespace Founders
             return this.gradeStatus;
         }// end gradeStatus
 
-        public bool isGradable()
+        public bool isGradablePass()
         {
             //The coin is considered ungradable if it does not get more than 19 RAIDA available
             bool returnTruth = false;
-            if (charCount(cc.pown, 'f') + charCount(cc.pown, 'p') > 19) {
+            if (charCount(cc.pown, 'f') + charCount(cc.pown, 'p') > 16 && isFixable() && !isDangerous())
+            {
                 returnTruth = true;
                 Console.Out.WriteLine("isGradable");
             }
+            else {
+                Console.Out.WriteLine("Not isGradable");
+            }
             return returnTruth;
-        }
+        }//end is gradable pass
 
         public bool isPerfect()
         {
             //The coin is considered perfect if it has all passes
             bool returnTruth = false;
-            if (cc.pown == "ppppppppppppppppppppppppp") {
+            if (cc.pown == "ppppppppppppppppppppppppp")
+            {
                 returnTruth = true;
                 Console.Out.WriteLine("isPerfect");
+            }
+            else {
+                Console.Out.WriteLine("Not isPerfect");
             }
             return returnTruth;
         }//end is perfect
 
         public bool isCounterfeit()
         {
-            //The coin is considered counterfeit if it has more than 20 fails
+            //The coin is considered counterfeit if it has so many fails it cannot be fixed
             bool returnTruth = false;
-            if (charCount(cc.pown, 'f') > 20) {
+            if ( (charCount(cc.pown, 'p')  < 6 && (charCount(cc.pown, 'f') > 13))) {
                 returnTruth = true;
                 Console.Out.WriteLine("isCounterfeit");
+            }
+            else
+            {
+                Console.Out.WriteLine("Not isCounterfeit");
             }
             return returnTruth;
         }//end is counterfeit
@@ -407,6 +419,10 @@ namespace Founders
             if (charCount(cc.pown, 'f') > 0 || charCount(cc.pown, 'n') > 0) {
                 returnTruth = true;
                 Console.Out.WriteLine("isFracked");
+            }
+            else
+            {
+                Console.Out.WriteLine("Not isFracked");
             }
             return returnTruth;
         }//end is fracked
@@ -420,6 +436,10 @@ namespace Founders
             {
                 returnTruth = true;
                 Console.Out.WriteLine("noResponses");
+            }
+            else
+            {
+                Console.Out.WriteLine("Not noResponses");
             }
             return returnTruth;
         }//end is fracked
@@ -449,6 +469,10 @@ namespace Founders
                     Console.Out.WriteLine("isDangerous");
                 }//end if coin contains threats.
             }
+            else
+            {
+                Console.Out.WriteLine("Not isDangerous");
+            }
             return threat;
         }//end is threat
 
@@ -465,26 +489,48 @@ namespace Founders
                 Match UP_RIGHT = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]fp", RegexOptions.IgnoreCase);//String UP_RIGHT = "pp***fp";
                 Match DOWN_LEFT = Regex.Match(doublePown, @"pf[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_LEFT = "pf***pp";
                 Match DOWN_RIGHT = Regex.Match(doublePown, @"fp[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "fp***pp";
+
                 Match UP_LEFT_n = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]pn", RegexOptions.IgnoreCase);//String UP_LEFT = "pp***pn";
                 Match UP_RIGHT_n = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]np", RegexOptions.IgnoreCase);//String UP_RIGHT = "pp***np";
                 Match DOWN_LEFT_n = Regex.Match(doublePown, @"pn[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_LEFT = "pn***pp";
                 Match DOWN_RIGHT_n = Regex.Match(doublePown, @"np[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "np***pp";
-             
-                if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success || UP_LEFT_n.Success || UP_RIGHT_n.Success || DOWN_LEFT_n.Success || DOWN_RIGHT_n.Success)
+
+                Match UP_LEFT_e = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]pe", RegexOptions.IgnoreCase);//String UP_LEFT = "pp***pe";
+                Match UP_RIGHT_e = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]ep", RegexOptions.IgnoreCase);//String UP_RIGHT = "pp***ep";
+                Match DOWN_LEFT_e = Regex.Match(doublePown, @"pe[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_LEFT = "pe***pp";
+                Match DOWN_RIGHT_e = Regex.Match(doublePown, @"ep[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "ep***pp";
+
+                Match UP_LEFT_u = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]pu", RegexOptions.IgnoreCase);//String UP_LEFT = "pp***pu";
+                Match UP_RIGHT_u = Regex.Match(doublePown, @"pp[a-z][a-z][a-z]up", RegexOptions.IgnoreCase);//String UP_RIGHT = "pp***up";
+                Match DOWN_LEFT_u = Regex.Match(doublePown, @"pu[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_LEFT = "pu***pp";
+                Match DOWN_RIGHT_u = Regex.Match(doublePown, @"up[a-z][a-z][a-z]pp", RegexOptions.IgnoreCase);//String DOWN_RIGHT = "up***pp";
+
+                if (UP_LEFT.Success || UP_RIGHT.Success || DOWN_LEFT.Success || DOWN_RIGHT.Success || UP_LEFT_n.Success || UP_RIGHT_n.Success || DOWN_LEFT_n.Success || DOWN_RIGHT_n.Success || UP_LEFT_e.Success || UP_RIGHT_e.Success || DOWN_LEFT_e.Success || DOWN_RIGHT_e.Success || UP_LEFT_u.Success || UP_RIGHT_u.Success || DOWN_LEFT_u.Success || DOWN_RIGHT_u.Success)
                 {
                     canFix = true;
                     Console.Out.WriteLine("isFixable");
-                }//end
-            
-                 if (UP_LEFT.Success) { Console.Out.WriteLine("canFix up left match"); }//end
-                 if (UP_RIGHT.Success) { Console.Out.WriteLine("canFix up right match"); }//end
-                 if (DOWN_LEFT.Success) { Console.Out.WriteLine("canFix down left match"); }//end
-                 if (DOWN_RIGHT.Success) { Console.Out.WriteLine("canFix down right match"); }//end
-                if (UP_LEFT_n.Success) { Console.Out.WriteLine("canFix_n up left match"); }//end
-                if (UP_RIGHT_n.Success) { Console.Out.WriteLine("canFix_n up right match"); }//end
-                if (DOWN_LEFT_n.Success) { Console.Out.WriteLine("canFix_n down left match"); }//end
-                if (DOWN_RIGHT_n.Success) { Console.Out.WriteLine("canFix_n down right match"); }//end
+                }
+                else
+                {
+                    canFix = false;
+                    Console.Out.WriteLine("Not isFixable");
+                }
+
+
+                // if (UP_LEFT.Success) { Console.Out.WriteLine("canFix up left match"); }//end
+                // if (UP_RIGHT.Success) { Console.Out.WriteLine("canFix up right match"); }//end
+                // // if (DOWN_LEFT.Success) { Console.Out.WriteLine("canFix down left match"); }//end
+                // if (DOWN_RIGHT.Success) { Console.Out.WriteLine("canFix down right match"); }//end
+                //if (UP_LEFT_n.Success) { Console.Out.WriteLine("canFix_n up left match"); }//end
+                // if (UP_RIGHT_n.Success) { Console.Out.WriteLine("canFix_n up right match"); }//end
+                // if (DOWN_LEFT_n.Success) { Console.Out.WriteLine("canFix_n down left match"); }//end
+                // if (DOWN_RIGHT_n.Success) { Console.Out.WriteLine("canFix_n down right match"); }//end
             }//end if more than five passed
+            else
+            {
+                canFix = false;
+                Console.Out.WriteLine("Not isFixable");
+            }
             return canFix;
         }//end is fixable
 
@@ -509,7 +555,7 @@ namespace Founders
                 return;
             }//if is counterfeit
 
-            if (!isGradable())
+            if (!isGradablePass())
             {
                 if ( noResponses() ) {
                     folder = Folder.Lost;
