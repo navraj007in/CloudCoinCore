@@ -104,12 +104,12 @@ namespace Founders
                                 CoreLogger.Log("  Now fixing fracked for " + (j + 1) + " of " + detectedFileNames.Length + " . SN " + string.Format("{0:n0}", newCC.sn) + ", Denomination: " + cu.getDenomination());
 
                                 Frack_Fixer ff = new Frack_Fixer(fileUtils, msToFixDangerousFracked);
-                                RAIDA raida = new RAIDA(5000);
+                                RAIDA raida = new RAIDA();
                                 Console.WriteLine("folder is " + cu.getFolder().ToLower());
                                 while (cu.getFolder().ToLower() == "dangerous")
                                 {// keep fracking fixing until all fixed or no more improvments possible. 
                                     Console.WriteLine("   calling fix Coin");
-                                    cu = ff.fixCoin(cu.cc);
+                                    cu = ff.fixCoin(cu.cc, msToFixDangerousFracked);
                                     Console.WriteLine("   sorting after fixing");
                                     cu.sortFoldersAfterFixingDangerous();
                                 }//while folder still dangerous
@@ -159,7 +159,7 @@ namespace Founders
             results[1] = totalValueToFractured;
             results[2] = totalValueToCounterfeit;
             results[3] = totalValueToKeptInSuspect;
-
+            results[4] = totalValueToLost;
             return results;
         }//Detect All
 
