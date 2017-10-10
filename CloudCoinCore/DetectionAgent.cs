@@ -13,24 +13,13 @@ namespace Founders
         public int RAIDANumber;
         public String fullUrl;
 
-
-        /**
-        * DetectionAgent Constructor
-        * @param readTimeout A parameter that determines how many milliseconds each request will be allowed to take
-        * @param RAIDANumber The number of the RAIDA server 0-24
-        */
+        //Constructor
         public DetectionAgent(int RAIDANumber)
         {
             this.RAIDANumber = RAIDANumber;
             fullUrl = "https://RAIDA" + RAIDANumber + ".cloudcoin.global/service/";
         }//Detection Agent Constructor
 
-
-
-        /**
-        * Method ECHO
-        * @param raidaID The number of the RAIDA server 0-24
-        */
         public async Task<Response> echo(int raidaID)
         {
             Response echoResponse = new Response();
@@ -68,12 +57,6 @@ namespace Founders
 
             return echoResponse;
         }//end detect
-
-
-
-
-
-
 
         public async Task<Response[]> multiDetect(int[] nn, int[] sn, String[] an, String[] pan, int[] d, int timeout)
         {
@@ -131,7 +114,7 @@ namespace Founders
                     }
                     else //404 not found or 500 error. 
                     {
-                        Console.Out.WriteLine("Status code:" + json.StatusCode);
+                        Console.Out.WriteLine( "RAIDA "+ RAIDANumber + " had an error: " + json.StatusCode);
                         after = DateTime.Now;
                         ts = after.Subtract(before);//Start the timer
                         for (int i = 0; i < nn.Length; i++)
@@ -249,24 +232,14 @@ namespace Founders
 
             }//End Else not a dud
              //Break the respons into sub responses. 
-
+            RAIDA_Status.multiDetectTime[RAIDANumber] = Convert.ToInt32(ts.Milliseconds);
 
             return response;
-
-
         }//End multi detect
 
 
-        /**
-         * Method DETECT
-         * Sends a Detection request to a RAIDA server
-         * @param nn  int that is the coin's Network Number 
-         * @param sn  int that is the coin's Serial Number
-         * @param an String that is the coin's Authenticity Number (GUID)
-         * @param pan String that is the Proposed Authenticity Number to replace the AN.
-         * @param d int that is the Denomination of the Coin
-         * @return Response object. 
-         */
+
+         //Sends a Detection request to a RAIDA server
         public async Task<Response> detect(int nn, int sn, String an, String pan, int d)
         {
             Response detectResponse = new Response();
@@ -307,18 +280,7 @@ namespace Founders
             return detectResponse;
         }//end detect
 
-
-
-        /**
-        * Method GET TICKET
-        * Returns an ticket from a trusted server
-        * @param nn  int that is the coin's Network Number 
-        * @param sn  int that is the coin's Serial Number
-        * @param an String that is the coin's Authenticity Number (GUID)
-        * @param pan String that is the Proposed Authenticity Number to replace the AN.
-        * @param d int that is the Denomination of the Coin
-        * @return Response object. 
-        */
+        //Returns an ticket from a trusted server
         public async Task<Response> get_ticket(int nn, int sn, String an, int d, int millisecondsToTimeout)
         {
             Response get_ticketResponse = new Response();
@@ -363,18 +325,7 @@ namespace Founders
             return get_ticketResponse;
         }//end get ticket
 
-
-
-        /**
-         * Method FIX
-         * Repairs a fracked RAIDA
-         * @param triad three ints trusted server RAIDA numbers
-         * @param m1 string ticket from the first trusted server
-         * @param m2 string ticket from the second trusted server
-         * @param m3 string ticket from the third trusted server
-         * @param pan string proposed authenticity number (to replace the wrong AN the RAIDA has)
-         * @return string status sent back from the server: sucess, fail or error. 
-         */
+         //Repairs a fracked RAIDA
         public async Task<Response> fix(int[] triad, String m1, String m2, String m3, String pan)
         {
             Response fixResponse = new Response();
@@ -406,15 +357,7 @@ namespace Founders
             return fixResponse;
         }//end fixit
 
-
-
-
-        /**
-         * Method getHtml download a webpage or a web service
-         *
-         * @param url_in The URL to be downloaded
-         * @return The text that was downloaded
-         */
+        //Method getHtml download a webpage or a web service
         private async Task<String> getHtml(String urlAddress)
         {
             //Console.Out.WriteLine(urlAddress);
@@ -447,17 +390,7 @@ namespace Founders
             return data;
         }//end get HTML
 
-  
-
-
-        /**
-         * Method ordinalIndexOf used to parse cloudcoins. Finds the nth number of a character within a string
-         *
-         * @param str The string to search in
-         * @param substr What to count in the string
-         * @param n The nth number
-         * @return The index of the nth number
-         */
+        // Method ordinalIndexOf used to parse cloudcoins. Finds the nth number of a character within a string
         public int ordinalIndexOf(string str, string substr, int n)
         {
             int pos = str.IndexOf(substr);
