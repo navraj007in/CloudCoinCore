@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
+
+using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
 namespace Founders
@@ -22,7 +24,7 @@ namespace Founders
 
 
 
-        public int detectMulti(int detectTime)
+        public int detectMulti(int detectTime, string receiptFile)
         {
             bool stillHaveSuspect = true;
             int coinNames = 0;
@@ -75,9 +77,9 @@ namespace Founders
                 //BUILD AN ARRAY OF COINS FROM THE FILE NAMES - UPTO 200
                 CloudCoin[] cloudCoin = new CloudCoin[coinNames];
                 CoinUtils[] cu = new CoinUtils[coinNames];
+                Receipt receipt = createReceipt(coinNames, receiptFile);
 
-
-                for (int i = 0; i < coinNames; i++)//for up to 200 coins in the suspect folder
+                    for (int i = 0; i < coinNames; i++)//for up to 200 coins in the suspect folder
                 {
 
                     try
@@ -86,7 +88,13 @@ namespace Founders
                             cu[i] = new CoinUtils(cloudCoin[i]);
                             Console.Out.WriteLine("  Now scanning coin " + (i + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", cloudCoin[i].sn) + ", Denomination: " + cu[i].getDenomination());
                             CoreLogger.Log("  Now scanning coin " + (i + 1) + " of " + suspectFileNames.Length + " for counterfeit. SN " + string.Format("{0:n0}", cloudCoin[i].sn) + ", Denomination: " + cu[i].getDenomination());
-
+                        ReceitDetail detail = new ReceitDetail();
+                        detail.sn = cloudCoin[i].sn;
+                        detail.nn = cloudCoin[i].nn;
+                        detail.status = "suspect";
+                        detail.pown = "uuuuuuuuuuuuuuuuuuuuuuuuu";
+                        detail.note = "Waiting";
+                        receipt.rd[i] = detail;
                     }
                     catch (FileNotFoundException ex)
                     {
@@ -105,12 +113,19 @@ namespace Founders
 
                 CoinUtils[] detectedCC = raida.detectMultiCoin(cu, detectTime);
 
-                //Write the coins to the detected folder delete from the suspect
-                for (int c = 0; c < detectedCC.Length; c++)
+                //create receits
+                using (StreamWriter sw = File.CreateText(fileUtils.receiptsFolder + receiptFile + ".json"))
                 {
-                    fileUtils.writeTo( fileUtils.detectedFolder, detectedCC[c].cc );
-                    File.Delete( fileUtils.suspectFolder + suspectFileNames[c] );//Delete the coin out of the suspect folder
+                    sw.WriteLine(JsonConvert.SerializeObject(receipt));
                 }
+
+
+                    //Write the coins to the detected folder delete from the suspect
+                    for (int c = 0; c < detectedCC.Length; c++)
+                    {
+                        fileUtils.writeTo(fileUtils.detectedFolder, detectedCC[c].cc);
+                        File.Delete(fileUtils.suspectFolder + suspectFileNames[c]);//Delete the coin out of the suspect folder
+                    }
             }//end while still have suspect
             return coinNames;
         }//End detectMulti All
@@ -126,6 +141,27 @@ namespace Founders
             CoreLogger.Log("  Suspect CloudCoin was moved to Trash folder.");
             Console.ForegroundColor = ConsoleColor.White;
         }//end coin exists
+
+        Receipt createReceipt(int length, string id)
+        {
+            DateTime dt = DateTime.Now;
+            TimeSpan tz = TimeZoneInfo.Local.GetUtcOffset(dt);
+            string plus = "";
+            if(tz > new TimeSpan(0))
+            { plus = "+"; }
+            else { plus = "-"; }
+            Receipt receipt = new Receipt();
+            receipt.time = dt.ToString("yyyy-MM-dd h:mm:tt");
+            receipt.timezone = "UTC" + plus + tz.ToString("%h");
+            receipt.bank_server = "localhost";
+            receipt.total_authentic = 0;
+            receipt.total_fracked = 0;
+            receipt.total_counterfeit = 0;
+            receipt.total_lost = 0;
+            receipt.receipt_id = id;
+            receipt.rd = new ReceitDetail[length];
+            return receipt;
+        }
 
 
     }//end class
