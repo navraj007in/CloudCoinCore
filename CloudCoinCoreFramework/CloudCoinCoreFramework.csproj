@@ -59,13 +59,17 @@
     <Compile Include="FileUtils.cs" />
     <Compile Include="FixitHelper.cs" />
     <Compile Include="Frack_Fixer.cs" />
+    <Compile Include="Grader.cs" />
     <Compile Include="Importer.cs" />
     <Compile Include="KeyboardReader.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MindStorage.cs" />
+    <Compile Include="MultiDetect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RAIDA.cs" />
     <Compile Include="RAIDA_Status.cs" />
+    <Compile Include="Receipt.cs" />
+    <Compile Include="ReceitDetail.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Stack.cs" />
   </ItemGroup>

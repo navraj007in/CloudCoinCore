@@ -369,5 +369,65 @@ namespace Founders
             }
         }
 
+        public bool importJson(String incomeJson)
+        {
+            bool isSuccessful = false;
+            //  System.out.println("Trying to load: " + importFolder + fileName );
+            try
+            {
+                //String incomeJson = fileUtils.importJSON(this.fileUtils.importFolder + fileName);//Load file as JSON .stack or .chest
+                Stack tempCoins = null;
+                if (seemsValidJSON(incomeJson))
+                {
+                    try
+                    {
+                        tempCoins = this.fileUtils.loadManyCloudCoinFromJsonFile(null, incomeJson);
+                    }
+                    catch (JsonReaderException e)
+                    {
+                        //Console.WriteLine("Moving corrupted file to trash: " + fileName);
+                        Console.WriteLine("Error reading "  + ". Moving to trash.");
+                        CoreLogger.Log("Error reading "  + ". Moving to trash.");
+                        Console.WriteLine(e);
+                        CoreLogger.Log(e.ToString());
+                        
+                    }//end catch json error
+                }
+                
+
+                if (tempCoins == null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Out.WriteLine("  The following file does not appear to be valid JSON. It will be moved to the Trash Folder: ");
+                    
+                    CoreLogger.Log("  The following file does not appear to be valid JSON. It will be moved to the Trash Folder: ");
+                    Console.Out.WriteLine("  Paste the text into http://jsonlint.com/ to check for validity.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return false;//CloudCoin was null so move to trash
+                }
+                else
+                {
+                    for (int i = 0; i < tempCoins.cc.Length; i++)
+                    {
+                        this.fileUtils.writeTo(this.fileUtils.suspectFolder, tempCoins.cc[i]);
+                    }//end for each temp Coin
+                    return true;
+                }//end if no coins. 
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.Out.WriteLine("File not found: "  + ex);
+                CoreLogger.Log("File not found: "  + ex);
+            }
+            catch (IOException ioex)
+            {
+                Console.Out.WriteLine("IO Exception:"  + ioex);
+                CoreLogger.Log("IO Exception:"  + ioex);
+            }
+
+            // end try catch
+            return isSuccessful;
+        }//import stack
+
     }//end class
 }//end namespace

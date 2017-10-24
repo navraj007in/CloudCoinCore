@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -327,7 +327,7 @@ namespace Founders
             /*WRITE JSON TO FILE*/
             json = json + "\t] " + Environment.NewLine;
             json += "}";
-            String filename = (this.fileUtils.exportFolder + Path.DirectorySeparatorChar + totalSaved + ".CloudCoins." + tag + ".stack");
+            String filename = (this.fileUtils.exportFolder + totalSaved + ".CloudCoins." + tag + ".stack");
             if (File.Exists(filename))
             {
                 // tack on a random number if a file already exists with the same tag
