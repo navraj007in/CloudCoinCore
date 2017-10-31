@@ -49,6 +49,8 @@ namespace Founders
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Out.WriteLine("You tried to import a coin that has already been imported.");
                         CoreLogger.Log("You tried to import a coin that has already been imported.");
+                        if (File.Exists(this.fileUtils.trashFolder + detectedFileNames[j]))
+                                File.Delete(this.fileUtils.trashFolder + detectedFileNames[j]);
                         File.Move(this.fileUtils.detectedFolder + detectedFileNames[j], this.fileUtils.trashFolder + detectedFileNames[j]);
                         Console.Out.WriteLine("Suspect CloudCoin was moved to Trash folder.");
                         CoreLogger.Log("Suspect CloudCoin was moved to Trash folder.");
