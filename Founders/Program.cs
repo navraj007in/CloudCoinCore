@@ -4,6 +4,7 @@ using System.Linq;
 using System.Diagnostics;
 //using Newtonsoft.Json;
 using System.Xml;
+using System.Security.Cryptography;
 
 namespace Founders
 {
@@ -185,8 +186,8 @@ namespace Founders
                 Console.Out.WriteLine("  Finishing importing coins from last time...");//
                 Console.ForegroundColor = ConsoleColor.White;
                
-                //   import();//temp stop while testing, change this in production
-                //   grade();
+                 import();//temp stop while testing, change this in production
+                 //grade();
 
             } //end if there are files in the suspect folder that need to be imported
 
@@ -206,7 +207,7 @@ namespace Founders
         {
             RAIDA_Status.resetEcho();
             RAIDA raida1 = new RAIDA();
-            Response[] results = raida1.echoAll(5000);
+            raida1.echoAll(5000).Wait();
             int totalReady = 0;
             Console.Out.WriteLine("");
             //For every RAIDA check its results
@@ -331,7 +332,8 @@ namespace Founders
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Out.WriteLine("  Finishing importing coins from last time...");//
                 Console.ForegroundColor = ConsoleColor.White;
-                multi_detect();
+                string receiptFileName = multi_detect();
+                grade(receiptFileName);
                 Console.Out.WriteLine("  Now looking in import folder for new coins...");// "Now looking in import folder for new coins...");
             } //end if there are files in the suspect folder that need to be imported
 
@@ -343,7 +345,7 @@ namespace Founders
             Console.ForegroundColor = ConsoleColor.White;
 
             Importer importer = new Importer(fileUtils);
-            if (!importer.importAll())//Moves all CloudCoins from the Import folder into the Suspect folder. 
+            if (!importer.importAll() )//Moves all CloudCoins from the Import folder into the Suspect folder. 
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Out.WriteLine("  No coins in import folder.");// "No coins in import folder.");
@@ -356,13 +358,13 @@ namespace Founders
                 TimeSpan ts = new TimeSpan();
                 //Console.Out.WriteLine("  IMPORT DONE> NOW DETECTING MULTI. Do you want to start detecting?");// "No coins in import folder.");
                 // Console.In.ReadLine();
-                multi_detect();
+                string receiptFileName = multi_detect();
                 // Console.Out.WriteLine("  DETCATION DONE> NOW GRADING. Do you want to start Grading?");// "No coins in import folder.");
                 // Console.In.ReadLine();
                 after = DateTime.Now;
                 ts = after.Subtract(before);//end the timer
                 
-                grade();
+                grade(receiptFileName);
                 // Console.Out.WriteLine("  GRADING DONE NOW SHOWING. Do you wnat to show");// "No coins in import folder.");
                 // Console.In.ReadLine();
                 Console.Out.WriteLine("Time in ms to multi detect pown " + ts.TotalMilliseconds);
@@ -391,10 +393,19 @@ namespace Founders
             Console.Out.WriteLine(stopwatch.Elapsed + " ms");
         }//end detect
 
-        public static void multi_detect() {
+        public static string multi_detect() {
             Console.Out.WriteLine("");
             Console.Out.WriteLine("  Detecting Authentication of Suspect Coins");// "Detecting Authentication of Suspect Coins");
             MultiDetect multi_detector = new MultiDetect(fileUtils);
+            string receiptFileName;
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                byte[] cryptoRandomBuffer = new byte[16];
+                rng.GetBytes(cryptoRandomBuffer);
+
+                Guid pan = new Guid(cryptoRandomBuffer);
+               receiptFileName = pan.ToString("N");
+            }
 
             //Calculate timeout
             int detectTime = 20000;
@@ -403,16 +414,16 @@ namespace Founders
                 detectTime = RAIDA_Status.getLowest21() + 200;
             }//Slow connection
 
-            multi_detector.detectMulti(detectTime);
-
+            multi_detector.detectMulti(detectTime, receiptFileName);
+            return receiptFileName;
         }//end multi detect
 
-        public static void grade()
+        public static void grade(string receiptFileName)
         {
             Console.Out.WriteLine("");
             Console.Out.WriteLine("  Grading Authenticated Coins");// "Detecting Authentication of Suspect Coins");
             Grader grader = new Grader(fileUtils);
-            int[] detectionResults = grader.gradeAll(5000, 2000);
+            int[] detectionResults = grader.gradeAll(5000, 2000, receiptFileName);
             Console.Out.WriteLine("  Total imported to bank: " + detectionResults[0]);//"Total imported to bank: "
             Console.Out.WriteLine("  Total imported to fracked: " + detectionResults[1]);//"Total imported to fracked: "                                                                       // And the bank and the fractured for total
             Console.Out.WriteLine("  Total Counterfeit: " + detectionResults[2]);//"Total Counterfeit: "
